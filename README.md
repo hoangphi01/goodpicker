@@ -11,7 +11,10 @@
   `sudo pip3 install virtualenv`
 - pew  
   `sudo pip3 install pew`
-
+```
+pipenv shell
+pipenv install
+```
 ### 2. Frontend
 
 ```
