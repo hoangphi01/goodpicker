@@ -1,0 +1,10 @@
+@import '../../../../styles/variables';
+
+.content-container {
+    position: relative;
+    flex-direction: column;
+    background: #f2f4f7;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-bottom: auto;
+}

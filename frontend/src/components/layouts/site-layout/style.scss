@@ -1,0 +1,18 @@
+@import '../../../styles/variables';
+
+.app-container{
+    position: fixed;
+    height: 100%; 
+    width: 100%; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    .layout {
+        margin: 0 auto;
+        position: relative;
+        padding: 0rem 1.5rem;
+        height: 100%;
+    }
+}
