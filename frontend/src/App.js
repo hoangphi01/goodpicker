@@ -1,7 +1,7 @@
-import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom'
-import LoginTemplate from './components/templates/login'
-import RegisterTemplate from './components/templates/register'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import UserPage from './pages/user/profile'
 import HomePage from './pages/home'
+import LoginPage from './pages/login'
 
 function App() {
 	return (
@@ -10,8 +10,8 @@ function App() {
 				<div className="content">
 					<Switch>
 						<Route exact path="/" component={HomePage} />
-						<Route path="/login" component={LoginTemplate} />
-						<Route path="/register" component={RegisterTemplate} />
+						<Route path="/login" component={LoginPage} />
+						<Route path="/profile" component={UserPage} />
 					</Switch>
 				</div>
 			</div>

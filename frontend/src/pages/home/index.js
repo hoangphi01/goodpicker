@@ -1,7 +1,7 @@
 import './style.scss'
 
 import React from 'react'
-import { Rate, Row, Col, Skeleton } from 'antd'
+import { Row, Col, Skeleton } from 'antd'
 import CustomCarousel from './carousel'
 import SiteLayout from '../../components/layouts/site-layout'
 import ao1 from '../../img/ao1.jpg'
@@ -18,25 +18,25 @@ const HomePage = () => {
 						src: ao1,
 						name: 'Áo gió nam mới sử dụng vài lần',
 						price: 1399000,
-						rating: 5
+						lastUpdate: 1
 					},
 					{
 						src: vay,
 						name: 'váy dear jose mới mua 3 tháng',
 						price: 799000,
-						rating: 4.7
+						lastUpdate: 2
 					},
 					{
 						src: ao1,
 						name: 'Áo gió nam mới sử dụng vài lần',
 						price: 1399000,
-						rating: 5
+						lastUpdate: 3
 					},
 					{
 						src: vay,
 						name: 'váy dear jose mới mua 3 tháng',
 						price: 799000,
-						rating: 4.7
+						lastUpdate: 4
 					}
 				]),
 			2000
@@ -47,23 +47,17 @@ const HomePage = () => {
 		var skeletons = []
 		for (let i = 0; i < 4; i++)
 			skeletons.push(
-				<Col md={6} className="hotpicks-category-item">
-					<Skeleton.Image />
+				<Col
+					key={`categoryItemSke#${i + 1}`}
+					md={6}
+					className="newest-category-item"
+				>
 					<Skeleton.Input
+						className="newest-category-item-skeleton__img"
 						active
-						style={{ width: 200, margin: '0.5rem 0' }}
-						size="small"
 					/>
-					<Skeleton.Input
-						active
-						style={{ width: 200, margin: '0.5rem 0' }}
-						size="small"
-					/>
-					<Skeleton.Input
-						active
-						style={{ width: 200, margin: '0.5rem 0' }}
-						size="small"
-					/>
+
+					<Skeleton active paragraph={{ rows: 3 }} />
 				</Col>
 			)
 		return <>{skeletons}</>
@@ -71,23 +65,29 @@ const HomePage = () => {
 
 	return (
 		<SiteLayout>
-			<div>
+			<div className="homepage">
 				<CustomCarousel />
 
-				<div className="hotpicks">
-					<div className="hotpicks-category">
-						<div className="hotpicks-category__title">Quần áo</div>
+				<div className="newest">
+					<div className="newest-category">
+						<div className="newest-category__title">Quần áo</div>
 
 						<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
 							{fakeData
 								? fakeData.map(data => (
-										<Col md={6} className="hotpicks-category-item">
+										<Col
+											key={data.lastUpdate}
+											md={6}
+											className="newest-category-item"
+										>
 											<img src={data.src} alt="Ao gio" />
-											<Rate disabled allowHalf value={data.rating} />
-											<div className="hotpicks-category-item__name">
+											<div className="newest-category-item__ago">
+												{Math.floor(data.lastUpdate)} phút trước
+											</div>
+											<div className="newest-category-item__name">
 												{data.name}
 											</div>
-											<div className="hotpicks-category-item__price">
+											<div className="newest-category-item__price">
 												{data.price.toLocaleString()}đ
 											</div>
 										</Col>
