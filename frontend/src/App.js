@@ -1,33 +1,18 @@
 import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom'
-
 import LoginTemplate from './components/templates/login'
-import UserProfileTemplate from './components/templates/user/profile'
-import HomeTemplate from './components/templates/home'
+import RegisterTemplate from './components/templates/register'
+import HomePage from './pages/home'
+
 function App() {
 	return (
 		<BrowserRouter>
 			<div className="App">
-				<div>
-					<div className="header">
-						<NavLink exact activeClassName="active" to="/">
-							Home
-						</NavLink>
-						<br />
-						<NavLink activeClassName="active" to="/login">
-							Login
-						</NavLink>
-						<br />
-						<NavLink activeClassName="active" to="/profile">
-							Profile
-						</NavLink>
-					</div>
-					<div className="content">
-						<Switch>
-							<Route exact path="/" component={HomeTemplate} />
-							<Route path="/login" component={LoginTemplate} />
-							<Route path="/Profile" component={UserProfileTemplate} />
-						</Switch>
-					</div>
+				<div className="content">
+					<Switch>
+						<Route exact path="/" component={HomePage} />
+						<Route path="/login" component={LoginTemplate} />
+						<Route path="/register" component={RegisterTemplate} />
+					</Switch>
 				</div>
 			</div>
 		</BrowserRouter>
