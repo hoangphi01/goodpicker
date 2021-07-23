@@ -1,0 +1,67 @@
+@import '../../styles/variables';
+
+.homepage {
+	background-color: rgba($color-oasis, 0.1);
+}
+
+.newest {
+	padding: 5rem 8rem;
+
+	&-category {
+		margin: 3rem 0;
+
+		&__title {
+			border-bottom: 5px solid $color-primary-green;
+			color: $color-primary-green;
+			padding: 0.25rem 1.5rem;
+			text-transform: uppercase;
+			font-size: 1.5rem;
+			font-weight: 700;
+		}
+
+		&-item {
+			margin-top: 2rem;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+
+			&__ago {
+				margin-top: 1rem;
+				color: $color-gray;
+				font-size: 0.85rem;
+			}
+
+			&__name {
+				text-align: center;
+				text-transform: uppercase;
+				font-size: 0.95rem;
+			}
+
+			&__price {
+				font-weight: 700;
+			}
+
+			& > img {
+				max-width: 14rem;
+				height: 14rem;
+			}
+
+			&-skeleton {
+				&__img {
+					border-radius: 15px;
+					width: 11.25rem;
+					height: 12rem !important;
+				}
+			}
+
+			.ant-skeleton-title {
+				display: none;
+			}
+
+			.ant-skeleton-paragraph li {
+				border-radius: 15px;
+			}
+		}
+	}
+}

@@ -1,0 +1,62 @@
+@import '../../../../styles/variables';
+
+.header {
+	position: relative;
+	line-height: 0;
+	z-index: 1000000;
+	height: 4rem;
+	background-color: rgba($color-primary-green, 0.1);
+	box-shadow: 10px 0 5px 5px rgba($color-black, 0.1);
+
+	&-right {
+		float: right;
+		height: 100%;
+		width: fit-content;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+	}
+
+	&-auth {
+		display: inline-flex;
+		align-items: center;
+
+		&-divider {
+			display: inline-block;
+			width: 1px;
+			height: 2rem;
+			border-radius: 10px;
+			border: 2px solid $color-white;
+		}
+
+		&-button {
+			background-color: transparent;
+			text-transform: uppercase;
+			border: 3px solid $color-primary-red;
+			border-radius: 10px;
+			padding: 1rem;
+			font-weight: 700;
+			transition: all 0.2s ease-in-out;
+
+			&:hover {
+				cursor: pointer;
+			}
+
+			&--login {
+				background-color: $color-primary-red;
+				color: $color-white;
+
+				&:hover {
+					color: $color-primary-red;
+					background-color: $color-white;
+				}
+				// padding-right: 0.5rem;
+			}
+
+			&--signup {
+				color: $color-primary-red;
+				padding-left: 0.5rem;
+			}
+		}
+	}
+}
