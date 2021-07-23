@@ -42,6 +42,7 @@
 //     font-family: $font-opensans-semibold;
 //     src: url('/fonts/OpenSans-SemiBold.ttf');
 // }
+
 $f1: rem(60px);
 $f2: rem(48px);
 $f3: rem(36px);
@@ -60,6 +61,7 @@ $f15: 18px;
 $f16: 14px;
 $f17: 42px;
 $f18: 16px;
+
 // FONT-WEIGHT
 $fw-light: 300;
 $fw-normal: 400;
@@ -67,18 +69,26 @@ $fw-medium: 500;
 $fw-semiBold: 600;
 $fw-bold: 700;
 $fw-black: 900;
-$color-red: #DC3A61;
+
+// Primary colors
+$color-primary-red: #ef4d65;
+$color-primary-green: #13a89e;
+
+$color-oasis: #fdefc8;
+$color-red: #dc3a61;
 $color-white: #ffffff;
+$color-whitesmoke: #f5f5f5;
 $color-black: #000000;
 $color-brown: #666666;
 $color-gray: #999999;
-$color-line: #E4E4E4;
-$color-bg: #EEEEEE;
-$color-gray-bg: #F3F3F3;
-$color-light-gray-bg: #F4F4F4;
+$color-line: #e4e4e4;
+$color-bg: #eeeeee;
+$color-gray-bg: #f3f3f3;
+$color-light-gray-bg: #f4f4f4;
 $color-gray2: #807878;
 $color-antd-layout: #f0f2f5;
 $base-size: 16px;
+
 @function rem($size, $context: $base-size) {
-    @return $size / $base-size * 1rem;
+	@return $size / $base-size * 1rem;
 }
