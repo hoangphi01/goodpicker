@@ -1,31 +1,34 @@
 // import './App.css';
-import './index.css';
+import 'antd/dist/antd.css';
+import 'swiper/swiper.scss';
+import './styles/globals.scss'
+// import './index.css';
 import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
  
 import LoginTemplate from './components/templates/login';
-import RegisterTemplate from './components/templates/register';
+import UserProfileTemplate from './components/templates/user/profile';
 import HomeTemplate from './components/templates/home';
 function App() {
   return (
     <BrowserRouter>
-    <div className="App">
-      <div>
-          <div className="header">
-            <NavLink exact activeClassName="active" to="/">Home</NavLink>
-            <br/>
-            <NavLink activeClassName="active" to="/login">Login</NavLink>
-            <br/>
-            <NavLink activeClassName="active" to="/register">Register</NavLink>
+      <div className="App">
+        <div>
+            <div className="header">
+              <NavLink exact activeClassName="active" to="/">Home</NavLink>
+              <br/>
+              <NavLink activeClassName="active" to="/login">Login</NavLink>
+              <br/>
+              <NavLink activeClassName="active" to="/profile">Profile</NavLink>
+            </div>
+            <div className="content">
+              <Switch>
+                <Route exact path="/" component={HomeTemplate} />
+                <Route path="/login" component={LoginTemplate} />
+                <Route path="/Profile" component={UserProfileTemplate} />
+              </Switch>
+            </div>
           </div>
-          <div className="content">
-            <Switch>
-              <Route exact path="/" component={HomeTemplate} />
-              <Route path="/login" component={LoginTemplate} />
-              <Route path="/register" component={RegisterTemplate} />
-            </Switch>
-          </div>
-        </div>
-    </div>
+      </div>
     </BrowserRouter>
   );
 }

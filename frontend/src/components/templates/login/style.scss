@@ -1,49 +1,59 @@
-.login-page {
+@import '../../../styles/variables';
+.signup-page {
     height: 100vh;
-    .app-login-content {
-        padding: 2rem 3rem 2rem 3rem;
+    .app-signup-content {
+        padding: 3rem 2rem 3rem 2rem;
         display: flex;
         align-items: center;
         align-content: center;
         height: 100%;
-        background-color: #fff4ff;
-        flex: 1;
-        // background-color: $color-bg;
-        .w-100 {
-            background-color: white;
-            border: 1px solid #878787;
-            padding: 2rem 3rem 2rem 3rem;
-            margin-top: 1rem;
-            -webkit-border-radius: 1rem;
-        }
+        background-color: #ffd1e8;
+        .w-100 {}
         .c-2 {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 12px;
+            border: 1px solid #171717;
+            background-color: #bebebe;
+            width: 80%;
+            -webkit-border-radius: 15px;
+            -moz-border-radius: 15px;
+            border-radius: 15px;
+            padding: 30px;
+            height: 800px;
         }
         .ant-form {
             width: 100%;
+            .ant-space {
+                margin-top: rem(30px);
+                font-size: 40px;
+                align-content: center;
+                font-weight: 30px;
+                label {
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    font-size: 25px;
+                    color: #6e6e6e;
+                }
+                .ant-icon {
+                    color: #6e6e6e;
+                }
+            }
             .form-header {
                 // font: $fw-semiBold 2rem $font-euclid-semibold;
                 line-height: 1.5rem;
                 margin-bottom: 1.5rem;
                 text-align: center;
-                background-color: #edf2f4;
-                .logo-title {
-                    font-size: 30px;
+                .logo-img {
+                    width: rem(120px);
+                    height: rem(80px);
                 }
             }
             .ant-form-item {
-                margin-bottom: 1;
-                .m-0 {
-                    background-color: white;
-                }
+                margin-bottom: 0;
                 .forgot-password {
                     // font: $fw-normal 1rem $font-euclid-regular;
-                    // color: $color-red;
+                    color: $color-red;
                     line-height: 2rem;
                     float: right;
                 }
-                .signin-button {
+                .signup-button {
                     // font: $fw-bold 1rem $font-euclid-bold;
                     line-height: 2rem;
                     letter-spacing: 0.125rem;
@@ -51,8 +61,8 @@
                     height: 3rem;
                     border-radius: 0.5rem;
                     margin-top: 1.5rem;
-                    // background-color: $color-black;
-                    // color: $color-white;
+                    background-color: $color-red;
+                    color: $color-white;
                     &:hover {
                         border: inherit;
                     }
@@ -79,26 +89,12 @@
                 margin: 0.5rem;
             }
         }
-        .signup-recommend {
-            text-align: center;
-            margin-top: 8rem;
-            margin-bottom: 2.5rem;
-            .normal-text {
-                // font: $fw-normal 1rem $font-euclid-regular;
-                line-height: 2rem;
-            }
-            .sign-up-text {
-                // font: $fw-medium 1rem $font-euclid-semibold;
-                line-height: 2rem;
-                // color: $color-red;
-            }
-        }
     }
 }
 
 @media screen and (max-width: 576px) {
-    .login-page {
-        .app-login-content {
+    .signup-page {
+        .app-signup-content {
             padding: 2rem !important;
             .form-header {
                 margin-bottom: 1rem !important;

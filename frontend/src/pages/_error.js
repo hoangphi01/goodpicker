@@ -3,8 +3,6 @@
  */
 import React from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
-// import Styles from '../css/index.scss'
 import { withRouter } from 'next/router';
 
 class ErrorPage extends React.Component {
