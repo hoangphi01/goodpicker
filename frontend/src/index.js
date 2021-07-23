@@ -1,8 +1,9 @@
-// import './styles/index.scss'
 import React from 'react'
 import ReactDOM from 'react-dom'
-// import './index.css'
-
+import 'antd/dist/antd.css'
+import 'swiper/swiper.scss'
+import './styles/index.scss'
+import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 
