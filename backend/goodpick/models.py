@@ -4,7 +4,7 @@ from datetime import datetime
 
 # Create your models here.
 class User(models.Model):
-    userID = models.IntegerField(primary_key=True)
+    userID = models.AutoField(primary_key=True)
     name = models.CharField(max_length=64)
     accountName = models.CharField(max_length=32)
     userPassword = models.CharField(max_length=32)
@@ -15,11 +15,12 @@ class User(models.Model):
 
 
 class Goods(models.Model):
-    goodsID = models.IntegerField(primary_key=True)
+    goodsID = models.AutoField(primary_key=True)
     goodsCreateId = models.ForeignKey(User, on_delete=models.CASCADE)
     goodsName = models.CharField(max_length=64)
+    goodsCategory = models.CharField(max_length=64)
     goodsDescription = models.CharField(max_length=200)
-    goodsPrice = models.IntegerField(max_length=10)
+    goodsPrice = models.IntegerField()
     goodsStatus = models.BooleanField()
     goodsLocation = models.CharField(max_length=64)
     goodsPostedTime = models.TimeField(auto_now=True)
@@ -31,10 +32,10 @@ class Goods(models.Model):
 
 class Order(models.Model):
     class OrderKey:
-        uniqueOrder = (('key1', 'key2'),)
+        uniqueOrder = (('userID', 'goodsID'),)
 
-    key1 = models.ForeignKey(User, on_delete=models.CASCADE)
-    key2 = models.ForeignKey(Goods, on_delete=models.CASCADE)
+    userID = models.ForeignKey(User, on_delete=models.CASCADE)
+    goodsID = models.ForeignKey(Goods, on_delete=models.CASCADE)
     orderStatus = models.BooleanField()
     orderTransactionTime = models.TimeField(auto_now=True)
 
@@ -44,11 +45,11 @@ class Order(models.Model):
 
 class Rating(models.Model):
     class RatingKey:
-        uniqueRating = (('key1', 'key2'),)
+        uniqueRating = (('userID', 'goodsID'),)
 
-    key1 = models.ForeignKey(User, on_delete=models.CASCADE)
-    key2 = models.ForeignKey(Goods, on_delete=models.CASCADE)
-    ratingScore = models.IntegerField(max_length=1)
+    userID = models.ForeignKey(User, on_delete=models.CASCADE)
+    goodsID = models.ForeignKey(Goods, on_delete=models.CASCADE)
+    ratingScore = models.IntegerField()
 
     def __str__(self):
         return f"{self.ratingScore}"
@@ -56,10 +57,10 @@ class Rating(models.Model):
 
 class Comment(models.Model):
     class CommentKey:
-        uniqueComment = (('key1', 'key2'),)
+        uniqueComment = (('userID', 'goodsID'),)
 
-    key1 = models.ForeignKey(User, on_delete=models.CASCADE)
-    key2 = models.ForeignKey(Goods, on_delete=models.CASCADE)
+    userID = models.ForeignKey(User, on_delete=models.CASCADE)
+    goodsID = models.ForeignKey(Goods, on_delete=models.CASCADE)
     commentContent = models.CharField(max_length=200)
     commentTime = models.TimeField(auto_now=True)
 
@@ -69,10 +70,10 @@ class Comment(models.Model):
 
 class Chat(models.Model):
     class ChatKey:
-        uniqueComment = (('key1', 'key2'),)
+        uniqueComment = (('userID', 'goodsID'),)
 
-    key1 = models.ForeignKey(User, on_delete=models.CASCADE)
-    key2 = models.ForeignKey(Goods, on_delete=models.CASCADE)
+    userID = models.ForeignKey(User, on_delete=models.CASCADE)
+    goodsID = models.ForeignKey(Goods, on_delete=models.CASCADE)
     chatContent = models.CharField(max_length=200)
     chatTime = models.TimeField(auto_now=True)
 
