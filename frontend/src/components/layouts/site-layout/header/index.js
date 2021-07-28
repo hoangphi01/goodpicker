@@ -4,14 +4,17 @@ import { Link } from 'react-router-dom'
 import { Layout, Tooltip } from 'antd'
 import { FileAddOutlined } from '@ant-design/icons'
 import Logo from '../../../elements/logo'
-import RippleButton from '../../../elements/ripple-button'
 
 const AppHeader = () => {
 	return (
 		<Layout.Header className="header">
 			<div className="header-section header-section--left">
-				<Link to="/about-us">About us</Link>
-				<Link to="/flagship">Flagship</Link>
+				<button className="header-btn">
+					<Link to="/about-us">About us</Link>
+				</button>
+				<button className="header-btn">
+					<Link to="/flagship">Flagship</Link>
+				</button>
 			</div>
 
 			<Link to="/">

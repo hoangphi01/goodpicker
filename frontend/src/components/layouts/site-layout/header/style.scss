@@ -24,18 +24,18 @@
 			text-transform: uppercase;
 			font-family: $font-nunito-semi-bold;
 			font-size: 1.1rem;
-			padding-left: 4rem;
+			padding-left: 2.5rem;
 
 			a,
+			a:hover,
 			a:active,
 			a:visited {
-				color: $color-primary-red;
-				display: block;
-				margin-right: 8.5rem;
+				color: inherit;
+				transition: none;
 			}
 
-			a:hover {
-				color: darken($color-primary-red, 15%);
+			button {
+				margin-right: 6.5rem;
 			}
 		}
 	}
@@ -47,11 +47,13 @@
 		font-family: $font-nunito-bold;
 		background-color: $color-primary-red;
 		color: $color-white;
+		padding: 1rem;
+		border-radius: 10px;
 
 		&:hover {
 			cursor: pointer;
-			color: $color-primary-red;
-			background-color: $color-white;
+			background-color: darken($color-primary-red, 12%);
+			border-color: darken($color-primary-red, 12%);
 		}
 
 		&--icon {
@@ -60,9 +62,9 @@
 			font-size: 1.25rem;
 		}
 
-		&--auth {
-			padding: 1rem;
-			border-radius: 10px;
+		&--auth:hover {
+			background-color: $color-white;
+			color: $color-primary-red;
 		}
 	}
 
