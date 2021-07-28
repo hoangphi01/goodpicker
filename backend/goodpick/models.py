@@ -1,4 +1,4 @@
-from django.db import models
+gitfrom django.db import models
 from datetime import datetime
 
 
