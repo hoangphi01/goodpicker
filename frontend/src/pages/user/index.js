@@ -1,212 +1,113 @@
 import './style.scss'
-
+import { Row, Col, Form, Button, Space, message, Tabs,Steps } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { Table, Tag, Layout, Button } from 'antd'
-import { Header } from 'antd/lib/layout/layout'
-import { RightOutlined } from '@ant-design/icons'
-import FilterForm from './filter-form'
-import UserManagementApi from '../../../api/user-management/index'
-import CreateModal from './create'
-import { STATUS_CODE } from '../../../constants'
-import AuthGuard from '../../../guards/auth'
+import CustomInputField from '../../components/elements/input'
+import { Link, withRouter } from 'react-router-dom'
+import { FacebookOutlined } from '@ant-design/icons'
+import Logo from '../../components/elements/logo'
+import AccountDetails from './account_detail'
+import PersonalDetails from './personal_detail'
+// import PaymentDetails from './payment_detail'
+import SiteLayout from '../../components/layouts/site-layout'
+import ChangePassword from './change_password'
 
-const UserPage = props => {
-	let [users, setUsers] = useState([])
-	let [paginationArgs, setPaginationArgs] = useState({
-		page: 1,
-		pageSize: 10,
-		totalItems: 0
-	})
 
-	let [filterArgs, setFilterArgs] = useState({
-		filterByName: '',
-		filterByEmail: '',
-		filterByRole: 'all',
-		filterByStatus: 'all'
-	})
+const {TabPane} = Tabs
+const { Step } = Steps;
 
-	let [modalVisible, setModalVisible] = useState(false)
+const steps = [
+	{
+	  title: 'Thông tin người dùng',
+	  content: <AccountDetails />,
+	},
+	{
+	  title: 'Thông tin cá nhân',
+	  content: <PersonalDetails />,
+	},
+	// {
+	//   title: 'Thông tin thanh toán',
+	//   content: <PaymentDetails />,
+	// },
+  ];
+const UserProfilePage = props => {
+	
+	const [current, setCurrent] = React.useState(0);
 
-	useEffect(async () => {
-		await getUsers(paginationArgs)
-	}, [])
+	const next = () => {
+		setCurrent(current + 1);
+	};
 
-	useEffect(async () => {
-		await getUsers({
-			...paginationArgs,
-			...filterArgs,
-			page: 1,
-			pageSize: 10
-		})
-	}, [filterArgs])
+	const prev = () => {
+		setCurrent(current - 1);
+	};
 
-	const getUsers = async data => {
-		let result = await UserManagementApi.fetchAll({
-			page: data.page,
-			pageSize: data.pageSize,
-			filterByEmail: data.filterByEmail,
-			filterByName: data.filterByName,
-			filterByRole: data.filterByRole,
-			filterByStatus: data.filterByStatus
-		})
+	const onDone = () => {
+		message.success('Processing complete!')
+		props.history.push('/')
 
-		if (result?.code == STATUS_CODE.success) {
-			setPaginationArgs({
-				totalItems: result.data.totalItems,
-				page: result.data.page,
-				pageSize: result.data.pageSize
-			})
-
-			setUsers(result.data.listUsers)
-		}
-	}
-
-	const testApi = async () => {
-		//getAll
-		let result = await UserManagementApi.fetchAll({
-			query: [['id', '=', '2']],
-			pageSize: 10,
-			pageIndex: 1,
-			model: 'hr.employee',
-			fields: ['name']
-		})
-
-		//get by id
-		// let result = await UserManagementApi.fetchById(38)
-
-		//create
-		// let result = await UserManagementApi.create({
-		//     model: "hr.employee",
-		//     object: {
-		//         "name": "Nhi Do"
-		//     }
-		// })
-
-		//update
-		// let result = await UserManagementApi.update(39, {
-		//     model: "hr.employee",
-		//     object: {
-		//         "name": "Do Nhi"
-		//     }
-		// })
-
-		//delete
-		// let result = await UserManagementApi.delete(39, {model: "hr.employee"})
-
-		console.log(result)
-	}
-
-	const columns = [
-		{
-			title: 'userManagementPage.name',
-			dataIndex: 'username',
-			key: 'username'
-		},
-		{
-			title: 'userManagementPage.email',
-			dataIndex: 'email',
-			key: 'email'
-		},
-		{
-			title: 'userManagementPage.status',
-			dataIndex: 'status',
-			key: 'status',
-			render: status => {
-				if (status == 'active') {
-					return <Tag color="green">{'userManagementPage.active'}</Tag>
-				} else if (status == 'inactive') {
-					return <Tag color="red">{'userManagementPage.inactive'}</Tag>
-				}
-			}
-		},
-		{
-			title: 'userManagementPage.role',
-			dataIndex: 'roles',
-			key: 'roles',
-			render: roles => `userManagementPage.${roles?.toString()}`
-		},
-		{
-			title: '',
-			key: 'arrow',
-			render: record => (
-				<a>
-					<RightOutlined />
-				</a>
-			)
-		}
-	]
-
-	const onShowSizeChange = (current, pageSize) => {
-		getUsers({
-			...paginationArgs,
-			page: current,
-			pageSize: pageSize
-		})
-
-		setPaginationArgs({
-			...paginationArgs,
-			page: current,
-			pageSize: pageSize
-		})
-	}
-
-	const onPageChange = (page, pageSize) => {
-		getUsers({
-			...paginationArgs,
-			page: page,
-			pageSize: pageSize
-		})
-
-		setPaginationArgs({
-			...paginationArgs,
-			page: page,
-			pageSize: pageSize
-		})
 	}
 
 	return (
 		<React.Fragment>
-			<AuthGuard>
-				<Layout className="header-container">
-					<Header className="page-header">
-						<h2 className="page-title">{'userManagementPage.users'}</h2>
-					</Header>
-				</Layout>
-				<FilterForm
-					setModalVisible={setModalVisible}
-					setFilterArgs={setFilterArgs}
-				/>
-				<Table
-					dataSource={users}
-					columns={columns}
-					pagination={{
-						defaultCurrent: 1,
-						showSizeChanger: true,
-						defaultPageSize: paginationArgs.pageSize,
-						total: paginationArgs.totalItems,
-						current: paginationArgs.page,
-						showTotal: total =>
-							`${'total'} ${total} ${'userManagementPage.user'}`,
-						onShowSizeChange: onShowSizeChange,
-						onChange: onPageChange
-					}}
-					onRow={(record, rowIndex) => ({
-						onClick: () => {}
-					})}
-				/>
-				<CreateModal
-					modalVisible={modalVisible}
-					setModalVisible={setModalVisible}
-					getUsers={getUsers}
-					paginationArgs={paginationArgs}
-				/>
+			<Row className="profile-page">
+				<Col xs={24} lg={24}>
+					<div className="app-profile-header">
+						<SiteLayout/>
+					</div>
+					<div className="app-profile-content">
+						<Row className="w-100" justify="center">
+							<Col span={12} className="c-2">
+								<Form>
+									
+									<Tabs defaultActiveKey="1" size="large" tabBarGutter = "40px">
+										<TabPane tab="Thông tin người dùng" key="1" className="info-user-tab">
+										<Steps current={current}>
+											{steps.map(item => (
+											<Step key={item.title} title={item.title} />
+											))}
+										</Steps>
+										<div className="steps-content">{steps[current].content}</div>
+										<div className="steps-action">
+											{current > 0 && (
+											<Button className="prev-button"
+												name = "previous" 
+												style={{ margin: '0 8px' }} 
+												onClick={() => prev()}>
+												Previous
+											</Button>
+											)}
+											{current < steps.length - 1 && (
+											<Button className="next-button" 
+												name = "next"
+												type="primary" 
+												onClick={() => next()}>
+												Next
+											</Button>
+											)}
+											{current === steps.length - 1 && (
+											<Button className="next-button" 
+												name = "done"
+												type="primary" 
+												onClick={onDone}>
+												Done
+											</Button>
+											)}
+											
+										</div>
+										</TabPane>
 
-				<Button onClick={testApi} type="primary">
-					Primary Button
-				</Button>
-			</AuthGuard>
+										<TabPane tab="Thay đổi mật khẩu" key="2" className="info-user-tab">
+											<ChangePassword/>
+										</TabPane>
+									</Tabs>
+								</Form>
+							</Col>
+						</Row>
+					</div>
+				</Col>
+			</Row>
 		</React.Fragment>
 	)
 }
 
-export default UserPage
+export default UserProfilePage
