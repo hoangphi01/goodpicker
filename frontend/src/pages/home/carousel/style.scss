@@ -62,12 +62,8 @@
 			&__title {
 				font-size: 4rem;
 				text-transform: uppercase;
-				letter-spacing: 1.5px;
-			}
-
-			&__title {
-				font-size: 4.25rem;
-				letter-spacing: 3.5px;
+				letter-spacing: 1px;
+				font-family: $font-nunito-bold;
 			}
 		}
 	}

@@ -6,7 +6,9 @@ import { Footer } from 'antd/lib/layout/layout'
 const AppFooter = () => {
 	return (
 		<React.Fragment>
-			<Footer className="text-align-center"></Footer>
+			<Footer className="footer">
+				<div className="footer-content">© 2021 Copyright: GoodsPicker</div>
+			</Footer>
 		</React.Fragment>
 	)
 }
