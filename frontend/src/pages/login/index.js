@@ -7,12 +7,9 @@ import { FacebookFilled } from '@ant-design/icons'
 import Logo from '../../components/elements/logo'
 import SiteLayout from '../../components/layouts/site-layout'
 
-
 const { TabPane } = Tabs
 
-const LoginPage = (props) => {
-	
-
+const LoginPage = props => {
 	const rulesLogin = {
 		password: [
 			{
@@ -52,8 +49,6 @@ const LoginPage = (props) => {
 		]
 	}
 
-	
-
 	const [error, setError] = useState(null)
 	const [initialLoginValue, setInitialLoginValue] = useState({
 		email: '',
@@ -80,15 +75,10 @@ const LoginPage = (props) => {
 	const onFinishRegisterFailed = () => {}
 
 	return (
-		<React.Fragment>
+		<SiteLayout>
 			<Row className="signup-page">
 				<Col xs={24} lg={24}>
-                    <div className="app-signup-header">
-                        <SiteLayout/>
-                    </div>
-                    <div className="app-signup-sidebar">
-
-                    </div>
+					<div className="app-signup-sidebar"></div>
 					<div className="app-signup-content">
 						<Row className="w-100" justify="end">
 							<Col span={8} className="c-2">
@@ -98,8 +88,8 @@ const LoginPage = (props) => {
 											<Logo width={120} />
 										</Link>
 									</div>
-									<Tabs defaultActiveKey="1" size="large" tabBarGutter = "90px" >
-										<TabPane tab="Đăng nhập" key="1" className="login-tab" >
+									<Tabs defaultActiveKey="1" size="large" tabBarGutter="90px">
+										<TabPane tab="Đăng nhập" key="1" className="login-tab">
 											<Form
 												name="login"
 												initialValues={initialLoginValue}
@@ -150,7 +140,7 @@ const LoginPage = (props) => {
 													<label for="login-with" classname="login-with">
 														Đăng nhập với:
 													</label>
-													<FacebookFilled style={{color: "#2a27ce"}} />
+													<FacebookFilled style={{ color: '#2a27ce' }} />
 												</Space>
 											</Form>
 										</TabPane>
@@ -161,9 +151,7 @@ const LoginPage = (props) => {
 												initialValues={initialRegisterValue}
 												onFinish={onFinishRegister}
 												onFinishFailed={onFinishRegisterFailed}
-											    >
-												
-
+											>
 												<Form.Item
 													className="m-0"
 													name="lastName"
@@ -240,12 +228,10 @@ const LoginPage = (props) => {
 					</div>
 				</Col>
 			</Row>
-		</React.Fragment>
+		</SiteLayout>
 	)
 }
 
-LoginPage.propTypes = {
-	
-}
+LoginPage.propTypes = {}
 
 export default LoginPage

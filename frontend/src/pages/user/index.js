@@ -48,12 +48,10 @@ const UserProfilePage = props => {
 	}
 
 	return (
-		<React.Fragment>
+		<SiteLayout>
 			<Row className="profile-page">
 				<Col xs={24} lg={24}>
-					<div className="app-profile-header">
-						<SiteLayout/>
-					</div>
+					
 					<div className="app-profile-content">
 						<Row className="w-100" justify="center">
 							<Col span={12} className="c-2">
@@ -106,7 +104,7 @@ const UserProfilePage = props => {
 					</div>
 				</Col>
 			</Row>
-		</React.Fragment>
+		</SiteLayout>
 	)
 }
 
