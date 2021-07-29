@@ -8,13 +8,10 @@ import { Layout } from 'antd'
 
 const SiteLayout = ({ children }) => {
 	return (
-		<Layout className="app-container">
-			{/* <AppSidebar /> */}
-			<Layout className="layout">
-				<AppHeader />
-				<Layout.Content>{children}</Layout.Content>
-				<AppFooter />
-			</Layout>
+		<Layout className="layout">
+			<AppHeader />
+			<Layout.Content>{children}</Layout.Content>
+			<AppFooter />
 		</Layout>
 	)
 }
