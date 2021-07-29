@@ -3,16 +3,15 @@ import { Row, Col, Form, Button, Space, message, Tabs } from 'antd'
 import React, { useEffect, useState } from 'react'
 import CustomInputField from '../../components/elements/input'
 import { Link, withRouter } from 'react-router-dom'
-import { FacebookOutlined } from '@ant-design/icons'
+import { FacebookFilled } from '@ant-design/icons'
 import Logo from '../../components/elements/logo'
+import SiteLayout from '../../components/layouts/site-layout'
+
 
 const { TabPane } = Tabs
 
-const LoginPage = props => {
-	// const initialValues = {
-	//     username: '',
-	//     password: '',
-	// };
+const LoginPage = (props) => {
+	
 
 	const rulesLogin = {
 		password: [
@@ -53,17 +52,7 @@ const LoginPage = props => {
 		]
 	}
 
-	const onFinishLogin = async values => {
-		props.history.push('/')
-	}
-
-	const onFinishLoginFailed = () => {}
-
-	const onFinishRegister = async values => {
-		props.history.push('/')
-	}
-
-	const onFinishRegisterFailed = () => {}
+	
 
 	const [error, setError] = useState(null)
 	const [initialLoginValue, setInitialLoginValue] = useState({
@@ -78,10 +67,28 @@ const LoginPage = props => {
 		username: ''
 	})
 
+	const onFinishLogin = async initialLoginValue => {
+		props.history.push('/')
+	}
+
+	const onFinishLoginFailed = () => {}
+
+	const onFinishRegister = async initialRegisterValue => {
+		props.history.push('/profile')
+	}
+
+	const onFinishRegisterFailed = () => {}
+
 	return (
 		<React.Fragment>
 			<Row className="signup-page">
 				<Col xs={24} lg={24}>
+                    <div className="app-signup-header">
+                        <SiteLayout/>
+                    </div>
+                    <div className="app-signup-sidebar">
+
+                    </div>
 					<div className="app-signup-content">
 						<Row className="w-100" justify="end">
 							<Col span={8} className="c-2">
@@ -91,8 +98,8 @@ const LoginPage = props => {
 											<Logo width={120} />
 										</Link>
 									</div>
-									<Tabs defaultActiveKey="1">
-										<TabPane tab="Login" key="1">
+									<Tabs defaultActiveKey="1" size="large" tabBarGutter = "90px" >
+										<TabPane tab="Đăng nhập" key="1" className="login-tab" >
 											<Form
 												name="login"
 												initialValues={initialLoginValue}
@@ -113,7 +120,7 @@ const LoginPage = props => {
 													rules={rulesLogin.password}
 												>
 													<CustomInputField
-														placeholder="Password"
+														placeholder="Mật khẩu"
 														customStyle="style#2"
 														type="password"
 														onChange={e => setInitialLoginValue(e.target.value)}
@@ -123,7 +130,7 @@ const LoginPage = props => {
 												<Form.Item>
 													<Link to="/forgot-password">
 														<a className="forgot-password">
-															<span>Forgot Password</span>
+															<span>Quên mật khẩu?</span>
 														</a>
 													</Link>
 												</Form.Item>
@@ -136,35 +143,26 @@ const LoginPage = props => {
 														type="primary"
 														onClick={onFinishLogin}
 													>
-														<span>Sign in</span>
+														<span>Đăng nhập</span>
 													</Button>
 												</Form.Item>
 												<Space align="start" size="middle">
 													<label for="login-with" classname="login-with">
-														Login with:
+														Đăng nhập với:
 													</label>
-													<FacebookOutlined />
+													<FacebookFilled style={{color: "#2a27ce"}} />
 												</Space>
 											</Form>
 										</TabPane>
 
-										<TabPane tab="Register" key="2">
+										<TabPane tab="Đăng ký" key="2" className="register-tab">
 											<Form
 												name="login"
 												initialValues={initialRegisterValue}
 												onFinish={onFinishRegister}
 												onFinishFailed={onFinishRegisterFailed}
-											>
-												<Form.Item
-													className="m-0"
-													name="firstName"
-													rules={rulesRegister.firstName}
-												>
-													<CustomInputField
-														placeholder="First Name"
-														customStyle="style#2"
-													/>
-												</Form.Item>
+											    >
+												
 
 												<Form.Item
 													className="m-0"
@@ -172,7 +170,7 @@ const LoginPage = props => {
 													rules={rulesRegister.lastName}
 												>
 													<CustomInputField
-														placeholder="Last Name"
+														placeholder="Họ và Tên"
 														customStyle="style#2"
 													/>
 												</Form.Item>
@@ -183,7 +181,7 @@ const LoginPage = props => {
 													rules={rulesRegister.username}
 												>
 													<CustomInputField
-														placeholder="Username"
+														placeholder="Tên người dùng"
 														customStyle="style#2"
 													/>
 												</Form.Item>
@@ -205,7 +203,7 @@ const LoginPage = props => {
 													rules={rulesRegister.password}
 												>
 													<CustomInputField
-														placeholder="Password"
+														placeholder="Mật khẩu"
 														customStyle="style#2"
 														type="password"
 													/>
@@ -217,7 +215,7 @@ const LoginPage = props => {
 													rules={rulesRegister.password}
 												>
 													<CustomInputField
-														placeholder="Type Password Again"
+														placeholder="Nhập lại mật khẩu"
 														customStyle="style#2"
 														type="password"
 													/>
@@ -228,8 +226,9 @@ const LoginPage = props => {
 														name="signup"
 														className="signup-button"
 														htmlType="submit"
+														onClick={onFinishRegister}
 													>
-														<span>Sign Up</span>
+														<span>Đăng ký</span>
 													</Button>
 												</Form.Item>
 											</Form>
@@ -243,6 +242,10 @@ const LoginPage = props => {
 			</Row>
 		</React.Fragment>
 	)
+}
+
+LoginPage.propTypes = {
+	
 }
 
 export default LoginPage
