@@ -9,12 +9,14 @@ from .serializers import OrderSerializer
 from .serializers import RatingSerializer
 from .serializers import CommentSerializer
 from .serializers import ChatSerializer
+from .serializers import CategorySerializer
 from .models import User
 from .models import Goods
 from .models import Order
 from .models import Rating
 from .models import Comment
 from .models import Chat
+from .models import Category
 
 # Create your views here.
 
@@ -23,12 +25,15 @@ class UserView(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
+class CategoryView(viewsets.ModelViewSet):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
 
 class GoodsView(viewsets.ModelViewSet):
     serializer_class = GoodsSerializer
     queryset = Goods.objects.all()
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['goodsCategory', 'goodsStatus']
+    filterset_fields = ['goodsCategoryID', 'goodsStatus']
     ordering_fields = ['goodsUpdatedTime']
 
 

@@ -43,6 +43,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=64)
     username = models.CharField(max_length=32, unique=True)
     email = models.EmailField(max_length=100, unique=True)
+    userImage = models.ImageField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     
@@ -53,18 +54,23 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return f"{self.username} ({self.email})"
 
+class Category(models.Model):
+    goodsCategoryID = models.AutoField(primary_key=True)
+    goodsCategoryName= models.CharField(max_length=64)
+
+    def __str__(self):
+        return f"{self.goodsCategoryName}"
 
 class Goods(models.Model):
     goodsID = models.AutoField(primary_key=True)
     goodsCreateId = models.ForeignKey(User, on_delete=models.CASCADE)
     goodsName = models.CharField(max_length=64)
-    goodsCategory = models.CharField(max_length=64)
+    goodsCategoryID = models.ForeignKey(Category, on_delete=models.CASCADE, default=0)
     goodsDescription = models.CharField(max_length=200)
     goodsPrice = models.IntegerField()
     goodsStatus = models.BooleanField()
     goodsLocation = models.CharField(max_length=64)
-    goodsPostedTime = models.TimeField(auto_now=True)
-    goodsUpdatedTime = models.TimeField(auto_now=True)
+    goodsUpdatedTime = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"{self.goodsName} ({self.goodsPrice})"
@@ -77,7 +83,7 @@ class Order(models.Model):
     userID = models.ForeignKey(User, on_delete=models.CASCADE)
     goodsID = models.ForeignKey(Goods, on_delete=models.CASCADE)
     orderStatus = models.BooleanField()
-    orderTransactionTime = models.TimeField(auto_now=True)
+    orderTransactionTime = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"{self.orderStatus} ({self.orderTransactionTime})"
@@ -102,7 +108,7 @@ class Comment(models.Model):
     userID = models.ForeignKey(User, on_delete=models.CASCADE)
     goodsID = models.ForeignKey(Goods, on_delete=models.CASCADE)
     commentContent = models.CharField(max_length=200)
-    commentTime = models.TimeField(auto_now=True)
+    commentTime = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"{self.commentContent} ({self.commentTime})"
@@ -115,7 +121,7 @@ class Chat(models.Model):
     userID = models.ForeignKey(User, on_delete=models.CASCADE)
     goodsID = models.ForeignKey(Goods, on_delete=models.CASCADE)
     chatContent = models.CharField(max_length=200)
-    chatTime = models.TimeField(auto_now=True)
+    chatTime = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"{self.chatContent} ({self.chatTime})"

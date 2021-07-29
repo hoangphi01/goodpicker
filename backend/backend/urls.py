@@ -19,9 +19,12 @@ from rest_framework import routers
 from goodpick import views
 from goodpick.api import RegisterAPI, LoginAPI, UserAPI
 from knox import views as knox_views
+from django.conf.urls.static import static
+from django.conf import settings
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserView, 'goodpick')
+router.register(r'categories', views.CategoryView, 'goodpick')
 router.register(r'goods', views.GoodsView, 'goodpick')
 router.register(r'orders', views.OrderView, 'goodpick')
 router.register(r'ratings', views.RatingView, 'goodpick')
@@ -36,4 +39,4 @@ urlpatterns = [
     path('api/auth/login', LoginAPI.as_view()),
     path('api/auth/user', UserAPI.as_view()),
     path('api/auth/logout', knox_views.LogoutView.as_view(), name='knox_logout')
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
