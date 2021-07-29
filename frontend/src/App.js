@@ -3,6 +3,7 @@ import UserPage from './pages/user/profile'
 import HomePage from './pages/home'
 import LoginPage from './pages/login'
 import AboutUs from './pages/about-us'
+import NewPost from './pages/new-post'
 
 function App() {
 	return (
@@ -14,6 +15,7 @@ function App() {
 						<Route path="/login" component={LoginPage} />
 						<Route path="/profile" component={UserPage} />
 						<Route path="/about-us" component={AboutUs} />
+						<Route path="/new-post" component={NewPost} />
 					</Switch>
 				</div>
 			</div>
