@@ -16,10 +16,18 @@ pipenv shell
 pipenv install
 ```
 ### 2. Frontend
-
+- nodejs 
+ ```
+ sudo apt update
+ sudo apt install nodejs
+ ```
+- npm 
+ `sudo apt install npm`
+- yarn 
+ `sudo npm i -g yarn`
 ```
 cd frontend
-npm i
+yarn
 ```
 
 ## Start

@@ -1,3 +1,5 @@
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import generics
 from django.http import HttpResponse
 from django.shortcuts import render
 from rest_framework import viewsets
@@ -25,6 +27,9 @@ class UserView(viewsets.ModelViewSet):
 class GoodsView(viewsets.ModelViewSet):
     serializer_class = GoodsSerializer
     queryset = Goods.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['goodsCategory', 'goodsStatus']
+    ordering_fields = ['goodsUpdatedTime']
 
 
 class OrderView(viewsets.ModelViewSet):
@@ -45,3 +50,4 @@ class CommentView(viewsets.ModelViewSet):
 class ChatView(viewsets.ModelViewSet):
     serializer_class = ChatSerializer
     queryset = Chat.objects.all()
+

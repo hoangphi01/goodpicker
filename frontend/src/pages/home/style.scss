@@ -16,7 +16,7 @@
 			padding: 0.25rem 1.5rem;
 			text-transform: uppercase;
 			font-size: 1.5rem;
-			font-weight: 700;
+			font-family: $font-nunito-bold;
 		}
 
 		&-item {
@@ -39,7 +39,7 @@
 			}
 
 			&__price {
-				font-weight: 700;
+				font-family: $font-nunito-bold;
 			}
 
 			& > img {

@@ -1,5 +1,10 @@
 @import '../../../../styles/variables';
 
-.footer-container {
-    text-align: center;
+.footer {
+	text-align: center;
+	background-color: rgba($color-primary-green, 0.1);
+
+	&-content {
+		font-family: $font-nunito-semi-bold;
+	}
 }

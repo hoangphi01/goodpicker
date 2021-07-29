@@ -8,6 +8,7 @@ django = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
 django-seed = "*"
+django-filter = "*"
 
 [dev-packages]
 
