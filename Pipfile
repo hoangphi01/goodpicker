@@ -9,6 +9,7 @@ djangorestframework = "*"
 django-cors-headers = "*"
 django-seed = "*"
 django-filter = "*"
+django-rest-knox = "*"
 
 [dev-packages]
 

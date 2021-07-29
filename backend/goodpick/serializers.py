@@ -1,4 +1,6 @@
 from rest_framework import serializers
+# from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 from .models import User
 from .models import Goods
 from .models import Order
@@ -6,12 +8,34 @@ from .models import Rating
 from .models import Comment
 from .models import Chat
 
-
+#User Serializer
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('userID', 'name', 'accountName', 'userPassword', 'userEmail')
+        fields = ('id', 'username', 'email', 'name')
 
+#Register Serializer
+class RegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'name', 'username', 'password', 'email')
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        user = User.objects.create_user(validated_data['username'], validated_data['email'], validated_data['password'], validated_data['name'])
+
+        return user
+
+#Login Serializer
+class LoginSerializer(serializers.Serializer):
+  email = serializers.CharField()
+  password = serializers.CharField()
+
+  def validate(self, data):
+    user = authenticate(**data)
+    if user and user.is_active:
+      return user
+    raise serializers.ValidationError("Incorrect Credentials")
 
 class GoodsSerializer(serializers.ModelSerializer):
     class Meta:

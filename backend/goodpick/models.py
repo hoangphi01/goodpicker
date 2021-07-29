@@ -1,17 +1,57 @@
 from django.db import models
 from datetime import datetime
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
+
+class UserManager(BaseUserManager):
+
+    def create_user(self, username, email, password, name, **kwargs):
+        if password is None:
+            raise TypeError('Users must have a password.')
+        if username is None:
+            raise TypeError('Users must have a username.')
+        if email is None:
+            raise TypeError('Users must have an email.')
+        if name is None:
+            raise TypeError('Users must have an name.')
+
+        user = self.model(username=username, email=self.normalize_email(email), name=name)
+        user.set_password(password)
+        user.save(using=self._db)
+
+        return user
+
+    def create_superuser(self, username, email, password, name):
+        if password is None:
+            raise TypeError('Superusers must have a password.')
+        if email is None:
+            raise TypeError('Superusers must have an email.')
+        if username is None:
+            raise TypeError('Superusers must have an username.')
+        if name is None:
+            raise TypeError('Superusers must have an name.')
+
+        user = self.create_user(username, email, password, name)
+        user.is_superuser = True
+        user.is_staff = True
+        user.save(using=self._db)
+
+        return user
 
 # Create your models here.
-class User(models.Model):
-    userID = models.AutoField(primary_key=True)
+class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=64)
-    accountName = models.CharField(max_length=32)
-    userPassword = models.CharField(max_length=32)
-    userEmail = models.EmailField(max_length=100)
+    username = models.CharField(max_length=32, unique=True)
+    email = models.EmailField(max_length=100, unique=True)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username', 'password', 'name']
 
+    objects = UserManager()
     def __str__(self):
-        return f"{self.accountName} ({self.userEmail})"
+        return f"{self.username} ({self.email})"
 
 
 class Goods(models.Model):
