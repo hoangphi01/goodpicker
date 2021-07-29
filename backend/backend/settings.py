@@ -31,10 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-<<<<<<< HEAD
-=======
     'django_filters',
->>>>>>> main
     'django_seed',
     'corsheaders',
     'rest_framework',
