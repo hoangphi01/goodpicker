@@ -33,7 +33,7 @@ yarn
 ## Start
 
 ### 1. Backend
-
+**At project root**
 ```
 pipenv shell
 cd backend
