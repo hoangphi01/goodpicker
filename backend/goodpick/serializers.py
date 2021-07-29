@@ -7,12 +7,13 @@ from .models import Order
 from .models import Rating
 from .models import Comment
 from .models import Chat
+from .models import Category
 
 #User Serializer
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'name')
+        fields = ('id', 'username', 'email', 'name', 'userImage')
 
 #Register Serializer
 class RegisterSerializer(serializers.ModelSerializer):
@@ -37,11 +38,16 @@ class LoginSerializer(serializers.Serializer):
       return user
     raise serializers.ValidationError("Incorrect Credentials")
 
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ('goodsCategoryID', 'goodsCategoryName')
+
 class GoodsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Goods
-        fields = ('goodsID', 'goodsCreateId', 'goodsName', 'goodsCategory', 'goodsDescription', 'goodsPrice',
-                  'goodsStatus', 'goodsLocation', 'goodsPostedTime', 'goodsUpdatedTime')
+        fields = ('goodsID', 'goodsCreateId', 'goodsName', 'goodsCategoryID', 'goodsDescription', 'goodsPrice',
+                  'goodsStatus', 'goodsLocation', 'goodsUpdatedTime')
 
 
 class OrderSerializer(serializers.ModelSerializer):

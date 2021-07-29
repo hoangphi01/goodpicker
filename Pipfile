@@ -10,6 +10,8 @@ django-cors-headers = "*"
 django-seed = "*"
 django-filter = "*"
 django-rest-knox = "*"
+cloudinary = "*"
+django-cloudinary-storage = "*"
 
 [dev-packages]
 
