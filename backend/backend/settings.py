@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django_filters',
     'django_seed',
     'corsheaders',
+    'knox',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -135,5 +136,8 @@ CORS_ORIGIN_WHITELIST = [
 ]
 
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
+
+AUTH_USER_MODEL = 'goodpick.User'
