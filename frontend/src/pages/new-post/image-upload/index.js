@@ -64,7 +64,11 @@ const ImageUpload = ({ className }) => {
 			/>
 			<Upload
 				className={`img-upload__list${
-					fileList.length >= 8 ? ' img-upload__list--full' : ''
+					fileList.length >= 8
+						? ' img-upload__list--full'
+						: fileList.length === 0
+						? ' img-upload__list--empty'
+						: ''
 				}`}
 				listType="picture-card"
 				fileList={fileList}

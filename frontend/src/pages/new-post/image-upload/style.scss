@@ -11,6 +11,10 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+
+		.ant-image-mask {
+			border-radius: 15px;
+		}
 	}
 
 	.img-upload {
@@ -19,6 +23,7 @@
 			height: auto;
 			max-width: 100%;
 			max-height: 100%;
+			border-radius: 15px;
 		}
 
 		&__list {
@@ -45,6 +50,12 @@
 				height: 6rem;
 				min-width: 6rem;
 				margin: 0 0.25rem 0.5rem 0.25rem;
+				border-radius: 15px;
+
+				.ant-upload-list-item-list-type-picture-card,
+				.ant-upload-list-item-info {
+					border-radius: 15px;
+				}
 			}
 
 			.ant-upload-select.ant-upload-select-picture-card {
@@ -57,6 +68,13 @@
 
 				& > .ant-upload {
 					font-size: 1rem;
+				}
+			}
+
+			&--empty {
+				.ant-upload-select.ant-upload-select-picture-card {
+					left: 50%;
+					transform: translateX(-50%);
 				}
 			}
 		}
@@ -101,13 +119,10 @@
 		}
 		.img-upload {
 			&__list {
-				position: relative;
 				width: 32rem;
-				margin-top: 0.75rem;
+				height: 8.5rem;
 
 				.ant-upload-list-picture-card {
-					display: flex;
-					overflow: auto;
 					width: 25.5rem;
 					margin-left: 8.5rem;
 				}
@@ -117,7 +132,33 @@
 					width: 8rem;
 					height: 8rem;
 					min-width: 8rem;
-					margin: 0 0.25rem 0.5rem 0.25rem;
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 767px) {
+	.new-post-upload {
+		.ant-image {
+			width: 17rem;
+			height: 17rem;
+		}
+		.img-upload {
+			&__list {
+				width: 28rem;
+				height: 7.5rem;
+
+				.ant-upload-list-picture-card {
+					width: 22.5rem;
+					margin-left: 7.5rem;
+				}
+
+				.ant-upload-list-picture-card-container,
+				.ant-upload-select.ant-upload-select-picture-card {
+					width: 7rem;
+					height: 7rem;
+					min-width: 7rem;
 				}
 			}
 		}
