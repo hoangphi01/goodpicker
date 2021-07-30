@@ -61,11 +61,18 @@ class Category(models.Model):
     def __str__(self):
         return f"{self.goodsCategoryName}"
 
+class ProductImage(models.Model):
+    goodsImageID = models.AutoField(primary_key=True)
+    goodsImage1 = models.ImageField(null=True, blank=True)
+    goodsImage2 = models.ImageField(null=True, blank=True)
+    goodsImage3 = models.ImageField(null=True, blank=True)
+
 class Goods(models.Model):
     goodsID = models.AutoField(primary_key=True)
     goodsCreateId = models.ForeignKey(User, on_delete=models.CASCADE)
     goodsName = models.CharField(max_length=64)
     goodsCategoryID = models.ForeignKey(Category, on_delete=models.CASCADE, default=0)
+    goodsImageID = models.ForeignKey(ProductImage, on_delete=models.CASCADE, default=0)
     goodsDescription = models.CharField(max_length=200)
     goodsPrice = models.IntegerField()
     goodsStatus = models.BooleanField()

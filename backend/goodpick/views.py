@@ -10,6 +10,7 @@ from .serializers import RatingSerializer
 from .serializers import CommentSerializer
 from .serializers import ChatSerializer
 from .serializers import CategorySerializer
+from .serializers import ProductImageSerializer
 from .models import User
 from .models import Goods
 from .models import Order
@@ -17,6 +18,7 @@ from .models import Rating
 from .models import Comment
 from .models import Chat
 from .models import Category
+from .models import ProductImage
 
 # Create your views here.
 
@@ -28,6 +30,10 @@ class UserView(viewsets.ModelViewSet):
 class CategoryView(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
+
+class ProductImageView(viewsets.ModelViewSet):
+    serializer_class = ProductImageSerializer
+    queryset = ProductImage.objects.all()
 
 class GoodsView(viewsets.ModelViewSet):
     serializer_class = GoodsSerializer
