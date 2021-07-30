@@ -3,10 +3,9 @@ import './style.scss'
 import React from 'react'
 import axios from 'axios'
 import SiteLayout from '../../components/layouts/site-layout'
-import { Row, Col, Form, Upload, Modal, Input } from 'antd'
-import { PlusOutlined } from '@ant-design/icons'
-
+import { Row, Col, Form, Input } from 'antd'
 import { Link } from 'react-router-dom'
+import ImageUpload from './image-upload'
 
 const NewPost = () => {
 	// React.useEffect(() => {
@@ -15,12 +14,14 @@ const NewPost = () => {
 	// 	}
 	// }, [])
 
-	// const [state, setState] = React.useState({
-	// 	successMessage: null,
-	// 	errorMessage: null,
-	// 	imageUrl: '',
-	// 	upload: false
-	// })
+	const initialValues = {}
+
+	const rules = []
+
+	const [state, setState] = React.useState({
+		successMessage: null,
+		errorMessage: null
+	})
 
 	const onFinish = async values => {
 		// try {
@@ -53,10 +54,6 @@ const NewPost = () => {
 		// })
 	}
 
-	const onImageChange = imageUrl => {
-		// setState({ ...state, imageUrl })
-	}
-
 	return (
 		<SiteLayout>
 			<div className="new-post">
@@ -71,7 +68,7 @@ const NewPost = () => {
 					layout="vertical"
 				>
 					<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-						<Col md={12}>
+						<Col xs={24} md={12}>
 							<Form.Item label="Tên sản phẩm" name="name">
 								<Input className="new-post-form__input" type="text" />
 							</Form.Item>
@@ -80,9 +77,13 @@ const NewPost = () => {
 								<Input className="new-post-form__input" type="number" />
 							</Form.Item>
 
-							<Form.Item label="Phân loại" name="category">
+							<Form.Item label="Danh mục" name="category">
 								<Input className="new-post-form__input" type="text" />
 							</Form.Item>
+						</Col>
+
+						<Col xs={24} md={12}>
+							<ImageUpload className="new-post-upload" />
 						</Col>
 					</Row>
 
@@ -109,70 +110,3 @@ const NewPost = () => {
 }
 
 export default NewPost
-
-// function getBase64(file) {
-//   return new Promise((resolve, reject) => {
-//     const reader = new FileReader();
-//     reader.readAsDataURL(file);
-//     reader.onload = () => resolve(reader.result);
-//     reader.onerror = error => reject(error);
-//   });
-// }
-
-// class PicturesWall extends React.Component {
-//   state = {
-//     previewVisible: false,
-//     previewImage: '',
-//     previewTitle: '',
-//     fileList: [
-
-//     ],
-//   };
-
-//   handleCancel = () => this.setState({ previewVisible: false });
-
-//   handlePreview = async file => {
-//     if (!file.url && !file.preview) {
-//       file.preview = await getBase64(file.originFileObj);
-//     }
-
-//     this.setState({
-//       previewImage: file.url || file.preview,
-//       previewVisible: true,
-//       previewTitle: file.name || file.url.substring(file.url.lastIndexOf('/') + 1),
-//     });
-//   };
-
-//   handleChange = ({ fileList }) => this.setState({ fileList });
-
-//   render() {
-//     const { previewVisible, previewImage, fileList, previewTitle } = this.state;
-//     const uploadButton = (
-//       <div>
-//         <PlusOutlined />
-//         <div style={{ marginTop: 8 }}>Upload</div>
-//       </div>
-//     );
-//     return (
-//       <>
-//         <Upload
-//           action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-//           listType="picture-card"
-//           fileList={fileList}
-//           onPreview={this.handlePreview}
-//           onChange={this.handleChange}
-//         >
-//           {fileList.length >= 8 ? null : uploadButton}
-//         </Upload>
-//         <Modal
-//           visible={previewVisible}
-//           title={previewTitle}
-//           footer={null}
-//           onCancel={this.handleCancel}
-//         >
-//           <img alt="example" style={{ width: '100%' }} src={previewImage} />
-//         </Modal>
-//       </>
-//     );
-//   }
-// }
