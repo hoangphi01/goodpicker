@@ -8,6 +8,7 @@ from .models import Rating
 from .models import Comment
 from .models import Chat
 from .models import Category
+from .models import ProductImage
 
 #User Serializer
 class UserSerializer(serializers.ModelSerializer):
@@ -43,10 +44,15 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ('goodsCategoryID', 'goodsCategoryName')
 
+class ProductImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductImage
+        fields = ('goodsImageID', 'goodsImage1', 'goodsImage2', 'goodsImage3')
+
 class GoodsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Goods
-        fields = ('goodsID', 'goodsCreateId', 'goodsName', 'goodsCategoryID', 'goodsDescription', 'goodsPrice',
+        fields = ('goodsID', 'goodsCreateId', 'goodsImageID', 'goodsName', 'goodsCategoryID', 'goodsDescription', 'goodsPrice',
                   'goodsStatus', 'goodsLocation', 'goodsUpdatedTime')
 
 

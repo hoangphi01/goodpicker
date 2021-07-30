@@ -12,6 +12,7 @@ django-filter = "*"
 django-rest-knox = "*"
 cloudinary = "*"
 django-cloudinary-storage = "*"
+pillow = "*"
 
 [dev-packages]
 
