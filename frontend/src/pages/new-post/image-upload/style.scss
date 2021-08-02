@@ -140,10 +140,13 @@
 
 @media (max-width: 767px) {
 	.new-post-upload {
+		margin-bottom: 1.5rem;
+
 		.ant-image {
 			width: 17rem;
 			height: 17rem;
 		}
+
 		.img-upload {
 			&__list {
 				width: 28rem;

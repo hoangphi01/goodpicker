@@ -8,7 +8,7 @@ from .models import Rating
 from .models import Comment
 from .models import Chat
 from .models import Category
-from .models import ProductImage
+from .models import GoodsImage
 
 #User Serializer
 class UserSerializer(serializers.ModelSerializer):
@@ -44,17 +44,34 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ('goodsCategoryID', 'goodsCategoryName')
 
-class ProductImageSerializer(serializers.ModelSerializer):
+class GoodsImageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ProductImage
-        fields = ('goodsImageID', 'goodsImage1', 'goodsImage2', 'goodsImage3')
+        model = GoodsImage
+        fields = '__all__'
 
 class GoodsSerializer(serializers.ModelSerializer):
+    images = GoodsImageSerializer(source='goodsimage_set', many=True, read_only=True)
+
     class Meta:
         model = Goods
-        fields = ('goodsID', 'goodsCreateId', 'goodsImageID', 'goodsName', 'goodsCategoryID', 'goodsDescription', 'goodsPrice',
-                  'goodsStatus', 'goodsLocation', 'goodsUpdatedTime')
+        fields = ('goodsID', 'goodsCreateId', 'goodsName', 'goodsCategoryID', 'goodsDescription', 'goodsPrice', 'goodsStatus', 'goodsLocation', 'goodsUpdatedTime', 'images')
+    
+    def create(self, validated_data):
+        images = self.context.get('request').FILES
+        user = User.objects.get(pk=1)
+        goods = Goods.objects.create(
+            goodsName=validated_data.get('goodsName'),
+            goodsCategoryID=validated_data.get('goodsCategoryID'),
+            goodsDescription=validated_data.get('goodsDescription', ''),
+            goodsPrice=validated_data.get('goodsPrice'),
+            goodsLocation=validated_data.get('goodsLocation', 'Hanoi'),
+            goodsCreateId=user,
+        )
 
+        for index, image in enumerate(images.values()):
+            isMain = str(index) == self.context.get('request').data.get('mainIndex')
+            GoodsImage.objects.create(goodsID=goods, image=image, isMain=isMain)
+        return goods
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:

@@ -61,27 +61,24 @@ class Category(models.Model):
     def __str__(self):
         return f"{self.goodsCategoryName}"
 
-class ProductImage(models.Model):
-    goodsImageID = models.AutoField(primary_key=True)
-    goodsImage1 = models.ImageField(null=True, blank=True)
-    goodsImage2 = models.ImageField(null=True, blank=True)
-    goodsImage3 = models.ImageField(null=True, blank=True)
-
 class Goods(models.Model):
     goodsID = models.AutoField(primary_key=True)
     goodsCreateId = models.ForeignKey(User, on_delete=models.CASCADE)
     goodsName = models.CharField(max_length=64)
-    goodsCategoryID = models.ForeignKey(Category, on_delete=models.CASCADE, default=0)
-    goodsImageID = models.ForeignKey(ProductImage, on_delete=models.CASCADE, default=0)
-    goodsDescription = models.CharField(max_length=200)
+    goodsCategoryID = models.ForeignKey(Category, on_delete=models.CASCADE)
+    goodsDescription = models.CharField(max_length=200, null=True, blank=True)
     goodsPrice = models.IntegerField()
-    goodsStatus = models.BooleanField()
+    goodsStatus = models.BooleanField(default=False)
     goodsLocation = models.CharField(max_length=64)
     goodsUpdatedTime = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"{self.goodsName} ({self.goodsPrice})"
 
+class GoodsImage(models.Model):
+    goodsID = models.ForeignKey(Goods, on_delete=models.CASCADE)
+    image = models.ImageField(blank=True, null=True)
+    isMain = models.BooleanField()
 
 class Order(models.Model):
     class OrderKey:
