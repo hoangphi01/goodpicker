@@ -3,6 +3,7 @@ import './style.scss'
 import React from 'react'
 import { Upload, Image } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
+import PropTypes from 'prop-types'
 import { getBase64 } from '../../../utils/image'
 
 const imageUploadReducer = (state, action) => {
@@ -17,17 +18,32 @@ const imageUploadReducer = (state, action) => {
 			return { ...state, previewSrc: '', previewUid: '' }
 		case 'add_image':
 			return { ...state, fileList: action.fileList }
+		case 'reset':
+			return { previewSrc: '', previewUid: '', fileList: [] }
 		default:
 			throw new Error('Impossible!')
 	}
 }
 
-const ImageUpload = ({ className }) => {
+const ImageUpload = ({
+	className,
+	updateFileList,
+	updateMainIndex,
+	clear,
+	resetClear
+}) => {
 	const [state, dispatch] = React.useReducer(imageUploadReducer, {
 		previewSrc: '',
 		previewUid: '',
 		fileList: []
 	})
+
+	React.useEffect(() => {
+		if (clear) {
+			dispatch({ type: 'reset' })
+			resetClear()
+		}
+	}, [clear, resetClear])
 
 	const { previewSrc, previewUid, fileList } = state
 
@@ -36,15 +52,20 @@ const ImageUpload = ({ className }) => {
 			file.preview = await getBase64(file.originFileObj)
 		}
 
+		updateMainIndex(fileList.findIndex(f => f.uid === file.uid))
 		dispatch({ type: 'choose_preview', file })
 	}
 
 	const handleChange = ({ fileList }) => {
+		const oriFileList = fileList.map(file => file.originFileObj)
+		updateFileList(oriFileList)
+
 		dispatch({ type: 'add_image', fileList })
 	}
 
 	const handleRemove = file => {
 		if (file.uid === previewUid) {
+			updateMainIndex(0)
 			dispatch({ type: 'remove_preview' })
 		}
 	}
@@ -64,8 +85,13 @@ const ImageUpload = ({ className }) => {
 			/>
 			<Upload
 				className={`img-upload__list${
-					fileList.length >= 8 ? ' img-upload__list--full' : ''
+					fileList.length >= 8
+						? ' img-upload__list--full'
+						: fileList.length === 0
+						? ' img-upload__list--empty'
+						: ''
 				}`}
+				accept="image/*"
 				listType="picture-card"
 				fileList={fileList}
 				onRemove={handleRemove}
@@ -82,6 +108,12 @@ const ImageUpload = ({ className }) => {
 			</Upload>
 		</div>
 	)
+}
+
+ImageUpload.propTypes = {
+	updateFileList: PropTypes.func.isRequired,
+	updateMainIndex: PropTypes.func.isRequired,
+	clear: PropTypes.bool.isRequired
 }
 
 export default ImageUpload
