@@ -1,12 +1,12 @@
 import './style.scss'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Row, Col, Skeleton } from 'antd'
 import CustomCarousel from './carousel'
 import SiteLayout from '../../components/layouts/site-layout'
 import ao1 from '../../img/ao1.jpg'
 import vay from '../../img/vay.png'
-
+import APIservice from '../../service/APIservice'
 const HomePage = () => {
 	const [fakeData, setFakeData] = React.useState(null)
 
@@ -42,6 +42,21 @@ const HomePage = () => {
 			2000
 		)
 	}, [])
+	
+	const [email, setEmail] = useState('')
+	useEffect(()=>{
+		const config = {
+			headers: {
+				Authorization: "Bearer" + localStorage.getItem('token')
+			}
+		}
+		APIservice.homeUser({email,config})
+		.then(res =>{
+			localStorage.setItem('token', res.data.token)
+		})
+	})
+
+
 
 	const renderSkeleton = () => {
 		var skeletons = []

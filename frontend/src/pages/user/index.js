@@ -53,7 +53,7 @@ const UserProfilePage = props => {
 				<Col xs={24} lg={24}>
 					
 					<div className="app-profile-content">
-						<Row className="w-100" justify="center">
+						<Row className="w-100" justify="right">
 							<Col span={12} className="c-2">
 								<Form>
 									

@@ -4,9 +4,11 @@ import HomePage from './pages/home'
 import LoginPage from './pages/login'
 import AboutUs from './pages/about-us'
 import NewPost from './pages/new-post'
+import {CookiesProvider} from 'react-cookie'
 
 function App() {
 	return (
+		<CookiesProvider>
 		<BrowserRouter>
 			<div className="App">
 				<div className="content">
@@ -21,6 +23,7 @@ function App() {
 				</div>
 			</div>
 		</BrowserRouter>
+		</CookiesProvider>
 	)
 }
 

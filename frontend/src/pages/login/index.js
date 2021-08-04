@@ -2,11 +2,12 @@ import './style.scss'
 import { Row, Col, Form, Button, Space, message, Tabs } from 'antd'
 import React, { useEffect, useState } from 'react'
 import CustomInputField from '../../components/elements/input'
-import { Link, withRouter } from 'react-router-dom'
+import { Link, withRouter, useHistory, Redirect } from 'react-router-dom'
 import { FacebookFilled } from '@ant-design/icons'
 import Logo from '../../components/elements/logo'
 import SiteLayout from '../../components/layouts/site-layout'
-
+import APIservice from '../../service/APIservice'
+import { useCookies } from 'react-cookie'
 const { TabPane } = Tabs
 
 const LoginPage = props => {
@@ -62,9 +63,42 @@ const LoginPage = props => {
 		username: ''
 	})
 
+	const [token, setToken] = useCookies(['mytoken']);
+	let history = useHistory()
+	
+	React.useEffect(()=>{
+		if(token['mytoken']){
+			history.push('/')
+		}
+		console.log(token)
+	},[token])
+
 	const onFinishLogin = async initialLoginValue => {
-		props.history.push('/')
+		
+		APIservice.login({
+			email: initialLoginValue.email,
+			password: initialLoginValue.password
+		})
+		// .then(res=>console.log(res.data.token))
+		.then(res => {
+			setToken('mytoken',res.data.token)
+			localStorage.setItem('mytoken', res.data.token)
+			console.log(res)
+		})
+		// .then(setRedirect(true))
+		.catch(
+			err => {console.log(err)
+		})
+		// console.log('123')		
+
 	}
+	
+
+	// const onFinishLogin =(e) => {
+	// 	e.preventDefault()
+	// 	console.log(e)
+	// }
+	
 
 	const onFinishLoginFailed = () => {}
 
@@ -82,7 +116,7 @@ const LoginPage = props => {
 					<div className="app-signup-content">
 						<Row className="w-100" justify="end">
 							<Col span={8} className="c-2">
-								<Form>
+								{/* <Form> */}
 									<div className="form-header">
 										<Link to="/">
 											<Logo width={120} />
@@ -118,10 +152,10 @@ const LoginPage = props => {
 												</Form.Item>
 
 												<Form.Item>
-													<Link to="/forgot-password">
-														<a className="forgot-password">
+													<Link className="forgot-password" to="/forgot-password">
+														
 															<span>Quên mật khẩu?</span>
-														</a>
+														
 													</Link>
 												</Form.Item>
 
@@ -131,13 +165,13 @@ const LoginPage = props => {
 														className="signup-button"
 														htmlType="submit"
 														type="primary"
-														onClick={onFinishLogin}
+														
 													>
 														<span>Đăng nhập</span>
 													</Button>
 												</Form.Item>
 												<Space align="start" size="middle">
-													<label for="login-with" classname="login-with">
+													<label htmlFor="login-with" className="login-with">
 														Đăng nhập với:
 													</label>
 													<FacebookFilled style={{ color: '#2a27ce' }} />
@@ -222,7 +256,7 @@ const LoginPage = props => {
 											</Form>
 										</TabPane>
 									</Tabs>
-								</Form>
+								{/* </Form> */}
 							</Col>
 						</Row>
 					</div>

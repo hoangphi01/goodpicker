@@ -10,6 +10,13 @@
         align-content: center;
         width: 100%;
     }
+    .m-1 {
+        align-items: flex-end;
+        margin-left: rem(420px);
+        .ant.upload {
+            background-color: #da3333;
+        }
+    }
     .form-header {
         // font: $fw-semiBold 2rem $font-euclid-semibold;
         line-height: 1.5rem;
