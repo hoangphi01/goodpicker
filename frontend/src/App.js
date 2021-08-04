@@ -17,7 +17,6 @@ function App() {
 						<Route exact path="/profile" component={UserProfilePage} />
 						<Route exact path="/about-us" component={AboutUs} />
 						<Route exact path="/new-post" component={NewPost} />
-						<Route exact path="/profile" component={UserProfilePage} />
 						<Route component={Custom404} />
 					</Switch>
 				</div>
