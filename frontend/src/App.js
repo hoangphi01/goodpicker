@@ -4,6 +4,7 @@ import HomePage from './pages/home'
 import LoginPage from './pages/login'
 import AboutUs from './pages/about-us'
 import NewPost from './pages/new-post'
+import Custom404 from './pages/404'
 
 function App() {
 	return (
@@ -12,11 +13,12 @@ function App() {
 				<div className="content">
 					<Switch>
 						<Route exact path="/" component={HomePage} />
-						<Route path="/login" component={LoginPage} />
-						<Route path="/profile" component={UserProfilePage} />
-						<Route path="/about-us" component={AboutUs} />
-						<Route path="/new-post" component={NewPost} />
-						<Route path="/profile" component={UserProfilePage} />
+						<Route exact path="/login" component={LoginPage} />
+						<Route exact path="/profile" component={UserProfilePage} />
+						<Route exact path="/about-us" component={AboutUs} />
+						<Route exact path="/new-post" component={NewPost} />
+						<Route exact path="/profile" component={UserProfilePage} />
+						<Route component={Custom404} />
 					</Switch>
 				</div>
 			</div>

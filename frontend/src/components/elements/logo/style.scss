@@ -13,11 +13,18 @@
 	width: 3.5rem;
 }
 
-.logo--about-us {
+.logo-heading {
 	max-width: 100%;
-	width: 40%;
 	height: auto;
 	border-radius: 0.25rem;
 	display: block;
 	margin: 0 auto 2.5rem auto;
+
+	&--about-us {
+		width: 40%;
+	}
+
+	&--404 {
+		width: 20%;
+	}
 }
