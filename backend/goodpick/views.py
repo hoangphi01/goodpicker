@@ -1,5 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import generics
+from rest_framework import generics, filters
 from django.http import HttpResponse
 from django.shortcuts import render
 from rest_framework import viewsets
@@ -38,7 +38,7 @@ class GoodsImageView(viewsets.ModelViewSet):
 class GoodsView(viewsets.ModelViewSet):
     serializer_class = GoodsSerializer
     queryset = Goods.objects.all()
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     filterset_fields = ['goodsCategoryID', 'goodsStatus']
     ordering_fields = ['goodsUpdatedTime']
 
