@@ -11,7 +11,7 @@ const AboutUs = () => {
 	return (
 		<SiteLayout>
 			<div className="about-page">
-				<Logo className="logo--about-us" />
+				<Logo className="logo-heading logo-heading--about-us" />
 
 				<div class="about-page-section">
 					<div class="about-page-section-body">
