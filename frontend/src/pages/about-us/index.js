@@ -13,13 +13,13 @@ const AboutUs = () => {
 			<div className="about-page">
 				<Logo className="logo-heading logo-heading--about-us" />
 
-				<div class="about-page-section">
-					<div class="about-page-section-body">
-						<div class="about-page-section-body__title">Về dự án</div>
+				<div className="about-page-section">
+					<div className="about-page-section-body">
+						<div className="about-page-section-body__title">Về dự án</div>
 
-						<div class="about-page-section-body__sub">GoodsPicker</div>
+						<div className="about-page-section-body__sub">GoodsPicker</div>
 
-						<div class="about-page-section-body__content">
+						<div className="about-page-section-body__content">
 							GoodsPicker là bài toán được xây dựng nhằm mục đích giúp người
 							dùng có thể bán lại những sản phẩm, đồ dùng đã qua sử dụng nhưng
 							vẫn hoạt động tốt. Qua đó nhằm đem những đồ vật đến với những
@@ -27,7 +27,7 @@ const AboutUs = () => {
 							giảm tác động xấu đối với môi trường.
 						</div>
 
-						<div class="about-page-section-body__content">
+						<div className="about-page-section-body__content">
 							Trước khi có công nghệ hiện đại như hiện nay, việc trao đổi hàng
 							hoá giữa các bên luôn gặp nhiều khó khăn trong việc tìm nguồn
 							hàng, lên lịch vận chuyển và giảm thiểu rủi ro. Cụ thể, A muốn bán
@@ -38,7 +38,7 @@ const AboutUs = () => {
 							cầu nối.
 						</div>
 
-						<div class="about-page-section-body__content">
+						<div className="about-page-section-body__content">
 							Chính vì vậy, GoodsPicker sẽ là một giải pháp toàn diện cho mọi
 							người, để người bán có thể trở thành người mua và người mua cũng
 							có thể trở thành người bán.
@@ -48,29 +48,31 @@ const AboutUs = () => {
 
 				<img
 					src={imgTwo}
-					class="about-page-img about-page-img--two"
+					className="about-page-img about-page-img--two"
 					alt="logo"
 				/>
 
-				<div class="about-page-section">
-					<div class="about-page-section-body">
-						<div class="about-page-section-body__sub">Triết lý thiết kế</div>
-						<p class="about-page-section-body__content">
+				<div className="about-page-section">
+					<div className="about-page-section-body">
+						<div className="about-page-section-body__sub">
+							Triết lý thiết kế
+						</div>
+						<p className="about-page-section-body__content">
 							GoodsPicker tự xây dựng triết lý làm việc của mình trên bộ nguyên
 							tắc bộ 3 – rất thông minh và dễ tuân thủ, bảo trì:
 						</p>
-						<p class="about-page-section-body__content">
+						<p className="about-page-section-body__content">
 							<span>1. Thân thiện:</span>
 							GoodsPicker được cấu thành từ các đặc trưng: Chi phí hợp lý, đơn
 							giản, dễ sử dụng và linh hoạt, trong sử dụng phát triển thiết kế
 							web. Lượng nội dung được sắp xếp vừa đủ, dễ nhìn, dễ thao tác.
 						</p>
-						<p class="about-page-section-body__content">
+						<p className="about-page-section-body__content">
 							<span>2. Thiết thực:</span>
 							GoodsPicker được xây dựng từ những nhu cầu cơ bản nhất của con
 							người, không thừa và không thiếu.
 						</p>
-						<p class="about-page-section-body__content">
+						<p className="about-page-section-body__content">
 							<span>3. Thích ứng:</span>
 							GoodsPicker có thể hoạt động đa nền tảng, với nhiều kích cỡ màn
 							hình, tạo thuận lợi tốt đa cho người sử dụng.
@@ -78,45 +80,45 @@ const AboutUs = () => {
 					</div>
 				</div>
 
-				<div class="about-page-section">
+				<div className="about-page-section">
 					<Row>
 						<Col md={8}>
 							<img
 								src={imgOne}
-								class="about-page-img about-page-img--one"
+								className="about-page-img about-page-img--one"
 								alt="..."
 							/>
 						</Col>
 						<Col md={16}>
-							<div class="about-page-section-body">
-								<div class="about-page-section-body__title">
+							<div className="about-page-section-body">
+								<div className="about-page-section-body__title">
 									Chỉn chu từ những điều nhỏ nhất
 								</div>
 
-								<p class="about-page-section-body__content">
+								<p className="about-page-section-body__content">
 									Từ khung trang, kích cỡ đến những nút tương tác, GoodsPicker
 									luôn cố gắng làm cẩn thận đến từng chi tiết. Bởi chúng tôi
 									biết, đây sẽ là những điều người dùng thường xuyên sử dụng, và
 									đó cũng chính là điều quyết định đến trải nghiệm của các bạn.
 								</p>
 
-								<p class="about-page-section-body__content">
-									<normal>- Đội ngũ phát triển dự án</normal>
+								<p className="about-page-section-body__content about-page-section-body__content--sub">
+									<span>- Đội ngũ phát triển dự án</span>
 								</p>
 							</div>
 						</Col>
 					</Row>
 				</div>
 
-				<div class="about-page-section">
-					<div class="about-page-section-body">
-						<h3 class="about-page-section-body__title">
+				<div className="about-page-section">
+					<div className="about-page-section-body">
+						<h3 className="about-page-section-body__title">
 							Về đội ngũ phát triển
 						</h3>
-						<div class="about-page-section-body__sub">
+						<div className="about-page-section-body__sub">
 							Những nhân tố không thể thiếu
 						</div>
-						<p class="about-page-section-body__content">
+						<p className="about-page-section-body__content">
 							GoodsPicker là một dự án được xây dựng bởi nhóm 4 sinh viên đến từ
 							Trường Đại học Công nghệ - Đại học Quốc gia Hà Nội. Dự án được sử
 							dụng đa dạng các công cụ và ngôn ngữ, bao gồm ReactJS, Django
@@ -124,7 +126,7 @@ const AboutUs = () => {
 						</p>
 					</div>
 
-					<table class="about-page-table">
+					<table className="about-page-table">
 						<tbody>
 							<tr>
 								<th className="striped" scope="row">
