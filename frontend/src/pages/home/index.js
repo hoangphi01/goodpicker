@@ -1,11 +1,16 @@
 import './style.scss'
 
 import React, { useEffect, useState } from 'react'
+import TimeAgo from 'javascript-time-ago'
+import vi from 'javascript-time-ago/locale/vi'
 import axios from 'axios'
 import { Row, Col, Skeleton } from 'antd'
 import CustomCarousel from './carousel'
 import SiteLayout from '../../components/layouts/site-layout'
 import APIservice from '../../service/APIservice'
+
+TimeAgo.addDefaultLocale(vi)
+const timeAgo = new TimeAgo('vi-VN')
 
 const homeReducer = (state, action) => {
 	switch (action.type) {
@@ -104,17 +109,22 @@ const HomePage = () => {
 												md={6}
 												className="newest-category-item"
 											>
-												<img
-													src={
-														item.images.find(image => {
-															console.log(image)
-															return image.isMain === true
-														}).image
-													}
-													alt="Ao gio"
-												/>
+												<div className="newest-category-item-img-wrapper">
+													<img
+														src={
+															item.images.find(image => {
+																console.log(image)
+																return image.isMain === true
+															}).image
+														}
+														alt={item.goodsName}
+													/>
+												</div>
 												<div className="newest-category-item__ago">
-													{Math.floor(item.goodsUpdatedTime)} phút trước
+													{timeAgo.format(
+														Date.now() -
+															(new Date() - new Date(item.goodsUpdatedTime))
+													)}
 												</div>
 												<div className="newest-category-item__name">
 													{item.goodsName}
