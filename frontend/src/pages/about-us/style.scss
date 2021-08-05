@@ -36,7 +36,7 @@
 					font-family: $font-nunito-bold;
 				}
 
-				normal {
+				&--sub > span {
 					color: #6c757d;
 					font-size: 1rem;
 				}

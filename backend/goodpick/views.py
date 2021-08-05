@@ -1,8 +1,8 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import generics, filters
+from rest_framework import generics, filters, viewsets
+from rest_framework.pagination import LimitOffsetPagination
 from django.http import HttpResponse
 from django.shortcuts import render
-from rest_framework import viewsets
 from .serializers import UserSerializer
 from .serializers import GoodsSerializer
 from .serializers import OrderSerializer
@@ -37,6 +37,7 @@ class GoodsImageView(viewsets.ModelViewSet):
 
 class GoodsView(viewsets.ModelViewSet):
     serializer_class = GoodsSerializer
+    pagination_class = LimitOffsetPagination
     queryset = Goods.objects.all()
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     filterset_fields = ['goodsCategoryID', 'goodsStatus']

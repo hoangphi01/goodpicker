@@ -7,51 +7,48 @@ import Logo from '../../../elements/logo'
 import APIservice from '../../../../service/APIservice'
 
 const AppHeader = () => {
-	const [email,setEmail] = useState('')
+	const [email, setEmail] = useState('')
 
 	// useEffect(()=> {
 	// 	APIservice.homeUser({email})
-		
+
 	// })
 
 	const onLogOut = async name => {
-		
 		APIservice.logout({
 			email
-		})
-		.then(
-			setEmail(''),		
-			localStorage.clear()
-		)	
+		}).then(setEmail(''), localStorage.clear())
 	}
 
-	let menu;
+	let menu
 
-	if(email === '') {
-		menu =	(<Link to="/login">
-					<div className="header-auth">
-						<button className="header-btn header-btn--auth">Đăng nhập</button>
-					</div>
-				</Link>)
-	}
-	else {
-		menu =  (<Link to="/" onClick={onLogOut}>
-					<div className="header-auth">
-						<button className="header-btn header-btn--auth">Đăng xuất</button>
-					</div>
-				</Link>)
+	if (email === '') {
+		menu = (
+			<Link to="/login">
+				<div className="header-auth">
+					<button className="header-btn header-btn--auth">Đăng nhập</button>
+				</div>
+			</Link>
+		)
+	} else {
+		menu = (
+			<Link to="/" onClick={onLogOut}>
+				<div className="header-auth">
+					<button className="header-btn header-btn--auth">Đăng xuất</button>
+				</div>
+			</Link>
+		)
 	}
 
-	
 	return (
 		<Layout.Header className="header">
 			<div className="header-section header-section--left">
-				<button className="header-btn">
-					<Link to="/about-us">About us</Link>
-				</button>
-				<button className="header-btn">
-					<Link to="/flagship">Flagship</Link>
-				</button>
+				<Link to="/about-us">
+					<button className="header-btn">About us</button>
+				</Link>
+				<Link to="/flagship">
+					<button className="header-btn">Flagship</button>
+				</Link>
 			</div>
 
 			<Link to="/">
@@ -66,9 +63,7 @@ const AppHeader = () => {
 						</button>
 					</Tooltip>
 				</Link>
-				<div>
-					{menu}
-				</div>
+				<div>{menu}</div>
 			</div>
 		</Layout.Header>
 	)
