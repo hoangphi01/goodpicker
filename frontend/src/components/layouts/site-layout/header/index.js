@@ -1,53 +1,16 @@
 import './style.scss'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import { Layout, Tooltip } from 'antd'
-import { FileAddOutlined } from '@ant-design/icons'
+import { Layout } from 'antd'
 import Logo from '../../../elements/logo'
-import APIservice from '../../../../service/APIservice'
+import HeaderControl from './control'
 
 const AppHeader = () => {
-	const [email, setEmail] = useState('')
-
-	// useEffect(()=> {
-	// 	APIservice.homeUser({email})
-
-	// })
-
-	const onLogOut = async name => {
-		APIservice.logout({
-			email
-		}).then(setEmail(''), localStorage.clear())
-	}
-
-	let menu
-
-	if (email === '') {
-		menu = (
-			<Link to="/login">
-				<div className="header-auth">
-					<button className="header-btn header-btn--auth">Đăng nhập</button>
-				</div>
-			</Link>
-		)
-	} else {
-		menu = (
-			<Link to="/" onClick={onLogOut}>
-				<div className="header-auth">
-					<button className="header-btn header-btn--auth">Đăng xuất</button>
-				</div>
-			</Link>
-		)
-	}
-
 	return (
 		<Layout.Header className="header">
 			<div className="header-section header-section--left">
 				<Link to="/about-us">
-					<button className="header-btn">About us</button>
-				</Link>
-				<Link to="/flagship">
-					<button className="header-btn">Flagship</button>
+					<button className="header-btn">Về chúng tôi</button>
 				</Link>
 			</div>
 
@@ -55,16 +18,7 @@ const AppHeader = () => {
 				<Logo type="mini" className="logo--header" />
 			</Link>
 
-			<div className="header-section header-section--right">
-				<Link to="new-post" className="header-icon">
-					<Tooltip mouseEnterDelay={0.4} title="Thêm sản phẩm">
-						<button className="header-btn header-btn--icon">
-							<FileAddOutlined />
-						</button>
-					</Tooltip>
-				</Link>
-				<div>{menu}</div>
-			</div>
+			<HeaderControl />
 		</Layout.Header>
 	)
 }
