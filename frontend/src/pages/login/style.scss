@@ -7,11 +7,26 @@
 		align-content: center;
 		height: 100%;
 
+		.login-slogan {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+
+			img {
+				margin-bottom: 1rem;
+			}
+
+			&__content {
+				font-size: 1.75rem;
+				font-family: $font-nunito-bold;
+				margin-bottom: 1.5rem;
+			}
+		}
+
 		.c-2 {
 			font-weight: bold;
 			border: 1px solid rgba($color-black, 0.2);
 			background-color: rgba(25, 230, 216, 0.2);
-			width: 80%;
 			-webkit-border-radius: 3.5rem;
 			-moz-border-radius: 3.5rem;
 			border-radius: 3.5rem;
@@ -124,9 +139,51 @@
 	}
 }
 
-@media (max-width: 767px) and (min-width: 580px) {
+@media (max-width: 767px) {
 	.ant-row.ant-row-end {
-		width: 85%;
-		margin: auto;
+		justify-content: center;
+
+		.c-2 {
+			width: 65%;
+			flex: none;
+		}
+	}
+}
+
+@media (max-width: 630px) {
+	.ant-row.ant-row-end {
+		.c-2 {
+			width: 80%;
+		}
+	}
+}
+
+@media (max-width: 500px) {
+	.ant-row.ant-row-end {
+		.c-2 {
+			width: 70%;
+		}
+	}
+}
+
+@media (max-width: 390px) {
+	.ant-row.ant-row-end {
+		.c-2 {
+			width: 80%;
+		}
+	}
+}
+
+@media (max-width: 330px) {
+	.ant-row.ant-row-end {
+		.c-2 {
+			width: 80%;
+		}
+
+		.login-slogan {
+			&__content {
+				font-size: 1.25rem;
+			}
+		}
 	}
 }

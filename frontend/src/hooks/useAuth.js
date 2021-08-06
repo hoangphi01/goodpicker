@@ -21,12 +21,6 @@ const AuthProvider = ({ children }) => {
 
 	const setAuthState = React.useCallback(
 		({ user, token, clearToken, clearUser }) => {
-			if (clearUser) {
-				value.setUser(null)
-			} else {
-				value.setUser(user)
-			}
-
 			if (clearToken) {
 				value.removeCookies('gp_token')
 			} else {
@@ -34,6 +28,12 @@ const AuthProvider = ({ children }) => {
 				expireDate.setDate(expireDate.getDate() + 5)
 
 				value.setCookies('gp_token', token, { expires: expireDate })
+			}
+
+			if (clearUser) {
+				value.setUser('')
+			} else {
+				value.setUser(user)
 			}
 		},
 		[value]

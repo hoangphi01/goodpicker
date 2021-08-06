@@ -119,13 +119,20 @@ const LoginPage = () => {
 			<div className="signup-page">
 				<div className="app-signup-sidebar"></div>
 				<div className="app-signup-content">
-					<Row justify="end">
-						<Col xs={24} md={8} className="c-2">
-							<div className="form-header">
+					<Row justify="end" className="w-100">
+						<Col xs={24} md={16}>
+							<div className="login-slogan">
 								<Link to="/">
-									<Logo className="logo--form" />
+									<Logo className="logo--slogan" />
 								</Link>
+
+								<div className="login-slogan__content">
+									Đem giá trị mới đến với đồ vật cũ
+								</div>
 							</div>
+						</Col>
+						<Col xs={24} md={8} className="c-2">
+							<div className="form-header"></div>
 
 							{error ? (
 								Array.isArray(error) && error.length > 1 ? (
