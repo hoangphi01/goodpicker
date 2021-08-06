@@ -62,7 +62,7 @@
 			&__title {
 				font-size: 4rem;
 				text-transform: uppercase;
-				letter-spacing: 1px;
+				letter-spacing: 0.0625rem;
 				font-family: $font-nunito-bold;
 			}
 		}
@@ -93,7 +93,7 @@
 				display: block;
 				width: 0.65rem;
 				height: 0.65rem;
-				border: 3px solid $color-primary-green;
+				border: 0.1875rem solid $color-primary-green;
 				background-color: $color-primary-green;
 				border-radius: 100%;
 				margin: 0 auto;
