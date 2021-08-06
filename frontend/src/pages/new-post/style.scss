@@ -51,6 +51,14 @@
 
 			.ant-input-number-handler-wrap {
 				border-radius: 0 12px 12px 0;
+
+				.ant-input-number-handler-up {
+					border-top-right-radius: 12px;
+				}
+
+				.ant-input-number-handler-down {
+					border-bottom-right-radius: 12px;
+				}
 			}
 
 			.ant-input-number-input-wrap > input {

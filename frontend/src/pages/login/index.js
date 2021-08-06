@@ -1,90 +1,155 @@
 import './style.scss'
 import { Row, Col, Form, Button } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import CustomInputField from '../../components/elements/input'
 import { Link, useHistory } from 'react-router-dom'
 import Logo from '../../components/elements/logo'
 import SiteLayout from '../../components/layouts/site-layout'
-import APIservice from '../../service/APIservice'
-import { useCookies } from 'react-cookie'
+import AuthService from '../../service/AuthService'
+import { useAuthenticate, useAuthState } from '../../hooks/useAuth'
 
-const LoginPage = props => {
+const LoginPage = () => {
 	const rules = {
 		email: [
 			{ type: 'email', message: 'Địa chỉ email không hợp lệ.' },
-			{ required: true, message: 'Vui lòng nhập email.' }
+			{ required: true, message: 'Vui lòng nhập email.', whitespace: true }
 		],
-		realName: [{ required: true, message: 'Vui lòng nhập tên của bạn.' }],
-		username: [{ required: true, message: 'Vui lòng nhập tên người dùng.' }],
-		password: [{ required: true, message: 'Vui lòng nhập mật khẩu.' }]
+		name: [
+			{
+				required: true,
+				message: 'Vui lòng nhập tên của bạn.',
+				whitespace: true
+			}
+		],
+		username: [
+			{
+				required: true,
+				message: 'Vui lòng nhập tên người dùng.',
+				whitespace: true
+			}
+		],
+		password: [
+			{ required: true, message: 'Vui lòng nhập mật khẩu.', whitespace: true }
+		],
+		confirmPassword: [
+			{
+				required: true,
+				message: 'Vui lòng nhập lại mật khẩu'
+			},
+			({ getFieldValue }) => ({
+				validator(_, value) {
+					if (!value || getFieldValue('password') === value) {
+						return Promise.resolve()
+					}
+
+					return Promise.reject(new Error('Mật khẩu nhập lại không khớp'))
+				}
+			})
+		]
 	}
 
+	const history = useHistory()
+	const authState = useAuthState()
+	const authenticate = useAuthenticate()
 	const [error, setError] = useState(null)
 
-	const initialLoginValue = {
-		email: '',
-		password: ''
-	}
-
-	const initialRegisterValue = {
-		email: '',
-		password: '',
-		firstName: '',
-		realName: '',
-		username: ''
-	}
-
-	const [token, setToken] = useCookies(['mytoken'])
-	let history = useHistory()
-
-	React.useEffect(() => {
-		if (token['mytoken']) {
+	useLayoutEffect(() => {
+		if (authState.cookies['gp_token']) {
 			history.push('/')
 		}
-		console.log(token)
-	}, [history, token])
+	}, [authState.cookies, history])
 
-	const onFinishLogin = async initialLoginValue => {
-		APIservice.login({
-			email: initialLoginValue.email,
-			password: initialLoginValue.password
+	const onFinishLogin = async values => {
+		AuthService.login({
+			email: values.email,
+			password: values.password
 		})
 			.then(res => {
-				setToken('mytoken', res.data.token)
-				localStorage.setItem('mytoken', res.data.token)
-				console.log(res)
+				authenticate(res.data)
+				history.push('/')
 			})
-			// .then(setRedirect(true))
 			.catch(err => {
-				console.log(err)
+				if (err.response.data.non_field_errors) {
+					setError(err.response.data.non_field_errors[0])
+				} else {
+					setError('Đã có lỗi xảy ra. Vui lòng thử lại sau.')
+				}
 			})
 	}
 
-	const onFinishRegister = async initialRegisterValue => {
-		props.history.push('/profile')
+	const onFinishRegister = async values => {
+		AuthService.register({
+			email: values.email,
+			password: values.password,
+			username: values.username,
+			name: values.name
+		})
+			.then(res => {
+				authenticate(res.data)
+				history.push('/')
+			})
+			.catch(err => {
+				if (err.response.data) {
+					const errMsgs = []
+
+					if (err.response.data.email) {
+						errMsgs.push('Email này đã được sử dụng.')
+					}
+
+					if (err.response.data.username) {
+						errMsgs.push('Tên người dùng này đã được sử dụng.')
+					}
+
+					setError(errMsgs)
+				} else {
+					setError('Đã có lỗi xảy ra. Vui lòng thử lại sau.')
+				}
+			})
 	}
 
 	const [activeTab, setActiveTab] = useState('login')
+
+	const onSwitchTab = tab => {
+		setError(null)
+		setActiveTab(tab)
+	}
 
 	return (
 		<SiteLayout>
 			<div className="signup-page">
 				<div className="app-signup-sidebar"></div>
 				<div className="app-signup-content">
-					<Row justify="end">
-						<Col xs={24} md={8} className="c-2">
-							<div className="form-header">
+					<Row justify="end" className="w-100">
+						<Col xs={24} md={16}>
+							<div className="login-slogan">
 								<Link to="/">
-									<Logo className="logo--form" />
+									<Logo className="logo--slogan" />
 								</Link>
+
+								<div className="login-slogan__content">
+									Đem giá trị mới đến với đồ vật cũ
+								</div>
 							</div>
+						</Col>
+						<Col xs={24} md={8} className="c-2">
+							<div className="form-header"></div>
+
+							{error ? (
+								Array.isArray(error) && error.length > 1 ? (
+									<div className="form-error-message">
+										<ul>
+											{error.map(msg => (
+												<li key={msg}>{msg}</li>
+											))}
+										</ul>
+									</div>
+								) : (
+									<div className="form-error-message">{error}</div>
+								)
+							) : null}
 
 							{activeTab === 'login' ? (
-								<Form
-									name="login"
-									initialValues={initialLoginValue}
-									onFinish={onFinishLogin}
-								>
+								<Form name="login" onFinish={onFinishLogin}>
 									<Form.Item className="m-0" name="email" rules={rules.email}>
 										<CustomInputField
 											placeholder="Email"
@@ -112,7 +177,7 @@ const LoginPage = props => {
 
 									<Form.Item>
 										<Button
-											name="signin"
+											name="login"
 											className="signup-button"
 											htmlType="submit"
 											type="primary"
@@ -124,23 +189,15 @@ const LoginPage = props => {
 										<span className="auth-alt auth-alt--sub">hoặc</span>
 										<span
 											className="auth-alt auth-alt--main"
-											onClick={() => setActiveTab('register')}
+											onClick={() => onSwitchTab('register')}
 										>
 											Tạo tài khoản
 										</span>
 									</div>
 								</Form>
 							) : (
-								<Form
-									name="register"
-									initialValues={initialRegisterValue}
-									onFinish={onFinishRegister}
-								>
-									<Form.Item
-										className="m-0"
-										name="realName"
-										rules={rules.realName}
-									>
+								<Form name="register" onFinish={onFinishRegister}>
+									<Form.Item className="m-0" name="name" rules={rules.name}>
 										<CustomInputField
 											placeholder="Họ và Tên"
 											customStyle="style#2"
@@ -179,8 +236,8 @@ const LoginPage = props => {
 
 									<Form.Item
 										className="m-0"
-										name="re-password"
-										rules={rules.password}
+										name="confirmPassword"
+										rules={rules.confirmPassword}
 									>
 										<CustomInputField
 											placeholder="Nhập lại mật khẩu"
@@ -194,7 +251,6 @@ const LoginPage = props => {
 											name="signup"
 											className="signup-button"
 											htmlType="submit"
-											onClick={onFinishRegister}
 										>
 											<span>Đăng ký</span>
 										</Button>
@@ -204,7 +260,7 @@ const LoginPage = props => {
 										<span className="auth-alt auth-alt--sub">hoặc</span>
 										<span
 											className="auth-alt auth-alt--main"
-											onClick={() => setActiveTab('login')}
+											onClick={() => onSwitchTab('login')}
 										>
 											Đăng nhập
 										</span>
