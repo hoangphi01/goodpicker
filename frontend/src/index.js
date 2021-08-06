@@ -6,11 +6,12 @@ import './styles/globals.scss'
 import './styles/index.scss'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
+import { AuthProvider } from './hooks/useAuth'
 
 ReactDOM.render(
-	<React.Fragment>
+	<AuthProvider>
 		<App />
-	</React.Fragment>,
+	</AuthProvider>,
 	document.getElementById('root')
 )
 

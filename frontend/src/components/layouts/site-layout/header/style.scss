@@ -75,5 +75,20 @@
 	&-auth {
 		display: inline-flex;
 		align-items: center;
+
+		&__avatar {
+			&:hover {
+				cursor: pointer;
+			}
+
+			&--default {
+				background-color: $color-primary-red;
+				font-family: $font-nunito-semi-bold;
+			}
+		}
+	}
+
+	&-skeleton {
+		margin-left: 0.5rem;
 	}
 }

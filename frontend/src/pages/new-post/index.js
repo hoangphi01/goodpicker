@@ -7,6 +7,8 @@ import { Row, Col, Form, Input, InputNumber, Select, Modal, Alert } from 'antd'
 import { Link } from 'react-router-dom'
 import ImageUpload from './image-upload'
 import Loader from '../../components/elements/loader'
+import { useAuthState } from '../../hooks/useAuth'
+import { useHistory } from 'react-router-dom'
 
 const newPostReducer = (state, action) => {
 	switch (action.type) {
@@ -47,7 +49,13 @@ const newPostReducer = (state, action) => {
 
 const NewPost = () => {
 	const rules = {
-		name: [{ required: true, message: 'Vui lòng điền tên sản phẩm' }],
+		name: [
+			{
+				required: true,
+				message: 'Vui lòng điền tên sản phẩm',
+				whitespace: true
+			}
+		],
 		price: [{ required: true, message: 'Vui lòng điền giá sản phẩm' }],
 		category: [{ required: true, message: 'Vui lòng chọn một danh mục' }]
 	}
@@ -68,11 +76,13 @@ const NewPost = () => {
 	})
 
 	const [form] = Form.useForm()
+	const { user, cookies } = useAuthState()
+	const history = useHistory()
 
 	React.useLayoutEffect(() => {
-		// if (!user) {
-		// 	router.push('/')
-		// }
+		if (!user) {
+			history.push('/')
+		}
 
 		const getCategories = async () => {
 			const res = await axios.get('/api/categories')
@@ -80,7 +90,7 @@ const NewPost = () => {
 			dispatch({ type: 'get_categories', categories: res.data })
 		}
 		getCategories()
-	}, [])
+	}, [user, history])
 
 	const onFinish = async values => {
 		if (state.fileList.length === 0) {
@@ -91,10 +101,10 @@ const NewPost = () => {
 		let formData = new FormData()
 
 		for (const key in values) {
-			formData.append(key, values[key])
+			formData.append(key, values[key] ?? '')
 		}
 
-		formData.append('goodsCreateId', '1')
+		formData.append('goodsCreateId', user.id)
 		formData.append('goodsLocation', 'Ha Noi')
 		formData.append('mainIndex', state.mainIndex)
 
@@ -116,7 +126,11 @@ const NewPost = () => {
 		})
 
 		try {
-			await axios.post('/api/goods/', formData)
+			await axios.post('/api/goods/', formData, {
+				headers: {
+					Authorization: `Bearer ${cookies['gp_token']}`
+				}
+			})
 
 			form.resetFields()
 			dispatch({ type: 'upload_success' })
@@ -183,19 +197,26 @@ const NewPost = () => {
 								name="goodsName"
 								rules={rules.name}
 							>
-								<Input className="new-post-form__input" type="text" />
+								<Input
+									spellCheck={false}
+									className="new-post-form__input"
+									type="text"
+								/>
 							</Form.Item>
 
 							<Form.Item
-								label="Giá sản phẩm"
+								label="Giá sản phẩm (VNĐ)"
 								name="goodsPrice"
 								rules={rules.price}
 							>
 								<InputNumber
 									className="new-post-form__input"
-									type="number"
 									min={0}
 									step={1000}
+									formatter={value =>
+										`${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+									}
+									parser={value => value.replace(/[^\d]/g, '')}
 								/>
 							</Form.Item>
 
@@ -219,7 +240,11 @@ const NewPost = () => {
 					</Row>
 
 					<Form.Item label="Mô tả" name="goodsDescription">
-						<Input.TextArea className="new-post-form__input" rows={7} />
+						<Input.TextArea
+							spellCheck={false}
+							className="new-post-form__input"
+							rows={7}
+						/>
 					</Form.Item>
 
 					<div className="new-post-form-submit">

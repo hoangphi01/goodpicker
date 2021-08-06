@@ -13,6 +13,7 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -153,3 +154,8 @@ REST_FRAMEWORK = {
 }
 
 AUTH_USER_MODEL = 'goodpick.User'
+
+REST_KNOX = {
+  'TOKEN_TTL': timedelta(days=5),
+  'AUTH_HEADER_PREFIX': 'Bearer'
+}

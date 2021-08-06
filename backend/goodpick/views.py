@@ -1,8 +1,10 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, filters, viewsets
 from rest_framework.pagination import LimitOffsetPagination
+from rest_framework.permissions import IsAuthenticated
 from django.http import HttpResponse
 from django.shortcuts import render
+from knox.auth import TokenAuthentication
 from .serializers import UserSerializer
 from .serializers import GoodsSerializer
 from .serializers import OrderSerializer
@@ -19,6 +21,7 @@ from .models import Comment
 from .models import Chat
 from .models import Category
 from .models import GoodsImage
+from .permissions import ReadOnly
 
 # Create your views here.
 
@@ -36,6 +39,8 @@ class GoodsImageView(viewsets.ModelViewSet):
     queryset = GoodsImage.objects.all()
 
 class GoodsView(viewsets.ModelViewSet):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated|ReadOnly]
     serializer_class = GoodsSerializer
     pagination_class = LimitOffsetPagination
     queryset = Goods.objects.all()

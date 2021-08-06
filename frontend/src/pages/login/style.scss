@@ -12,9 +12,9 @@
 			border: 1px solid rgba($color-black, 0.2);
 			background-color: rgba(25, 230, 216, 0.2);
 			width: 80%;
-			-webkit-border-radius: 55px;
-			-moz-border-radius: 55px;
-			border-radius: 55px;
+			-webkit-border-radius: 3.5rem;
+			-moz-border-radius: 3.5rem;
+			border-radius: 3.5rem;
 			padding: 1.5rem 2rem 3rem 2rem;
 			box-shadow: 0 3px 6px rgba($color-black, 0.16),
 				0 2px 4px rgba($color-black, 0.23);
@@ -22,6 +22,20 @@
 			.form-header {
 				margin-bottom: 1.5rem;
 				text-align: center;
+			}
+
+			.form-error-message {
+				color: #842029;
+				background-color: #f8d7da;
+				border: 1px solid #f5c2c7;
+				padding: 1rem;
+				border-radius: 1.5rem;
+				font-size: 0.95rem;
+
+				& > ul {
+					padding-left: 1rem;
+					margin: 0;
+				}
 			}
 		}
 

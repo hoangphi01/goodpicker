@@ -37,7 +37,7 @@ class LoginSerializer(serializers.Serializer):
     user = authenticate(**data)
     if user and user.is_active:
       return user
-    raise serializers.ValidationError("Incorrect Credentials")
+    raise serializers.ValidationError("Thông tin đăng nhập không chính xác. Vui lòng thử lại.")
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -58,14 +58,13 @@ class GoodsSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         images = self.context.get('request').FILES
-        user = User.objects.get(pk=1)
         goods = Goods.objects.create(
             goodsName=validated_data.get('goodsName'),
             goodsCategoryID=validated_data.get('goodsCategoryID'),
             goodsDescription=validated_data.get('goodsDescription', ''),
             goodsPrice=validated_data.get('goodsPrice'),
             goodsLocation=validated_data.get('goodsLocation', 'Hanoi'),
-            goodsCreateId=user,
+            goodsCreateId=validated_data.get('goodsCreateId'),
         )
 
         for index, image in enumerate(images.values()):
