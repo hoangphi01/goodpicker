@@ -127,7 +127,10 @@ const LoginPage = () => {
 								</Link>
 
 								<div className="login-slogan__content">
-									Đem giá trị mới đến với đồ vật cũ
+									Đem giá trị&nbsp;
+									<span className="login-slogan__content--new">mới</span> đến
+									với đồ vật&nbsp;
+									<span className="login-slogan__content--old">cũ</span>.
 								</div>
 							</div>
 						</Col>

@@ -1,4 +1,8 @@
 .logo {
+	&--main {
+		width: 30rem;
+	}
+
 	&--watermark {
 		position: absolute;
 		width: 6.5rem;

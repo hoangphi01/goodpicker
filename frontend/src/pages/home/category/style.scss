@@ -4,7 +4,7 @@
 	margin: 3rem 0;
 
 	&__title {
-		border-bottom: 5px solid $color-primary-green;
+		border-bottom: 0.3125rem solid $color-primary-green;
 		color: $color-primary-green;
 		padding: 0.25rem 1.5rem;
 		text-transform: uppercase;
@@ -40,6 +40,7 @@
 			width: 14rem;
 			display: flex;
 			align-items: center;
+			justify-content: center;
 
 			& > img {
 				max-width: 100%;
@@ -51,7 +52,7 @@
 
 		&-skeleton {
 			&__img {
-				border-radius: 15px;
+				border-radius: 0.9375rem;
 				width: 11.25rem;
 				height: 12rem !important;
 			}
@@ -62,7 +63,7 @@
 		}
 
 		.ant-skeleton-paragraph li {
-			border-radius: 15px;
+			border-radius: 0.9375rem;
 		}
 	}
 }
