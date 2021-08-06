@@ -17,7 +17,6 @@ export default class AuthService {
 	}
 
 	static getMe = token => {
-		console.log(`Bearer ${token}`)
 		return axios.get('api/auth/user', {
 			headers: {
 				Authorization: `Bearer ${token}`
