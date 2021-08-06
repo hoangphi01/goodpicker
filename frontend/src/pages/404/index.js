@@ -15,7 +15,7 @@ const Custom404 = () => {
 			</span>
 
 			<Link to="/">
-				<button type="button" class="custom-404__button">
+				<button type="button" className="custom-404__button">
 					Quay về trang chủ
 				</button>
 			</Link>
