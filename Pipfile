@@ -13,6 +13,9 @@ django-rest-knox = "*"
 cloudinary = "*"
 django-cloudinary-storage = "*"
 pillow = "*"
+gunicorn = "*"
+django-heroku = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 

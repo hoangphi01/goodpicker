@@ -1,0 +1,1 @@
+web: gunicorn goodpicker.wsgi --log-file -
