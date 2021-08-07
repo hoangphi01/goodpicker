@@ -17,7 +17,8 @@
 
 		&--right {
 			float: right;
-			justify-content: flex-end;
+			justify-content: space-between;
+			width: 30%;
 		}
 
 		&--left {
@@ -25,6 +26,7 @@
 			text-transform: uppercase;
 			font-family: $font-nunito-semi-bold;
 			font-size: 1.1rem;
+			width: 30%;
 
 			a,
 			a:hover,
@@ -32,10 +34,6 @@
 			a:visited {
 				color: inherit;
 				transition: none;
-			}
-
-			button {
-				margin-right: 6.5rem;
 			}
 		}
 	}
@@ -74,6 +72,17 @@
 		}
 	}
 
+	&-link {
+		color: $color-primary-red;
+		font-family: $font-nunito-bold;
+		transition: all 0.2s ease-in-out;
+		text-transform: uppercase;
+
+		&:hover {
+			color: darken($color-primary-red, 12%);
+		}
+	}
+
 	&-icon {
 		margin-right: 1.5rem;
 	}
@@ -96,5 +105,17 @@
 
 	&-skeleton {
 		margin-left: 0.5rem;
+	}
+
+	&-dropdown {
+		&-first-li {
+			border-top-left-radius: 0.75rem;
+			border-top-right-radius: 0.75rem;
+		}
+
+		&-last-li {
+			border-bottom-left-radius: 0.75rem;
+			border-bottom-right-radius: 0.75rem;
+		}
 	}
 }

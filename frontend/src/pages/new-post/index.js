@@ -192,11 +192,7 @@ const NewPost = () => {
 							/>
 						</Col>
 						<Col xs={24} md={{ span: 12, pull: 12 }}>
-							<Form.Item
-								label="Tên sản phẩm"
-								name="goodsName"
-								rules={rules.name}
-							>
+							<Form.Item label="Tên món đồ" name="goodsName" rules={rules.name}>
 								<Input
 									spellCheck={false}
 									className="new-post-form__input"
@@ -248,9 +244,11 @@ const NewPost = () => {
 					</Form.Item>
 
 					<div className="new-post-form-submit">
-						<button className="new-post-form-submit__btn new-post-form-submit__btn--cancel">
-							<Link to="/profile">Hủy</Link>
-						</button>
+						<Link to="/profile">
+							<button className="new-post-form-submit__btn new-post-form-submit__btn--cancel">
+								Hủy
+							</button>
+						</Link>
 
 						<button
 							className="new-post-form-submit__btn new-post-form-submit__btn--submit"

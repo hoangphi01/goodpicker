@@ -36,8 +36,11 @@
 		}
 
 		&__input {
+			height: 3rem;
+			display: flex;
+			align-items: center;
 			width: 100%;
-			padding: 0.7rem 1rem;
+			padding: 0 1rem;
 			border-radius: 0.75rem;
 			font-size: 1rem;
 			font-family: $font-nunito-light;
@@ -68,9 +71,13 @@
 		}
 
 		&__select {
+			height: 3rem;
+
 			.ant-select-selector {
 				height: 100% !important;
-				padding: 0.7rem 1rem !important;
+				display: flex;
+				align-items: center;
+				padding: 0 1rem !important;
 				border-radius: 0.75rem !important;
 				font-size: 1rem;
 				font-family: $font-nunito-light;

@@ -1,0 +1,40 @@
+@import '../../styles/variables';
+
+.search-page {
+	padding: 5rem 8rem;
+
+	&__title {
+		font-family: $font-nunito-bold;
+		font-size: 2.5rem;
+		margin-bottom: 2rem;
+		color: $color-primary-green;
+	}
+
+	&-form {
+		.ant-form-item-label > label {
+			font-family: $font-nunito-semi-bold;
+			font-size: 1.15rem;
+		}
+
+		.ant-form-item {
+			margin-bottom: 1.5rem;
+		}
+	}
+
+	&-divider {
+		height: 0.1875rem;
+		background-color: $color-primary-green;
+		margin: 3.5rem 0;
+	}
+
+	&-result {
+		&-card {
+			height: 15rem;
+			border: 0.0625rem solid rgba($color-black, 0.2);
+			border-radius: 1.25rem;
+			margin-bottom: 1.5rem;
+			box-shadow: -0.125rem 0.125rem 0.5rem 0 rgb(0 0 0 / 8%);
+			padding: 1.5rem;
+		}
+	}
+}
