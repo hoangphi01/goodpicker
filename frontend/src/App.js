@@ -1,10 +1,12 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import UserProfilePage from './pages/user'
+import UserProfilePage from './pages/profile'
+import UserPage from './pages/user'
 import HomePage from './pages/home'
 import LoginPage from './pages/login'
 import AboutUs from './pages/about-us'
 import NewPost from './pages/new-post'
+
 import Custom404 from './pages/404'
 import { useAuthState, useAuthenticate, useLogout } from './hooks/useAuth'
 import AuthService from './service/AuthService'
@@ -34,6 +36,7 @@ function App() {
 						<Route exact path="/profile" component={UserProfilePage} />
 						<Route exact path="/about-us" component={AboutUs} />
 						<Route exact path="/new-post" component={NewPost} />
+						<Route exact path="/users" component={UserPage} />
 						<Route component={Custom404} />
 					</Switch>
 				</div>

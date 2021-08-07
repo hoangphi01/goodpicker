@@ -15,7 +15,7 @@ const HeaderControl = () => {
 
 	const menu = (
 		<Menu>
-			<Link to="/profile">
+			<Link to="/users">
 				<Menu.Item key="profile">Quản lí tài khoản</Menu.Item>
 			</Link>
 			<Link to="/wallet">

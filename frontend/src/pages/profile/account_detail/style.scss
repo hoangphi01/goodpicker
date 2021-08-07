@@ -1,5 +1,5 @@
 @import '../../../styles/variables';
-.ant-form {
+.profile-acount-page {
     margin-top: rem(25px);
     margin-bottom: rem(25px);
     width: 100%;
@@ -17,6 +17,12 @@
             background-color: #da3333;
         }
     }
+    .profile-avatar{
+        padding-bottom: rem(110px);
+    }
+    // .profile-item {
+    //     padding-top: rem(110px);
+    // }
     .form-header {
         // font: $fw-semiBold 2rem $font-euclid-semibold;
         line-height: 1.5rem;
@@ -36,6 +42,10 @@
             border-top: 0.125rem solid #c0c0c0;
         }
     }
+}
+
+.ant-layout, .ant-layout * {
+    justify-content: center;
 }
 
 .app-social {

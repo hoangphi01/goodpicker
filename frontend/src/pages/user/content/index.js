@@ -18,12 +18,8 @@ const ContentSide = ({userId, userName}) => {
         <React.Fragment>
             <Col className="data-component">
                 <Col className="profile-card">
-                    <Image
-                        title="Avatar" 
-                        src = ''
-                        >
-
-                    </Image>
+                    <h1>Content</h1>
+                    
                 </Col>
             </Col>
         </React.Fragment>

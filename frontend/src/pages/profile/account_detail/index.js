@@ -1,176 +1,175 @@
 import './style.scss'
 import React, { useEffect, useState,useRef } from 'react'
-import { Row, Col, Form, 
-    Button, Steps, message, 
-    Tabs, Modal, Image, Upload } from 'antd'
+import { Form, Alert, Col, Row} from 'antd'
 import CustomInputField from '../../../components/elements/input'
 
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 
-import ImageUpload from '../../new-post/image-upload'
+import AvatarUpload from './avatar-upload';
+import { useAuthState } from '../../../hooks/useAuth';
 
-const getBase64 = (img, callback) => {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result));
-    reader.readAsDataURL(img);
-  }
-  
-  const beforeUpload = (file) => {
-    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-    if (!isJpgOrPng) {
-      message.error('You can only upload JPG/PNG file!');
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-      message.error('Image must smaller than 2MB!');
-    }
-    return isJpgOrPng && isLt2M;
-  }
-const AccountDetails = (props) => {
+const newAvatar = (state, action) => {
+	switch (action.type) {
+		case 'get_categories':
+			return { ...state, categories: action.categories }
+		case 'update_files':
+			return { ...state, fileList: action.fileList }
+		case 'update_index':
+			return { ...state, mainIndex: action.mainIndex }
+		case 'upload_success':
+			return {
+				...state,
+				status: 'success',
+				message: 'Cập nhật thành công',
+				clear: true
+			}
+		case 'upload_fail':
+			return {
+				...state,
+				status: 'error',
+				message:
+					'Đã có lỗi trong quá trình cập nhật. Vui lòng kiểm tra thông tin đã nhập'
+			}
+		case 'reset_status':
+			return { ...state, status: 'idle' }
+		case 'reset_images':
+			return { ...state, clear: false }
+		// case 'no_images':
+		// 	return {
+		// 		...state,
+		// 		status: 'error',
+		// 		message: 'Bài đăng cần kèm theo ảnh. Vui lòng thêm ảnh vào bài đăng.'
+		// 	}
+		default:
+			throw new Error('Impossible!')
+	}
+}
 
 
-    const rulesRegister = {
+const AccountDetails = () => {
+
+    const {user, cookies} = useAuthState()
+
+    const rules = {
         email: [
             {
-                type: 'email'
-            },
-            {
-                required: true
+                type: 'email',
+                required: true,
+                message: 'Vui lòng nhập Email'
             }
         ],
-        firstName: [
+        name: [
             {
-                required: true
-            }
-        ],
-        lastName: [
-            {
-                required: true
+                required: true,
+                message: 'Vui lòng nhập Họ và Tên'
             }
         ],
         username: [
             {
-                required: true
-            }
-        ],
-        password: [
-            {
-                required: true
+                required: true,
+                message: 'Vui lòng nhập tên người dùng'
             }
         ]
     }
     
-    const [initialRegisterValue, setInitialRegisterValue] = useState({
-        email: '',
-        password: '',
-        firstName: '',
-        lastName: '',
-        username: ''
+    const [state, dispatch] = React.useReducer(newAvatar,{
+        status: 'idle',
+        clear: false,
+        message: null,
+        fileList: [],
+        mainIndex: 0,
+        categories: [],
+        initialValues: {
+            name: '',
+            username: '',
+            email: ''
+        }
     })
 
-    // const [loading, setLoad] = useState(false)
-    const [loading, setLoading] = useState(
-        false
-    )
-    const [imageUrl,setImageUrl] = useState('')
-    const uploadButton = (
-        <div>
-          {loading ? <LoadingOutlined /> : <PlusOutlined />}
-          <div style={{ marginTop: 8 }}>Upload</div>
-        </div>
-      );
-    const handleChange = info => {
-        if (info.file.status === 'uploading') {
-          setLoading({ loading: true });
-          return;
-        }
-        if (info.file.status === 'done') {
-          // Get this url from response in real world.
-          getBase64(info.file.originFileObj, imageUrl =>
-            setImageUrl({imageUrl}),
-            setLoading({
-              loading: false,
-            }),
-          );
-        }
-      };
 
-    // const resetClear = React.useCallback(() => {
-	// 	dispatch({ type: 'reset_images' })
-	// }, [])
-    const onFinishRegister = () => {}
-    const onFinishRegisterFailed = () => {}
+    const updateFileList = fileList => {
+		dispatch({ type: 'update_files', fileList })
+	}
+
+	const updateMainIndex = mainIndex => {
+		dispatch({ type: 'update_index', mainIndex })
+	}
+
+	const resetClear = React.useCallback(() => {
+		dispatch({ type: 'reset_images' })
+	}, [])
+
+	const onAlertClose = () => {
+		dispatch({ type: 'reset_status' })
+	}
+
+    
     
 
     return(
         <React.Fragment>
-        <Form name="login"
-            initialValues={initialRegisterValue}
-            onFinish={onFinishRegister}
-            onFinishFailed={onFinishRegisterFailed}>
-            
+            <div>
+                {state.message ? (
+                    <Alert
+                        className={`new-post__alert new-post__alert--${state.status}`}
+                        message={state.message}
+                        type={state.status}
+                        closable
+                        onClose={onAlertClose}
+                    />
+                ) : null}
+            <div className="profile-acount-page">
+            <Col>
+                <Row className="profile-avatar">
+                    <AvatarUpload
+                        className="new-post-upload"
+                        updateFileList={updateFileList}
+                        updateMainIndex={updateMainIndex}
+                        clear={state.clear}
+                        resetClear={resetClear}
+                    />
+                </Row>
+                    <Col className="profile-item">
+                        <Form.Item
+                            className="m-0"
+                            name="lastName"
+                            rules={rules.name}
+                            >
+                            <CustomInputField
+                                placeholder="Họ và Tên"
+                                customStyle="style#2"
+                            />
+                        </Form.Item>
 
+                        <Form.Item
+                            className="m-0"
+                            name="username"
+                            rules={rules.username}
+                            >
+                            <CustomInputField
+                                placeholder="Tên người dùng"
+                                customStyle="style#2"
+                            />
+                        </Form.Item>
+                        
 
-            <Form.Item className="m-1"
-                name="image">
-                    <Upload
-                        name="avatar"
-                        listType="picture-card"
-                        className="avatar-uploader"
-                        showUploadList={false}
-                        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                        beforeUpload={beforeUpload}
-                        onChange={handleChange}
-                    >
-                        {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-                    </Upload>
-            </Form.Item>
+                        <Form.Item
+                            className="m-0"
+                            name="email"
+                            rules={rules.email}
+                            >
+                            <CustomInputField
+                                placeholder="Email"
+                                customStyle="style#2"
+                                defaultValue = {user.email}
+                                disabled
+                            />
+                        </Form.Item>
+                    </Col>
+                </Col>
 
-            <Form.Item
-                className="m-0"
-                name="lastName"
-                rules={rulesRegister.lastName}
-                >
-                <CustomInputField
-                    placeholder="Họ và Tên"
-                    customStyle="style#2"
-                />
-            </Form.Item>
-
-            <Form.Item
-                className="m-0"
-                name="username"
-                rules={rulesRegister.username}
-                >
-                <CustomInputField
-                    placeholder="Tên người dùng"
-                    customStyle="style#2"
-                />
-            </Form.Item>
-
-            <Form.Item
-                className="m-0"
-                name="email"
-                rules={rulesRegister.email}
-                >
-                <CustomInputField
-                    placeholder="Email"
-                    customStyle="style#2"
-                />
-            </Form.Item>
-
-            <Form.Item
-                className="m-0"
-                name="password"
-                rules={rulesRegister.password}
-                >
-                <CustomInputField
-                    placeholder="Mật khẩu"
-                    customStyle="style#2"
-                    type="password"
-                />
-            </Form.Item>
-            </Form>
+                </div>
+            </div>
         </React.Fragment>
     )
 }
