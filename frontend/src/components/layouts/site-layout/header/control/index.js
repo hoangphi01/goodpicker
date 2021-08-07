@@ -4,13 +4,17 @@ import { Avatar, Menu, Dropdown, Tooltip, Skeleton } from 'antd'
 import { FileAddOutlined } from '@ant-design/icons'
 import { useAuthState, useLogout } from '../../../../../hooks/useAuth'
 import AuthService from '../../../../../service/AuthService'
+import { openMessage } from '../../../../elements/auth-message'
 
 const HeaderControl = () => {
 	const { user, cookies } = useAuthState()
 	const logout = useLogout()
 
 	const onLogOut = async () => {
-		AuthService.logout(cookies['gp_token']).then(() => logout())
+		AuthService.logout(cookies['gp_token']).then(() => {
+			logout()
+			openMessage('Bạn đã đăng xuất.')
+		})
 	}
 
 	const menu = (

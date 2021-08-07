@@ -7,6 +7,7 @@ import Logo from '../../components/elements/logo'
 import SiteLayout from '../../components/layouts/site-layout'
 import AuthService from '../../service/AuthService'
 import { useAuthenticate, useAuthState } from '../../hooks/useAuth'
+import { openMessage } from '../../components/elements/auth-message'
 
 const LoginPage = () => {
 	const rules = {
@@ -48,9 +49,10 @@ const LoginPage = () => {
 		]
 	}
 
+	const authenticate = useAuthenticate()
 	const history = useHistory()
 	const authState = useAuthState()
-	const authenticate = useAuthenticate()
+
 	const [error, setError] = useState(null)
 
 	useLayoutEffect(() => {
@@ -65,8 +67,7 @@ const LoginPage = () => {
 			password: values.password
 		})
 			.then(res => {
-				authenticate(res.data)
-				history.push('/')
+				onAuthenticate(res.data)
 			})
 			.catch(err => {
 				if (err.response.data.non_field_errors) {
@@ -85,8 +86,7 @@ const LoginPage = () => {
 			name: values.name
 		})
 			.then(res => {
-				authenticate(res.data)
-				history.push('/')
+				onAuthenticate(res.data)
 			})
 			.catch(err => {
 				if (err.response.data) {
@@ -105,6 +105,12 @@ const LoginPage = () => {
 					setError('Đã có lỗi xảy ra. Vui lòng thử lại sau.')
 				}
 			})
+	}
+
+	const onAuthenticate = authData => {
+		authenticate(authData)
+		history.push('/')
+		openMessage('Bạn đã đăng nhập.')
 	}
 
 	const [activeTab, setActiveTab] = useState('login')
