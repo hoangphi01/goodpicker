@@ -121,6 +121,10 @@ body {
 	font-size: 0.4375rem;
 }
 
+.ant-message {
+	top: 0.5rem;
+}
+
 @media (min-width: 768px) {
 	:root {
 		font-size: calc(0.6rem + ((1vw - 7.68px) * 1.25));
