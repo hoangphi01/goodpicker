@@ -25,6 +25,7 @@ from django.conf import settings
 router = routers.DefaultRouter()
 router.register(r'users', views.UserView, 'goodpick')
 router.register(r'categories', views.CategoryView, 'goodpick')
+router.register(r'provinces', views.ProvinceView, 'goodpick')
 router.register(r'goodsimages', views.GoodsImageView, 'goodpick')
 router.register(r'goods', views.GoodsView, 'goodpick')
 router.register(r'orders', views.OrderView, 'goodpick')

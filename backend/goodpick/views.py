@@ -12,6 +12,7 @@ from .serializers import RatingSerializer
 from .serializers import CommentSerializer
 from .serializers import ChatSerializer
 from .serializers import CategorySerializer
+from .serializers import ProvinceSerializer
 from .serializers import GoodsImageSerializer
 from .models import User
 from .models import Goods
@@ -20,6 +21,7 @@ from .models import Rating
 from .models import Comment
 from .models import Chat
 from .models import Category
+from .models import Province
 from .models import GoodsImage
 from .permissions import ReadOnly
 
@@ -29,6 +31,10 @@ from .permissions import ReadOnly
 class UserView(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
+
+class ProvinceView(viewsets.ModelViewSet):
+    serializer_class = ProvinceSerializer
+    queryset = Province.objects.all()
 
 class CategoryView(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
