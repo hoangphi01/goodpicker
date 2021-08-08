@@ -50,9 +50,16 @@ class GoodsView(viewsets.ModelViewSet):
     serializer_class = GoodsSerializer
     pagination_class = LimitOffsetPagination
     queryset = Goods.objects.all()
-    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
-    filterset_fields = ['goodsCategoryID', 'goodsStatus']
-    ordering_fields = ['goodsUpdatedTime']
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
+    filterset_fields = {
+        'goodsCategoryID': ['exact'],
+        'goodsStatus': ['exact'],
+        'goodsPrice': ['gte', 'lte'],
+        'goodsLocation': ['exact'],
+        'goodsUpdatedTime': ['gte', 'lte']
+    }
+    search_fields = ['goodsName']
+    ordering_fields = ['goodsUpdatedTime', 'goodsPrice']
 
 
 class OrderView(viewsets.ModelViewSet):

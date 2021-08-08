@@ -75,7 +75,7 @@ class Goods(models.Model):
     goodsCreateId = models.ForeignKey(User, on_delete=models.CASCADE)
     goodsName = models.CharField(max_length=64)
     goodsCategoryID = models.ForeignKey(Category, on_delete=models.CASCADE)
-    goodsDescription = models.CharField(max_length=200, null=True, blank=True)
+    goodsDescription = models.CharField(max_length=600, null=True, blank=True)
     goodsPrice = models.IntegerField()
     goodsStatus = models.BooleanField(default=False)
     goodsLocation = models.CharField(max_length=64)
