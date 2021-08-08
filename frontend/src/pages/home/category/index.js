@@ -8,13 +8,23 @@ import { Col, Row, Skeleton } from 'antd'
 const Category = ({ categoryId, categoryName }) => {
 	const [goods, setGoods] = React.useState([])
 	const timeAgo = new TimeAgo('vi-VN')
+	const unmountedRef = React.useRef(false)
+
+	React.useEffect(() => {
+		return () => {
+			unmountedRef.current = true
+		}
+	})
 
 	React.useEffect(() => {
 		const getGoods = async () => {
 			const res = await axios.get(
-				`/api/goods?goodsCategoryID=${categoryId}&goodsStatus=false&limit=4&ordering=-goodsUpdatedTime`
+				`/api/goods?goodsCategoryID=${categoryId}&goodsStatus=false&limit=6&ordering=-goodsUpdatedTime`
 			)
-			setGoods(res.data.results)
+
+			if (!unmountedRef.current) {
+				setGoods(res.data.results)
+			}
 		}
 
 		getGoods()
@@ -44,13 +54,16 @@ const Category = ({ categoryId, categoryName }) => {
 		<div className="homepage-newest-category">
 			<div className="homepage-newest-category__title">{categoryName}</div>
 
-			<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+			<Row className="homepage-newest-category-row">
 				{goods.length !== 0
-					? goods.map(item => (
+					? goods.map((item, i) => (
 							<Col
 								key={item.goodsUpdatedTime}
+								xs={24}
 								md={6}
-								className="homepage-newest-category-item"
+								className={`homepage-newest-category-item${
+									i % 3 === 0 ? ' homepage-newest-category-item--first' : ''
+								}`}
 							>
 								<div className="homepage-newest-category-item-img-wrapper">
 									<img
@@ -67,7 +80,7 @@ const Category = ({ categoryId, categoryName }) => {
 									{item.goodsName}
 								</div>
 								<div className="homepage-newest-category-item__price">
-									{item.goodsPrice.toLocaleString()}đ
+									{item.goodsPrice.toLocaleString()}₫
 								</div>
 							</Col>
 					  ))

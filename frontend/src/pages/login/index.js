@@ -100,6 +100,10 @@ const LoginPage = () => {
 						errMsgs.push('Tên người dùng này đã được sử dụng.')
 					}
 
+					if (!err.response.data.email && !err.response.data.username) {
+						errMsgs.push('Đã có lỗi xảy ra. Vui lòng thử lại sau.')
+					}
+
 					setError(errMsgs)
 				} else {
 					setError('Đã có lỗi xảy ra. Vui lòng thử lại sau.')

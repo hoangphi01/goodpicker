@@ -75,9 +75,16 @@ const NewPost = () => {
 		}
 	})
 
+	const unmountedRef = React.useRef(false)
 	const [form] = Form.useForm()
 	const { user, cookies } = useAuthState()
 	const history = useHistory()
+
+	React.useEffect(() => {
+		return () => {
+			unmountedRef.current = true
+		}
+	}, [])
 
 	React.useLayoutEffect(() => {
 		if (!user) {
@@ -87,7 +94,9 @@ const NewPost = () => {
 		const getCategories = async () => {
 			const res = await axios.get('/api/categories')
 
-			dispatch({ type: 'get_categories', categories: res.data })
+			if (!unmountedRef.current) {
+				dispatch({ type: 'get_categories', categories: res.data })
+			}
 		}
 		getCategories()
 	}, [user, history])
@@ -132,13 +141,20 @@ const NewPost = () => {
 				}
 			})
 
-			form.resetFields()
-			dispatch({ type: 'upload_success' })
+			if (!unmountedRef.current) {
+				form.resetFields()
+				dispatch({ type: 'upload_success' })
+			}
 		} catch (error) {
-			dispatch({ type: 'upload_fail' })
+			if (!unmountedRef.current) {
+				dispatch({ type: 'upload_fail' })
+			}
 		} finally {
 			window.scrollTo(0, 0)
-			modal.destroy()
+
+			if (!unmountedRef.current) {
+				modal.destroy()
+			}
 		}
 	}
 
@@ -171,10 +187,10 @@ const NewPost = () => {
 					/>
 				) : null}
 
-				<div className="new-post__title">Tạo bài đăng mới</div>
+				<div className="low-bradius-formpage__title">Tạo bài đăng mới</div>
 
 				<Form
-					className="new-post-form"
+					className="low-bradius-formpage-form"
 					layout="vertical"
 					form={form}
 					onFinish={onFinish}
@@ -195,20 +211,20 @@ const NewPost = () => {
 							<Form.Item label="Tên món đồ" name="goodsName" rules={rules.name}>
 								<Input
 									spellCheck={false}
-									className="new-post-form__input"
+									className="low-bradius-formpage-form__input"
 									type="text"
 								/>
 							</Form.Item>
 
 							<Form.Item
-								label="Giá sản phẩm (VNĐ)"
+								label="Giá món đồ (VNĐ)"
 								name="goodsPrice"
 								rules={rules.price}
 							>
 								<InputNumber
-									className="new-post-form__input"
+									className="low-bradius-formpage-form__input"
 									min={0}
-									step={1000}
+									step={10000}
 									formatter={value =>
 										`${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 									}
@@ -221,7 +237,7 @@ const NewPost = () => {
 								name="goodsCategoryID"
 								rules={rules.category}
 							>
-								<Select className="new-post-form__select">
+								<Select className="low-bradius-formpage-form__select">
 									{state.categories.map(category => (
 										<Select.Option
 											key={category.goodsCategoryName}
@@ -238,20 +254,21 @@ const NewPost = () => {
 					<Form.Item label="Mô tả" name="goodsDescription">
 						<Input.TextArea
 							spellCheck={false}
-							className="new-post-form__input"
+							className="low-bradius-formpage-form__input low-bradius-formpage-form__input--area"
 							rows={7}
+							maxLength={600}
 						/>
 					</Form.Item>
 
-					<div className="new-post-form-submit">
+					<div className="low-bradius-formpage-form-submit">
 						<Link to="/profile">
-							<button className="new-post-form-submit__btn new-post-form-submit__btn--cancel">
+							<button className="low-bradius-formpage-form-submit__btn low-bradius-formpage-form-submit__btn--cancel">
 								Hủy
 							</button>
 						</Link>
 
 						<button
-							className="new-post-form-submit__btn new-post-form-submit__btn--submit"
+							className="low-bradius-formpage-form-submit__btn low-bradius-formpage-form-submit__btn--submit"
 							type="submit"
 						>
 							Đăng bài
