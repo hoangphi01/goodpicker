@@ -17,11 +17,16 @@
             -moz-border-radius: 55px;
             border-radius: 55px;
             padding: 30px;
-            height: 800px;
+            height: rem(1000px);
+        }
+        .profile-avatar {
+            padding-bottom: rem(40px);
+            height: 10%;
         }
         .ant-form {
             // margin-top: 55px;
             width: 100%;
+            height: rem(900px);
             .ant-tabs {
                 font-size: 10px;
                 color: #da3333;
@@ -77,6 +82,8 @@
                     border-top: 0.125rem solid #c0c0c0;
                 }
             }
+
+            
         }
         .app-social {
             justify-content: center;

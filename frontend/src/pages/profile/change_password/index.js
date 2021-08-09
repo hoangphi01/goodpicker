@@ -51,18 +51,6 @@ const ChangePassword = (props) => {
                     />
                 </Form.Item>
 
-                
-
-                <Form.Item
-                    className="m-0"
-                    name="address"
-                    // rules={rulesRegister.username}
-                    >
-                    <CustomInputField
-                        placeholder="Địa chỉ cụ thể"
-                        customStyle="style#2"
-                    />
-                </Form.Item>
 
                 <Form.Item>
                     <Button
@@ -70,7 +58,7 @@ const ChangePassword = (props) => {
                         className="submit-button"
                         htmlType="submit"
                         type="primary"
-                        onClick={onFinishSubmit}
+                        
                     >
                         <span>Hoàn tất</span>
                     </Button>
