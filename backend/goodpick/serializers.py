@@ -1,20 +1,21 @@
 from rest_framework import serializers
 # from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from .models import User
+from .models import Province, User
 from .models import Goods
 from .models import Order
 from .models import Rating
 from .models import Comment
 from .models import Chat
 from .models import Category
+from .models import Province
 from .models import GoodsImage
 
 #User Serializer
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'name', 'userImage')
+        fields = ('id', 'username', 'email', 'name', 'userImage', 'userProvinceID', 'userPhoneNumber')
 
 #Register Serializer
 class RegisterSerializer(serializers.ModelSerializer):
@@ -43,6 +44,11 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ('goodsCategoryID', 'goodsCategoryName')
+
+class ProvinceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Province
+        fields = ('userProvinceID', 'userProvinceName')
 
 class GoodsImageSerializer(serializers.ModelSerializer):
     class Meta:

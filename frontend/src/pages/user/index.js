@@ -53,13 +53,15 @@ const UserPage = () => {
 
                             <div className="body-content">
                                 <Row className="main-content" >
-                                    <div className="avatar-side">
+                                    <Col className="avatar-side"
+                                        span={6}
+                                    >
                                         <AvatarSide/>
-                                    </div>
+                                    </Col>
 
-                                    <div className="content-side">
+                                    <Col className="content-side">
                                         <ContentSide/>
-                                    </div>
+                                    </Col>
                                 </Row>
                             </div>
 

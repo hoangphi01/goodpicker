@@ -13,7 +13,7 @@
 		justify-content: center;
 
 		.ant-image-mask {
-			border-radius: 15px;
+			border-radius: 0.9375rem;
 		}
 	}
 
@@ -23,7 +23,7 @@
 			height: auto;
 			max-width: 100%;
 			max-height: 100%;
-			border-radius: 15px;
+			border-radius: 0.9375rem;
 		}
 
 		&__list {
@@ -50,11 +50,11 @@
 				height: 6rem;
 				min-width: 6rem;
 				margin: 0 0.25rem 0.5rem 0.25rem;
-				border-radius: 15px;
+				border-radius: 0.9375rem;
 
 				.ant-upload-list-item-list-type-picture-card,
 				.ant-upload-list-item-info {
-					border-radius: 15px;
+					border-radius: 0.9375rem;
 				}
 			}
 

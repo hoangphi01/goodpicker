@@ -3,21 +3,28 @@ import './style.scss'
 import React from 'react'
 import axios from 'axios'
 import TimeAgo from 'javascript-time-ago'
-import vi from 'javascript-time-ago/locale/vi'
 import { Col, Row, Skeleton } from 'antd'
-
-TimeAgo.addDefaultLocale(vi)
-const timeAgo = new TimeAgo('vi-VN')
 
 const Category = ({ categoryId, categoryName }) => {
 	const [goods, setGoods] = React.useState([])
+	const timeAgo = new TimeAgo('vi-VN')
+	const unmountedRef = React.useRef(false)
+
+	React.useEffect(() => {
+		return () => {
+			unmountedRef.current = true
+		}
+	})
 
 	React.useEffect(() => {
 		const getGoods = async () => {
 			const res = await axios.get(
-				`/api/goods?goodsCategoryID=${categoryId}&goodsStatus=false&limit=4&ordering=-goodsUpdatedTime`
+				`/api/goods?goodsCategoryID=${categoryId}&goodsStatus=false&limit=6&ordering=-goodsUpdatedTime`
 			)
-			setGoods(res.data.results)
+
+			if (!unmountedRef.current) {
+				setGoods(res.data.results)
+			}
 		}
 
 		getGoods()
@@ -30,10 +37,10 @@ const Category = ({ categoryId, categoryName }) => {
 				<Col
 					key={`categoryItemSke#${i + 1}`}
 					md={6}
-					className="newest-category-item"
+					className="homepage-newest-category-item"
 				>
 					<Skeleton.Input
-						className="newest-category-item-skeleton__img"
+						className="homepage-newest-category-item-skeleton__img"
 						active
 					/>
 
@@ -44,33 +51,36 @@ const Category = ({ categoryId, categoryName }) => {
 	}
 
 	return (
-		<div className="newest-category">
-			<div className="newest-category__title">{categoryName}</div>
+		<div className="homepage-newest-category">
+			<div className="homepage-newest-category__title">{categoryName}</div>
 
-			<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+			<Row className="homepage-newest-category-row">
 				{goods.length !== 0
-					? goods.map(item => (
+					? goods.map((item, i) => (
 							<Col
 								key={item.goodsUpdatedTime}
+								xs={24}
 								md={6}
-								className="newest-category-item"
+								className={`homepage-newest-category-item${
+									i % 3 === 0 ? ' homepage-newest-category-item--first' : ''
+								}`}
 							>
-								<div className="newest-category-item-img-wrapper">
+								<div className="homepage-newest-category-item-img-wrapper">
 									<img
 										src={item.images.find(image => image.isMain === true).image}
 										alt={item.goodsName}
 									/>
 								</div>
-								<div className="newest-category-item__ago">
+								<div className="homepage-newest-category-item__ago">
 									{timeAgo.format(
 										Date.now() - (new Date() - new Date(item.goodsUpdatedTime))
 									)}
 								</div>
-								<div className="newest-category-item__name">
+								<div className="homepage-newest-category-item__name">
 									{item.goodsName}
 								</div>
-								<div className="newest-category-item__price">
-									{item.goodsPrice.toLocaleString()}đ
+								<div className="homepage-newest-category-item__price">
+									{item.goodsPrice.toLocaleString()}₫
 								</div>
 							</Col>
 					  ))

@@ -6,7 +6,8 @@
 	z-index: 1;
 	height: 4rem;
 	background-color: rgba($color-primary-green, 0.1);
-	box-shadow: 10px 0 5px 5px rgba($color-black, 0.1);
+	box-shadow: 0.625rem 0 0.3125rem 0.3125rem rgba($color-black, 0.1);
+	padding: 0 3.125rem;
 
 	&-section {
 		height: 100%;
@@ -16,7 +17,8 @@
 
 		&--right {
 			float: right;
-			justify-content: flex-end;
+			justify-content: space-between;
+			width: 30%;
 		}
 
 		&--left {
@@ -24,7 +26,7 @@
 			text-transform: uppercase;
 			font-family: $font-nunito-semi-bold;
 			font-size: 1.1rem;
-			padding-left: 2.5rem;
+			width: 30%;
 
 			a,
 			a:hover,
@@ -33,22 +35,19 @@
 				color: inherit;
 				transition: none;
 			}
-
-			button {
-				margin-right: 6.5rem;
-			}
 		}
 	}
 
 	&-btn {
 		text-transform: uppercase;
-		border: 3px solid $color-primary-red;
+		border: none;
 		transition: all 0.2s ease-in-out;
 		font-family: $font-nunito-bold;
 		background-color: $color-primary-red;
 		color: $color-white;
-		padding: 1rem;
-		border-radius: 10px;
+		border-radius: 0.625rem;
+		height: 2.5rem;
+		padding: 0 1rem;
 
 		&:hover {
 			cursor: pointer;
@@ -60,11 +59,27 @@
 			padding: 0.4rem;
 			border-radius: 50%;
 			font-size: 1.25rem;
+			width: 2.5rem;
 		}
 
-		&--auth:hover {
-			background-color: $color-white;
-			color: $color-primary-red;
+		&--auth {
+			border: 0.1825rem solid $color-primary-red;
+
+			&:hover {
+				background-color: $color-white;
+				color: $color-primary-red;
+			}
+		}
+	}
+
+	&-link {
+		color: $color-primary-red;
+		font-family: $font-nunito-bold;
+		transition: all 0.2s ease-in-out;
+		text-transform: uppercase;
+
+		&:hover {
+			color: darken($color-primary-red, 12%);
 		}
 	}
 
@@ -90,5 +105,17 @@
 
 	&-skeleton {
 		margin-left: 0.5rem;
+	}
+
+	&-dropdown {
+		&-first-li {
+			border-top-left-radius: 0.75rem;
+			border-top-right-radius: 0.75rem;
+		}
+
+		&-last-li {
+			border-bottom-left-radius: 0.75rem;
+			border-bottom-right-radius: 0.75rem;
+		}
 	}
 }

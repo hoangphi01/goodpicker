@@ -5,7 +5,7 @@
 
 	&__alert {
 		padding: 1rem;
-		border-radius: 12px;
+		border-radius: 0.75rem;
 		margin-bottom: 1.5rem;
 		font-size: 1rem;
 
@@ -18,124 +18,13 @@
 		}
 	}
 
-	&__title {
-		font-family: $font-nunito-bold;
-		font-size: 2.5rem;
-		margin-bottom: 2rem;
-		color: $color-primary-green;
-	}
-
-	&-form {
-		.ant-form-item-label > label {
-			font-family: $font-nunito-semi-bold;
-			font-size: 1.15rem;
-		}
-
-		.ant-form-item {
-			margin-bottom: 1.5rem;
-		}
-
-		&__input {
-			width: 100%;
-			padding: 0.7rem 1rem;
-			border-radius: 12px;
-			font-size: 1rem;
-			font-family: $font-nunito-light;
-			border: 1px solid lighten($color-gray, 20%);
-
-			&:hover,
-			&:focus {
-				border-color: rgba($color-primary-green, 1);
-				outline: none;
-			}
-
-			.ant-input-number-handler-wrap {
-				border-radius: 0 12px 12px 0;
-
-				.ant-input-number-handler-up {
-					border-top-right-radius: 12px;
-				}
-
-				.ant-input-number-handler-down {
-					border-bottom-right-radius: 12px;
-				}
-			}
-
-			.ant-input-number-input-wrap > input {
-				padding: 0;
-				height: unset;
-			}
-		}
-
-		&__select {
-			.ant-select-selector {
-				height: 100% !important;
-				padding: 0.7rem 1rem !important;
-				border-radius: 12px !important;
-				font-size: 1rem;
-				font-family: $font-nunito-light;
-				border: 1px solid lighten($color-gray, 20%) !important;
-
-				&:hover,
-				&:focus {
-					border-color: rgba($color-primary-green, 1) !important;
-					outline: none;
-				}
-			}
-		}
-
-		&-submit {
-			display: flex;
-			justify-content: flex-end;
-
-			&__btn {
-				padding: 0.6rem 1.1rem;
-				border-radius: 10px;
-				margin-left: 1.5rem;
-				text-transform: uppercase;
-				font-family: $font-nunito-bold;
-				border: none;
-				transition: background 0.15s linear;
-
-				a,
-				a:hover,
-				a:active,
-				a:visited {
-					color: inherit;
-				}
-
-				&:hover {
-					cursor: pointer;
-				}
-
-				&--cancel {
-					background-color: rgba($color-gray, 0.25);
-					color: $color-primary-green;
-
-					&:hover {
-						background-color: rgba($color-gray, 0.35);
-					}
-				}
-
-				&--submit {
-					color: $color-white;
-					background-color: $color-primary-green;
-
-					&:hover {
-						background-color: darken($color-primary-green, 2%);
-					}
-				}
-			}
-		}
-	}
-
 	&-modal {
 		&__title {
 			display: block;
 			font-family: $font-nunito-bold;
-			font-size: 24px;
+			font-size: 1.5rem;
 			color: $color-primary-red;
-			border-bottom: 2px solid $color-primary-red;
+			border-bottom: 0.125rem solid $color-primary-red;
 			padding-bottom: 0.5rem;
 		}
 
@@ -143,11 +32,11 @@
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			font-size: 14px;
+			font-size: 0.9rem;
 		}
 
 		& > .ant-modal-content {
-			border-radius: 15px;
+			border-radius: 0.9375rem;
 		}
 	}
 }

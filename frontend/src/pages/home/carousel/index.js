@@ -55,7 +55,7 @@ const CustomCarousel = () => {
 			<div className="carousel-section carousel-section--others">
 				<div className="carousel-section-cover carousel-section-cover--unclipped">
 					<span className="carousel-section-cover__title carousel-section-cover__title--logo">
-						<Logo width={480} />
+						<Logo className="logo--main" />
 					</span>
 				</div>
 			</div>

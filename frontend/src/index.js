@@ -1,12 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import TimeAgo from 'javascript-time-ago'
+import vi from 'javascript-time-ago/locale/vi'
 import 'antd/dist/antd.css'
 import 'swiper/swiper.scss'
-import './styles/globals.scss'
 import './styles/index.scss'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { AuthProvider } from './hooks/useAuth'
+
+TimeAgo.addDefaultLocale(vi)
 
 ReactDOM.render(
 	<AuthProvider>

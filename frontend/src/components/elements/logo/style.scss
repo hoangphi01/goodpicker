@@ -1,9 +1,13 @@
 .logo {
+	&--main {
+		width: 30rem;
+	}
+
 	&--watermark {
 		position: absolute;
 		width: 6.5rem;
-		top: 20px;
-		left: 20px;
+		top: 1.25rem;
+		left: 1.25rem;
 	}
 
 	&--header {

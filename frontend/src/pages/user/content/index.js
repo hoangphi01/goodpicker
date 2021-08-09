@@ -42,22 +42,23 @@ const ContentSide = ({userId, userName}) => {
         <React.Fragment>
             <Col className="data-component">
                 <Col className="profile-card">
-                {/* <CustomCarousel /> */}
 
-                    <div className="newest">
-                        {categories.map(category => (
-                            <Suspense
-                                key={category.goodsCategoryName}
-                                fallback={renderSkeleton()}
-                            >
-                                <Category
-                                    categoryId={category.goodsCategoryID}
-                                    categoryName={category.goodsCategoryName}
-                                />
-                            </Suspense>
-    ))}
-</div>
-                    
+                <div className="homepage-newest">
+					{categories
+						? categories.map(category => (
+								<Suspense
+									key={category.goodsCategoryName}
+									fallback={renderSkeleton()}
+								>
+									<Category
+										categoryId={category.goodsCategoryID}
+										categoryName={category.goodsCategoryName}
+									/>
+								</Suspense>
+						  ))
+						: renderSkeleton()}
+				</div>
+                    <h1>content</h1>
                 </Col>
             </Col>
         </React.Fragment>

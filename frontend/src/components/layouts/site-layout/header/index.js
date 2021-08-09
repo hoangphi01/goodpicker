@@ -1,17 +1,25 @@
 import './style.scss'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { Layout } from 'antd'
 import Logo from '../../../elements/logo'
 import HeaderControl from './control'
+import CustomSearchInput from '../../../elements/input-search'
 
 const AppHeader = () => {
+	const history = useHistory()
+
+	const onSearchSubmit = name => {
+		history.push(`/search${name ? `?search=${name}&` : '?'}goodsStatus=false`)
+	}
+
 	return (
 		<Layout.Header className="header">
 			<div className="header-section header-section--left">
-				<Link to="/about-us">
-					<button className="header-btn">Về chúng tôi</button>
-				</Link>
+				<CustomSearchInput
+					onSearch={onSearchSubmit}
+					placeholder="Tìm tên món đồ"
+				/>
 			</div>
 
 			<Link to="/">

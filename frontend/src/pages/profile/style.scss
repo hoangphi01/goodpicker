@@ -82,6 +82,21 @@
                     border-top: 0.125rem solid #c0c0c0;
                 }
             }
+            &-select {
+                border-radius: 50px;
+            }
+            .address-province-form__select {
+                padding-bottom: rem(10px);
+                border-radius: 55px;
+                height: 40px;
+                padding-bottom: 20px;
+                
+            }
+            element.style {
+                border-radius: 55px;
+                height: 40px;
+                padding-bottom: 20px;
+            }
 
             
         }
@@ -97,6 +112,8 @@
         }
     }
 }
+
+
 
 @media screen and (max-width: 576px) {
     .profile-page {

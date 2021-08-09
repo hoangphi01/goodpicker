@@ -104,8 +104,8 @@ const tagRender = (props) => {
 
 const newAvatar = (state, action) => {
 	switch (action.type) {
-		case 'get_users':
-			return { ...state, users: action.users }
+		case 'get_provinces':
+			return { ...state, provinces: action.provinces }
 		case 'update_files':
 			return { ...state, fileImg: action.fileImg }
 		case 'upload_success':
@@ -196,6 +196,7 @@ const UserProfilePage = () => {
 		message: null,
 		fileImg: [],
 		users: '',
+		provinces: [],
 		initialValues: {
             username:'', //user.username,
             email:'', // user.email,
@@ -219,9 +220,9 @@ const UserProfilePage = () => {
 		}
 
 		const getUsers = async () => {
-			const res = await axios.get(`/api/users/${userid}/`)
+			const res = await axios.get(`/api/provinces/`)
 			// console.log(res.data.name)
-			dispatch({ type: 'get_users', users: res.data })
+			dispatch({ type: 'get_provinces', provinces: res.data })
 		}
 		getUsers()
 	}, [user, history])
@@ -425,13 +426,26 @@ const UserProfilePage = () => {
 																name="address"
 																rules={rules.address}
 																>
-																<Select 
+																{/* <Select 
 																	style={{width:'60%'}}
 																	options={ optionProvince }
 																	// placeholder={t('Dân tộc')}
 																	size='large'
 																	defaultValue={ optionProvince[0] }
-																/>
+																/> */}
+
+																<Select className="address-province-form__select"
+																	// bordered
+																	>
+																	{state.provinces.map(address => {
+																		<Select.Option
+																			key={address.provinceName}
+																			value={address.provinceId}
+																			>
+																			{address.provinceName}
+																		</Select.Option>
+																	})}
+																</Select>
 															</Form.Item>
 
 															<Form.Item

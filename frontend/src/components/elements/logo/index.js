@@ -4,11 +4,11 @@ import logo from '../../../img/logo_full.png'
 import miniLogo from '../../../img/logo_mini.png'
 import PropTypes from 'prop-types'
 
-const Logo = ({ className = '', width, alt = 'logo', type = 'full' }) => {
+const Logo = ({ className = '', alt = 'logo', type = 'full' }) => {
 	return type === 'full' ? (
-		<img className={className} src={logo} alt={alt} width={width} />
+		<img className={className} src={logo} alt={alt} />
 	) : type === 'mini' ? (
-		<img className={className} src={miniLogo} alt={alt} width={width} />
+		<img className={className} src={miniLogo} alt={alt} />
 	) : null
 }
 

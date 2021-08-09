@@ -2,45 +2,57 @@ import './style.scss'
 
 import React, { Suspense } from 'react'
 import axios from 'axios'
-import { Skeleton } from 'antd'
+import { useHistory } from 'react-router-dom'
+import { Skeleton, Input } from 'antd'
 import CustomCarousel from './carousel'
 import SiteLayout from '../../components/layouts/site-layout'
-// import APIservice from '../../service/APIservice'
 const Category = React.lazy(() => import('./category'))
 
 const HomePage = () => {
-	const [categories, setCategoties] = React.useState([])
+	const [categories, setCategories] = React.useState(null)
+	const unmountedRef = React.useRef(false)
 
 	React.useLayoutEffect(() => {
 		const getCategories = async () => {
 			const res = await axios.get('/api/categories')
 
-			setCategoties(res.data)
+			if (!unmountedRef.current) {
+				setCategories(res.data)
+			}
 		}
 
 		getCategories()
 	}, [])
 
-	// const [email, setEmail] = useState('')
-	// useEffect(() => {
-	// 	const config = {
-	// 		headers: {
-	// 			Authorization: 'Bearer' + localStorage.getItem('token')
-	// 		}
-	// 	}
-	// 	APIservice.homeUser({ email, config }).then(res => {
-	// 		localStorage.setItem('token', res.data.token)
-	// 	})
-	// })
+	React.useEffect(() => {
+		return () => {
+			unmountedRef.current = true
+		}
+	}, [])
 
 	const renderSkeleton = () => {
 		return (
-			<div className="newest-category-skeleton">
-				<Skeleton.Input active className="newest-category-skeleton__title" />
-				<Skeleton.Input active className="newest-category-skeleton__divider" />
-				<Skeleton.Input active className="newest-category-skeleton__content" />
+			<div className="homepage-newest-category-skeleton">
+				<Skeleton.Input
+					active
+					className="homepage-newest-category-skeleton__title"
+				/>
+				<Skeleton.Input
+					active
+					className="homepage-newest-category-skeleton__divider"
+				/>
+				<Skeleton.Input
+					active
+					className="homepage-newest-category-skeleton__content"
+				/>
 			</div>
 		)
+	}
+
+	const history = useHistory()
+
+	const onSearchSubmit = name => {
+		history.push(`/search${name ? `?search=${name}&` : '?'}goodsStatus=false`)
 	}
 
 	return (
@@ -48,18 +60,30 @@ const HomePage = () => {
 			<div className="homepage">
 				<CustomCarousel />
 
-				<div className="newest">
-					{categories.map(category => (
-						<Suspense
-							key={category.goodsCategoryName}
-							fallback={renderSkeleton()}
-						>
-							<Category
-								categoryId={category.goodsCategoryID}
-								categoryName={category.goodsCategoryName}
-							/>
-						</Suspense>
-					))}
+				<div className="homepage__title">Tìm món đồ phù hợp</div>
+
+				<div className="homepage-search">
+					<Input.Search onSearch={onSearchSubmit} placeholder="Tìm kiếm" />
+				</div>
+
+				<div className="homepage__title homepage__title--left">
+					Các bài đăng mới nhất
+				</div>
+
+				<div className="homepage-newest">
+					{categories
+						? categories.map(category => (
+								<Suspense
+									key={category.goodsCategoryName}
+									fallback={renderSkeleton()}
+								>
+									<Category
+										categoryId={category.goodsCategoryID}
+										categoryName={category.goodsCategoryName}
+									/>
+								</Suspense>
+						  ))
+						: renderSkeleton()}
 				</div>
 			</div>
 		</SiteLayout>

@@ -39,6 +39,13 @@ class UserManager(BaseUserManager):
         return user
 
 # Create your models here.
+class Province(models.Model):
+    userProvinceID = models.AutoField(primary_key=True)
+    userProvinceName= models.CharField(max_length=64)
+
+    def __str__(self):
+        return f"{self.userProvinceName}"
+
 class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=64)
     username = models.CharField(max_length=32, unique=True)
@@ -46,7 +53,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     userImage = models.ImageField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    
+    userProvinceID = models.ForeignKey(Province, on_delete=models.CASCADE, null = True)
+    userPhoneNumber = models.CharField(max_length=10, null = True)
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'password', 'name']
 
@@ -66,7 +75,7 @@ class Goods(models.Model):
     goodsCreateId = models.ForeignKey(User, on_delete=models.CASCADE)
     goodsName = models.CharField(max_length=64)
     goodsCategoryID = models.ForeignKey(Category, on_delete=models.CASCADE)
-    goodsDescription = models.CharField(max_length=200, null=True, blank=True)
+    goodsDescription = models.CharField(max_length=600, null=True, blank=True)
     goodsPrice = models.IntegerField()
     goodsStatus = models.BooleanField(default=False)
     goodsLocation = models.CharField(max_length=64)
