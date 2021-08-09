@@ -26,21 +26,15 @@ const imageUploadReducer = (state, action) => {
 
 
 
-const UploadAvatar = ({updateFileImg}) => {
+const UploadAvatar = () => {
 
     const [image, setImage] = React.useState('')
     const [isUploaded, setIsUploaded] = useState(false)
     const [typeFile, setTypeFile] = useState('');
 
-    // const [state, dispatch] = React.useReducer(imageUploadReducer, {
-    //   // previewSrc: '',
-    //   // previewUid: '',
-    //   fileImg: []
-    // })
 
     const  handleImageChange = (e) => {
         if (e.target.files && e.target.files[0]) {
-          // setTypeFile(e.target.files[0].type);
           let reader = new FileReader();
           
           reader.onload = function (e) {
@@ -49,10 +43,6 @@ const UploadAvatar = ({updateFileImg}) => {
           };
     
           reader.readAsDataURL(e.target.files[0]);
-          // const oriFileImg = fileImg.map(file => file.originFileObj)
-          // updateFileImg(oriFileImg)
-
-          // dispatch({ type: 'add_image', fileImg })
         }
       }
     return (

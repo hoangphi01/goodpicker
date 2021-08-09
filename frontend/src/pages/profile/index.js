@@ -3,6 +3,7 @@ import { Row, Col, Form, Button, Space, message, Tabs,Steps, Result, Select, Tag
 import React, { useEffect, useState } from 'react'
 import CustomInputField from '../../components/elements/input'
 import { Link, withRouter, useHistory, useParams } from 'react-router-dom'
+import AvatarUpload from './avatar-upload'
 import SiteLayout from '../../components/layouts/site-layout'
 import ChangePassword from './change_password'
 import { useAuthenticate, useAuthState } from '../../hooks/useAuth'
@@ -11,7 +12,6 @@ import axios from 'axios'
 import { Alert, Modal } from 'antd'
 import Loader from '../../components/elements/loader'
 import UploadAvatar from './upload-avatar'
-import AvatarUpload from './avatar-upload'
 
 const {TabPane} = Tabs;
 
@@ -82,24 +82,24 @@ const optionProvince = [
 	
 ]
 
-// const tagRender = (props) => {
-//     const { label, value, closable, onClose } = props;
-//     const onPreventMouseDown = event => {
-//         // event.preventDefault;
-//         event.stopPropagation();
-//     };
-//     return (
-//         <Tag
-//             color={value}
-//             onMouseDown={onPreventMouseDown}
-//             closable={closable}
-//             onClose={onClose}
-//             style={{marginRight:3}}
-//             >
-//             {label}
-//         </Tag>
-//     );
-// }
+const tagRender = (props) => {
+    const { label, value, closable, onClose } = props;
+    const onPreventMouseDown = event => {
+        // event.preventDefault;
+        event.stopPropagation();
+    };
+    return (
+        <Tag
+            color={value}
+            onMouseDown={onPreventMouseDown}
+            closable={closable}
+            onClose={onClose}
+            style={{marginRight:3}}
+            >
+            {label}
+        </Tag>
+    );
+}
 
 
 const newAvatar = (state, action) => {
@@ -126,6 +126,12 @@ const newAvatar = (state, action) => {
 			return { ...state, status: 'idle' }
 		case 'reset_images':
 			return { ...state, clear: false }
+		// case 'no_images':
+		// 	return {
+		// 		...state,
+		// 		status: 'error',
+		// 		message: 'Bài đăng cần kèm theo ảnh. Vui lòng thêm ảnh vào bài đăng.'
+		// 	}
 		default:
 			throw new Error('Impossible!')
 	}
@@ -190,8 +196,6 @@ const UserProfilePage = () => {
 		message: null,
 		fileImg: [],
 		users: '',
-		previewVisibel: false,
-		previewImage: "",
 		initialValues: {
             username:'', //user.username,
             email:'', // user.email,
@@ -200,7 +204,7 @@ const UserProfilePage = () => {
             birthday:'',// user.birthday,
             gender:'', //user.gender,
             address:'', //user.address,
-			// image:null,// user.userImage,
+			image:'',// user.userImage,
 		}
 	})
 	
@@ -222,6 +226,12 @@ const UserProfilePage = () => {
 		getUsers()
 	}, [user, history])
 
+	// React.useEffect(()=> {
+	// 	const pushUsers = async () => {
+	// 		const res = await axios.push(`/api/users/${userid}/`)
+	// 	}
+	// 	pushUsers()
+	// }, [user, history])
 
 	const onFinish = async values => {
 
@@ -239,8 +249,10 @@ const UserProfilePage = () => {
 		formData.append('gender',values.gender)
 		formData.append('address',values.address)
 		formData.append('email',values.email)
-		// formData.append('image', values.image)
-		// state.fileImg(file => formData.append('image',file))
+		// if(values.image!= null) {
+		// 	formData.append('userImage',values.image)
+		// }
+
 
 
 		// state.fileImg.forEach((file, i) => formData.append(`images${i}`, file))
@@ -269,7 +281,7 @@ const UserProfilePage = () => {
 			.then(res => {
 				console.log(res.data)
 				authenticate({user: res.data, token: cookies['gp_token']})
-				history.push('/user')
+				// history.push('/user')
 			})
 
 			form.resetFields()
@@ -282,9 +294,6 @@ const UserProfilePage = () => {
 		}
 	}
 
-	// const updateFileImg = fileImg => {
-	// 	dispatch({ type: 'update_files', fileImg })
-	// }
 
 	const onAlertClose = () => {
 		dispatch({ type: 'reset_status' })
@@ -331,7 +340,6 @@ const UserProfilePage = () => {
 															<UploadAvatar
 																// updateFileImg = {updateFileImg}
 															/>
-															{/* <AvatarUpload/> */}
 														</Form.Item>
 													</Col>
 														<Form.Item
@@ -341,7 +349,7 @@ const UserProfilePage = () => {
 															// label="Họ và Tên"
 															>
 															<CustomInputField
-																
+																placeholder="Họ và Tên"
 																customStyle="style#2"
 															/>
 														</Form.Item>
@@ -353,7 +361,7 @@ const UserProfilePage = () => {
 															// label="Tên người dùng"
 															>
 															<CustomInputField
-																
+																placeholder="Tên người dùng"
 																customStyle="style#2"
 															/>
 														</Form.Item>
@@ -366,7 +374,7 @@ const UserProfilePage = () => {
 															// label="Email"
 															>
 															<CustomInputField
-																
+																placeholder="Email"
 																customStyle="style#2"
 																// disabled
 															/>
@@ -379,7 +387,7 @@ const UserProfilePage = () => {
 															// label="Số điện thoại"
 															>
 															<CustomInputField
-																
+																placeholder="Số điện thoại"
 																customStyle="style#2"
 															/>
 															</Form.Item>
@@ -391,7 +399,7 @@ const UserProfilePage = () => {
 															// label="Ngày sinh"
 															>
 															<CustomInputField
-																
+																placeholder="Ngày sinh"
 																customStyle="style#2"
 															/>
 															</Form.Item>
@@ -405,7 +413,7 @@ const UserProfilePage = () => {
 																// label="Giới tính"
 																>
 																<CustomInputField
-																	
+																	placeholder="Giới tính"
 																	customStyle="style#2"
 																/>
 															</Form.Item>
@@ -418,8 +426,6 @@ const UserProfilePage = () => {
 																rules={rules.address}
 																>
 																<Select 
-																	// showArrow
-																	// tagRender={ tagRender }
 																	style={{width:'60%'}}
 																	options={ optionProvince }
 																	// placeholder={t('Dân tộc')}
