@@ -43,29 +43,20 @@ const UserPage = () => {
 
     return (
         <SiteLayout>
-            <div className="application-main">
+            <div className="user-page">
                 {cookies['gp_token']? (
-                    
-                        <Col className="container">
-                            <div className="body-header">
-
-                            </div>
-
-                            <div className="body-content">
-                                <Row className="main-content" >
-                                    <Col className="avatar-side"
-                                        span={6}
-                                    >
-                                        <AvatarSide/>
-                                    </Col>
-
-                                    <Col className="content-side">
-                                        <ContentSide/>
-                                    </Col>
-                                </Row>
-                            </div>
-
+                    <Row className="user-main-content" >
+                        <Col className="user-avatar-side"
+                            span={10}
+                            push={3}
+                        >
+                            <AvatarSide/>
                         </Col>
+
+                        <Col className="user-content-side">
+                            <ContentSide/>
+                        </Col>
+                    </Row>
                     ):(
                         <Custom404/>
                     )

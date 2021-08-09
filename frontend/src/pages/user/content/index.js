@@ -3,8 +3,12 @@ import { Row, Col, Image, Skeleton } from "antd"
 import TimeAgo from "javascript-time-ago"
 import axios from "axios"
 import React, {Suspense} from "react"
-import CustomCarousel from "../../home/carousel"
+import { useAuthState } from "../../../hooks/useAuth"
+
+
+
 const Category = React.lazy(() => import('../../home/category'))
+
 // import TimeAgo from "javascript-time-ago"
 // import vi from 'javascript-time-ago/locale/vi'
 
@@ -15,7 +19,7 @@ const Category = React.lazy(() => import('../../home/category'))
 const ContentSide = ({userId, userName}) => {
 
     // const []
-
+    const {user, cookies} = useAuthState()
     const [categories, setCategoties] = React.useState([])
 
 	React.useLayoutEffect(() => {
@@ -27,6 +31,9 @@ const ContentSide = ({userId, userName}) => {
 
 		getCategories()
 	}, [])
+
+    let renderSkeletonHere;
+    
 
 	const renderSkeleton = () => {
 		return (
@@ -43,8 +50,9 @@ const ContentSide = ({userId, userName}) => {
             <Col className="data-component">
                 <Col className="profile-card">
 
-                <div className="homepage-newest">
-					{categories
+                {/* <div className="homepage-newest">
+					{
+                        categories
 						? categories.map(category => (
 								<Suspense
 									key={category.goodsCategoryName}
@@ -57,8 +65,8 @@ const ContentSide = ({userId, userName}) => {
 								</Suspense>
 						  ))
 						: renderSkeleton()}
-				</div>
-                    <h1>content</h1>
+				</div> */}
+                <h1> content</h1>
                 </Col>
             </Col>
         </React.Fragment>

@@ -15,99 +15,14 @@ import UploadAvatar from './upload-avatar'
 
 const {TabPane} = Tabs;
 
-const optionProvince = [
-	{value:'angiang', label: 'An Giang',},
-	{value:'baria-vungtau', label: 'Bà Rịa - Vũng Tàu',},
-	{value:'baclieu', label: 'Bạc Liêu',},
-	{value:'backan', label: 'Bắc Kạn',},
-	{value:'bacgiang', label: 'Bắc Giang',},
-	{value:'bacninh', label: 'Bắc Ninh',},
-	{value:'bentre', label: 'Bến Tre',},
-	{value:'binhdinh', label: 'Bình Định',},
-	{value:'binhphuoc', label: 'Bình Phước',},
-	{value:'binhthuan', label: 'Bình Thuận',},
-	{value:'camau', label: 'Cà Mau',},
-	{value:'caobang', label: 'Cao Bằng',},
-	{value:'cantho', label: 'Cần Thơ (TP)',},
-	{value:'danang', label: 'Đà Nẵng (TP)',},
-	{value:'daklak', label: 'Đắk Lắk',},
-	{value:'daknong', label: 'Đắk Nông',},
-	{value:'dienbien', label: 'Điện Biên',},
-	{value:'dongnai', label: 'Đồng Nai',},
-	{value:'dongthap', label: 'Đồng Tháp',},
-	{value:'gialai', label: 'Gia Lai',},
-	{value:'hagiang', label: 'Hà Giang',},
-	{value:'hanam', label: 'Hà Nam',},
-	{value:'hanoi', label: 'Hà Nội (TP)',},
-	{value:'hatay', label: 'Hà Tây',},
-	{value:'hatinh', label: 'Hà Tĩnh',},
-	{value:'haiduong', label: 'Hải Dương',},
-	{value:'haiphong', label: 'Hải Phòng (TP)',},
-	{value:'hoabinh', label: 'Hòa Bình',},
-	{value:'hcm', label: 'Hồ Chí Minh (TP)',},
-	{value:'haugiang', label: 'Hậu Giang',},
-	{value:'hungyen', label: 'Hưng Yên',},
-	{value:'khanhhoa', label: 'Khánh Hòa',},
-	{value:'kiengiang', label: 'Kiên Giang',},
-	{value:'kontum', label: 'Kon Tum',},
-	{value:'laichau', label: 'Lai Châu',},
-	{value:'laocai', label: 'Lào Cai',},
-	{value:'langson', label: 'Lạng Sơn',},
-	{value:'lamdong', label: 'Lâm Đồng',},
-	{value:'longan', label: 'Long An',},
-	{value:'namdinh', label: 'Nam Định',},
-	{value:'nghean', label: 'Nghệ An',},
-	{value:'ninhbinh', label: 'Ninh Bình',},
-	{value:'ninhthuan', label: 'Ninh Thuận',},
-	{value:'phutho', label: 'Phú Thọ',},
-	{value:'phuyen', label: 'Phú Yên',},
-	{value:'quangbinh', label: 'Quảng Bình',},
-	{value:'quangnam', label: 'Quảng Nam',},
-	{value:'quangngai', label: 'Quảng Ngãi',},
-	{value:'quangninh', label: 'Quảng Ninh',},
-	{value:'quangtri', label: 'Quảng Trị',},
-	{value:'soctrang', label: 'Sóc Trăng',},
-	{value:'sonla', label: 'Sơn La',},
-	{value:'tayninh', label: 'Tây Ninh',},
-	{value:'thaibinh', label: 'Thái Bình',},
-	{value:'thainguyen', label: 'Thái Nguyên',},
-	{value:'thanhhoa', label: 'Thanh Hóa',},
-	{value:'thuathienhue', label: 'Thừa Thiên – Huế',},
-	{value:'tiengiang', label: 'Tiền Giang',},
-	{value:'travinh', label: 'Trà Vinh',},
-	{value:'tuyenquang', label: 'Tuyên Quang',},
-	{value:'vinhlong', label: 'Vĩnh Long',},
-	{value:'vinhphuc', label: 'Vĩnh Phúc',},
-	{value:'yenbai', label: 'Yên Bái',},
-	
-]
-
-const tagRender = (props) => {
-    const { label, value, closable, onClose } = props;
-    const onPreventMouseDown = event => {
-        // event.preventDefault;
-        event.stopPropagation();
-    };
-    return (
-        <Tag
-            color={value}
-            onMouseDown={onPreventMouseDown}
-            closable={closable}
-            onClose={onClose}
-            style={{marginRight:3}}
-            >
-            {label}
-        </Tag>
-    );
-}
-
-
 const newAvatar = (state, action) => {
 	switch (action.type) {
 		case 'get_provinces':
 			return { ...state, provinces: action.provinces }
 		case 'update_files':
 			return { ...state, fileImg: action.fileImg }
+		case 'update_index':
+			return { ...state, mainIndex: action.mainIndex }
 		case 'upload_success':
 			return {
 				...state,
@@ -162,26 +77,13 @@ const UserProfilePage = () => {
         ],
 		phone: [
             {
-                required: true,
+                // required: true,
                 message: 'Vui lòng nhập Số điện thoại'
-            }
-        ],
-        birthday: [
-            {
-                type: 'date',
-                required: true,
-                message: 'Vui lòng nhập Ngày sinh'
-            }
-        ],
-        gender: [
-            {
-                required: true,
-                message: 'Vui lòng nhập giới tính'
             }
         ],
         address: [
             {
-                required: true,
+                // required: true,
                 message: 'Vui lòng nhập địa chỉ'
             }
         ]
@@ -195,44 +97,47 @@ const UserProfilePage = () => {
 		clear: false,
 		message: null,
 		fileImg: [],
-		users: '',
+		mainIndex: 0,
 		provinces: [],
 		initialValues: {
-            username:'', //user.username,
-            email:'', // user.email,
-			name:'',// user.name,
-			phone:'',// user.phone,
-            birthday:'',// user.birthday,
-            gender:'', //user.gender,
-            address:'', //user.address,
-			image:'',// user.userImage,
+            username:'', 
+            email:'', 
+			name:'',
+			phone:'',
+            address:'', 
+			// image:'',// user.userImage,
 		}
 	})
 	
 	const [form] = Form.useForm()
-	
+	const unmountedRef = React.useRef(false)
 	const history = useHistory()
 	const authenticate = useAuthenticate()
 	const userid =user.id;
+
+	React.useEffect(() => {
+		return () => {
+			unmountedRef.current = true
+		}
+	}, [])
+
+
 	React.useLayoutEffect(() => {
 		if (!user) {
 			history.push('/')
 		}
 
-		const getUsers = async () => {
-			const res = await axios.get(`/api/provinces/`)
-			// console.log(res.data.name)
-			dispatch({ type: 'get_provinces', provinces: res.data })
+		const getProvinces = async () => {
+			const res = await axios.get('/api/provinces')
+			console.log(res.data)
+			if (!unmountedRef.current) {
+				dispatch({ type: 'get_provinces', provinces: res.data })
+			}
 		}
-		getUsers()
+		getProvinces()
 	}, [user, history])
 
-	// React.useEffect(()=> {
-	// 	const pushUsers = async () => {
-	// 		const res = await axios.push(`/api/users/${userid}/`)
-	// 	}
-	// 	pushUsers()
-	// }, [user, history])
+	
 
 	const onFinish = async values => {
 
@@ -243,20 +148,9 @@ const UserProfilePage = () => {
 		}
 
 		formData.append('userId', user.id)
-		formData.append('name',values.name)
-		formData.append('username',values.username)
-		formData.append('phone',values.phone)
-		formData.append('birthday',values.birthday)
-		formData.append('gender',values.gender)
-		formData.append('address',values.address)
-		formData.append('email',values.email)
-		// if(values.image!= null) {
-		// 	formData.append('userImage',values.image)
-		// }
-
-
-
-		// state.fileImg.forEach((file, i) => formData.append(`images${i}`, file))
+		formData.append('mainIndex', state.mainIndex)
+		
+		state.fileImg.forEach((file, i) => formData.append(`images${i}`, file))
 
 		const modal = Modal.info({
 			className: 'new-user-modal',
@@ -285,21 +179,38 @@ const UserProfilePage = () => {
 				// history.push('/user')
 			})
 
-			form.resetFields()
-			dispatch({ type: 'upload_success' })
+			if (!unmountedRef.current) {
+				form.resetFields()
+				dispatch({ type: 'upload_success' })
+			}
 		} catch (error) {
-			dispatch({ type: 'upload_fail' })
+			if (!unmountedRef.current) {
+				dispatch({ type: 'upload_fail' })
+			}
 		} finally {
 			window.scrollTo(0, 0)
-			modal.destroy()
+
+			if (!unmountedRef.current) {
+				modal.destroy()
+			}
 		}
 	}
 
+	const updateFileImg = fileImg => {
+		dispatch({ type: 'update_files', fileImg })
+	}
 
 	const onAlertClose = () => {
 		dispatch({ type: 'reset_status' })
 	}
 
+	const resetClear = React.useCallback(() => {
+		dispatch({ type: 'reset_images' })
+	}, [])
+
+	const updateMainIndex = mainIndex => {
+		dispatch({ type: 'update_index', mainIndex })
+	}
 	return (
 		<SiteLayout>
 		<div>
@@ -332,17 +243,19 @@ const UserProfilePage = () => {
 													initialValues={state.initialValues}
 												>
 													<Col className="profile-item">
-													<Col className="profile-avatar"
-														span={6}
-														offset={7}>
-														
-														<Form.Item
-															name = "image">
-															<UploadAvatar
-																// updateFileImg = {updateFileImg}
-															/>
-														</Form.Item>
-													</Col>
+														<Col className="profile-avatar"
+															span={6}
+															push={9}
+															justify="center">
+															
+																<AvatarUpload
+																	className="new-avatar-upload"
+																	updateFileImg={updateFileImg}
+																	updateMainIndex={updateMainIndex}
+																	clear={state.clear}
+																	resetClear={resetClear}
+																/>
+														</Col>
 														<Form.Item
 															className="m-0"
 															name="name"
@@ -383,7 +296,7 @@ const UserProfilePage = () => {
 
 														<Form.Item
 															className="m-0"
-															name="phone"
+															name="userPhoneNumber"
 															rules={rules.phone}
 															// label="Số điện thoại"
 															>
@@ -393,58 +306,22 @@ const UserProfilePage = () => {
 															/>
 															</Form.Item>
 															
-															<Form.Item
-															className="m-0"
-															name="birthday"
-															rules={rules.birthday}
-															// label="Ngày sinh"
-															>
-															<CustomInputField
-																placeholder="Ngày sinh"
-																customStyle="style#2"
-															/>
-															</Form.Item>
-
 															
 
 															<Form.Item
-																className="m-0"
-																name="gender"
-																rules={rules.gender}
-																// label="Giới tính"
-																>
-																<CustomInputField
-																	placeholder="Giới tính"
-																	customStyle="style#2"
-																/>
-															</Form.Item>
-
-															
-
-															<Form.Item
-																className="m-0"
-																name="address"
+																// label="Dia chi"
+																name="userProvinceID"
 																rules={rules.address}
 																>
-																{/* <Select 
-																	style={{width:'60%'}}
-																	options={ optionProvince }
-																	// placeholder={t('Dân tộc')}
-																	size='large'
-																	defaultValue={ optionProvince[0] }
-																/> */}
-
-																<Select className="address-province-form__select"
-																	// bordered
+																<Select className="low-bradius-formpage-form__select">
+																	{state.provinces.map(address => (
+																	<Select.Option
+																		value={address.userProvinceName}
+																		key={address.userProvinceID}
 																	>
-																	{state.provinces.map(address => {
-																		<Select.Option
-																			key={address.provinceName}
-																			value={address.provinceId}
-																			>
-																			{address.provinceName}
-																		</Select.Option>
-																	})}
+																		{address.userProvinceName}
+																	</Select.Option>
+																	))}
 																</Select>
 															</Form.Item>
 

@@ -1,19 +1,30 @@
 import './style.scss'
 
-import React, {useState} from 'react'
-import { Upload, Image, Modal } from 'antd'
+import React from 'react'
+import { Upload, Image } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import PropTypes from 'prop-types'
+import { getBase64 } from '../../../utils/image'
+import Avatar from 'antd/lib/avatar/avatar'
+import Modal from 'antd/lib/modal/Modal'
 
-
-const imageUploadAvatar = (state, action) => {
+const imageUploadReducer = (state, action) => {
 	switch (action.type) {
 		case 'choose_preview':
 			return {
 				...state,
 				previewSrc: action.file.url || action.file.preview,
-				previewUid: action.file.uid
+				previewUid: action.file.uid,
+				// previewImage: action.file.url || action.file.preview,
+		  		previewVisible: true,
 			}
+
+		case 'cancle_modal':
+			return {
+				...state,
+				previewVisible:false,
+			}
+
 		case 'remove_preview':
 			return { ...state, previewSrc: '', previewUid: '' }
 		case 'add_image':
@@ -25,66 +36,66 @@ const imageUploadAvatar = (state, action) => {
 	}
 }
 
-
 const AvatarUpload = ({
 	className,
-	updateFileList,
-	// updateMainIndex,
+	updateFileImg,
+	updateMainIndex,
 	clear,
 	resetClear
 }) => {
-	// const [state, dispatch] = React.useReducer(imageUploadAvatar, {
-	// 	previewSrc: '',
-	// 	previewUid: '',
-	// 	fileList: []
-	// })
-
-	const [state, setState] = useState({
+	const [state, dispatch] = React.useReducer(imageUploadReducer, {
 		previewVisible: false,
-		previewImage: "",
+		previewSrc: '',
+		previewUid: '',
 		fileList: []
 	})
 
-	// React.useEffect(() => {
-	// 	if (clear) {
-	// 		dispatch({ type: 'reset' })
-	// 		resetClear()
-	// 	}
-	// }, [clear, resetClear])
+	const [isUploaded, setIsUploaded] = React.useState(false)
 
-	const { previewSrc, previewUid, fileList } = state
+	React.useEffect(() => {
+		if (clear) {
+			dispatch({ type: 'reset' })
+			resetClear()
+		}
+	}, [clear, resetClear])
 
-	const handleCancel = () => setState({previewVisible:false});
+	const { previewVisible, previewSrc, previewUid, fileList } = state
 
-	const handlePreview = file => {
-		setState({
-			previewImage: file.thumbUrl,
-      		previewVisible: true
-		})
-	} 
+	const choosePreview = async file => {
+		if (!file.url && !file.preview) {
+			file.preview = await getBase64(file.originFileObj)
+		}
 
-	const handleUpload = ({fileList}) => {
-		setState({fileList});
+		updateMainIndex(fileList.findIndex(f => f.uid === file.uid))
+		dispatch({ type: 'choose_preview', file })
+	}
+	const handlePreview = async file => {
+		if (!file.url && !file.preview) {
+		  file.preview = await getBase64(file.originFileObj);
+		}
+	
+		updateMainIndex(fileList.findIndex(f => f.uid === file.uid))
+		dispatch({ type: 'choose_preview', file })
+	  };
+
+	const handleCancle = () => {
+		dispatch({type: 'cancle_modal'})
+	}
+	 
+	const handleChange = ({ fileList }) => {
+		const oriFileList = fileList.map(file => file.originFileObj)
+		updateFileImg(oriFileList)
+		setIsUploaded(true)
+		dispatch({ type: 'add_image', fileList })
 	}
 
-	// const handleChange = ({ fileList }) => {
-	// 	const oriFileList = fileList.map(file => file.originFileObj)
-	// 	updateFileList(oriFileList)
-
-	// 	dispatch({ type: 'add_image', fileList })
-	// }
-	
-
-	// const handleRemove = file => {
-	// 	if (file.uid === previewUid) {
-	// 		// updateMainIndex(0)
-	// 		dispatch({ type: 'remove_preview' })
-	// 	}
-	// }
-
-	// const handleCancle = () => {
-		
-	// }
+	const handleRemove = file => {
+		if (file.uid === previewUid) {
+			updateMainIndex(0)
+			dispatch({ type: 'remove_preview' })
+			// setIsUploaded(false);
+		}
+	}
 
 	const dummyRequest = ({ file, onSuccess }) => {
 		setTimeout(() => {
@@ -94,23 +105,22 @@ const AvatarUpload = ({
 
 	return (
 		<div className={className}>
-			
-				<Upload
-					// className={`img-upload__list${
-					// 	fileList.length >= 1
-					// 		? ' img-upload__list--full'
-					// 		: fileList.length === 0
-					// 		? ' img-upload__list--empty'
-					// 		: ''
-					// }`}
-					accept="image/*"
-					listType="picture-card"
-					fileList={fileList}
-					onPreview={handlePreview}
-					onChange={handleUpload}
-					beforeUpload={() => false}
-					customRequest={dummyRequest}
-				>
+			<Upload
+				className={`img-upload__list${
+					fileList.length >= 1
+						? ' img-upload__list--full'
+						: fileList.length === 0
+						? ' img-upload__list--empty'
+						: ''
+				}`}
+				accept="image/*"
+				listType="picture-card"
+				fileList={fileList}
+				onRemove={handleRemove}
+				onPreview={handlePreview}
+				onChange={handleChange}
+				customRequest={dummyRequest}
+			>
 				{fileList.length >= 1 ? null : (
 					<div>
 						<PlusOutlined />
@@ -118,22 +128,20 @@ const AvatarUpload = ({
 					</div>
 				)}
 			</Upload>
+
 			<Modal
-				visible={state.previewVisible}
-				footer={null}
-				onCancel={handleCancel}
-				>
-				<Image alt="example" style={{ width: "100%" }} src={state.previewImage} />
+				visible={previewVisible}
+				onCancel={handleCancle}>
+					<img src={previewSrc} />
 			</Modal>
-			
 		</div>
 	)
 }
 
 AvatarUpload.propTypes = {
-	// updateFileList: PropTypes.func.isRequired,
-	// updateMainIndex: PropTypes.func.isRequired,
-	// clear: PropTypes.bool.isRequired
+	updateFileImg: PropTypes.func.isRequired,
+	updateMainIndex: PropTypes.func.isRequired,
+	clear: PropTypes.bool.isRequired
 }
 
 export default AvatarUpload

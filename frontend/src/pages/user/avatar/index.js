@@ -1,4 +1,4 @@
-import { Row, Col, Image, Button } from "antd"
+import { Row, Col, Image, Button, Avatar } from "antd"
 import TimeAgo from "javascript-time-ago"
 import axios from "axios"
 import React, {useState, useEffect} from "react"
@@ -42,12 +42,18 @@ const AvatarSide = ({userEmail, userImage}) => {
         <React.Fragment>
             <Col className="data-component">
                 <Col className="profile-card">
-                    <Image
-                        size="small"
+                    <Avatar
+                        shape = "circle"
                         src={userImageAvata}
                         className="header-auth__avatar"
-                        width={200}
-                        height={200}
+                        size={{
+                            xs: 100,
+                            sm: 120,
+                            md: 160,
+                            lg: 180,
+                            xl: 360,
+                            xxl: 420,
+                        }}
                     />
                     <div className="card-name">
                         {user.username}

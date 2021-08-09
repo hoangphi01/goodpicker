@@ -26,11 +26,10 @@ const imageUploadReducer = (state, action) => {
 
 
 
-const UploadAvatar = () => {
+const UploadAvatar = ({className, updateFileImg}) => {
 
     const [image, setImage] = React.useState('')
     const [isUploaded, setIsUploaded] = useState(false)
-    const [typeFile, setTypeFile] = useState('');
 
 
     const  handleImageChange = (e) => {
@@ -41,7 +40,8 @@ const UploadAvatar = () => {
             setImage(e.target.result);
             setIsUploaded(true);
           };
-    
+          const oriFile = e.target.file[0];
+          updateFileImg(oriFile)
           reader.readAsDataURL(e.target.files[0]);
         }
       }
@@ -59,7 +59,7 @@ const UploadAvatar = () => {
                 <Input
                   id="upload-input"
                   type="file"
-                  accept=".jpg,.jpeg,.gif,.png,.mov,.mp4"
+                  accept="image/*"
                   onChange={handleImageChange}
                 />
               </>
