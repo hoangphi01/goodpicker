@@ -5,7 +5,7 @@ export default class AuthService {
 	}
 
 	static logout = token => {
-		return axios.post('api/auth/logout', null, {
+		return axios.post('http://localhost:8000/api/auth/logout', null, {
 			headers: {
 				Authorization: `Bearer ${token}`
 			}
