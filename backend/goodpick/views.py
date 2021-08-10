@@ -54,9 +54,11 @@ class GoodsView(viewsets.ModelViewSet):
     filterset_fields = {
         'goodsCategoryID': ['exact'],
         'goodsStatus': ['exact'],
+        'goodsCreateId': ['extract'],
         'goodsPrice': ['gte', 'lte'],
         'goodsLocation': ['exact'],
         'goodsUpdatedTime': ['gte', 'lte']
+        
     }
     search_fields = ['goodsName']
     ordering_fields = ['goodsUpdatedTime', 'goodsPrice']
