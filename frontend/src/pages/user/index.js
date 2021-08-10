@@ -23,8 +23,8 @@ const UserPage = () => {
     
     return (
         <SiteLayout>
-                {cookies['gp_token']? (
-                    <Col className="user-main-content" span={16}>
+                {/* {cookies['gp_token']? ( */}
+                    <Col className="user-main-content" span={18}>
                         <Row className="user-avatar-side">
                             <AvatarSide/>
                         </Row>
@@ -33,10 +33,10 @@ const UserPage = () => {
                             <ContentSide/>
                         </Row>
                     </Col>
-                    ):(
+                    {/* ):(
                         <Custom404/>
                     )
-                }
+                } */}
         </SiteLayout>
     )
 }

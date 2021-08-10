@@ -4,38 +4,12 @@ import TimeAgo from "javascript-time-ago"
 import axios from "axios"
 import React, {Suspense} from "react"
 import { useAuthState } from "../../../hooks/useAuth"
-// import ListCategory from "./category"
 
-
-// const ListCategory = React.lazy(()=> import('./category'))
 
 const ContentSide = ({goodsID, goodsName}) => {
 
     const {user, cookies} = useAuthState()
-    // const [categories, setCategories] = React.useState(null)
-	// const unmountedRef = React.useRef(false)
-
-	// React.useLayoutEffect(() => {
-	// 	const getCategories = async () => {
-	// 		const res = await axios.get('/api/categories')
-
-	// 		if (!unmountedRef.current) {
-	// 			setCategories(res.data)
-	// 		}
-	// 	}
-
-	// 	getCategories()
-	// }, [])
-
-	// React.useEffect(() => {
-	// 	return () => {
-	// 		unmountedRef.current = true
-	// 	}
-	// }, [])
-
-
-	// const [user, cookies] = useAuthState()
-    // const timeAgo = new TimeAgo('vi-vn')
+    const timeAgo = new TimeAgo('vi-vn')
     const unmountedRef = React.useRef(false)
     const [goods, setGoods] = React.useState([])
     const [count,setCount] = React.useState(0)
@@ -54,30 +28,37 @@ const ContentSide = ({goodsID, goodsName}) => {
             )
             .then(res => {
                 setCount(res.data.length)
-				setGoods(res.data.results)
+				setGoods(res.data)
+				// console.log(res.data)
             	}
             )
-            // if (!unmountedRef.current) {
-			// 	setGoods(res.data.results)
-			// }
         }
 
         getGoods()
     },[goodsID])
 
-    // const renderListCategory = ({item,i}) => {
-        const listData = [];
-        for(let i; i < count; i++) {
-			if(goods.goodsID === i) {
-            listData.push({
-                title: goods.goodsName,
-                description: goods.goodsPrice,
-                content: goods.goodsDescription,
+	const  [goodImg, setGoodImg] = React.useState()
 
-            })
-        }}
+	const listData = [];
+	// if(goods=== null) {}
+	if(goods && goods.length !== 0) {
+		for (let i = 0; i < count; i++) {
+			let goodImg;
+			goodImg = goods[i].images.find(image => image.isMain === true).image;
+			let des;
+			if(goods[i].goodsDescription) des = goods[i].goodsDescription;
+			else des = `Đây là sản phẩm của ` + user.name
 
-    // }
+			listData.push({
+				key: goods[i].goodsID,
+				title: goods[i].goodsName,
+				description: goods[i].goodsPrice,
+				content: des,
+				image: goodImg,
+				updateTime: goods[i].goodsUpdatedTime
+			});
+		}
+	}
     
 
 	
@@ -88,48 +69,43 @@ const ContentSide = ({goodsID, goodsName}) => {
 				<Row className="user-category-title">
 					<h2><b>Sản phẩm đã đăng</b></h2>
 				</Row>
-				<Row className="user-category-content">
-					{categories ?
-						categories.map(category => (
-							<Suspense
-								key = {category.goodsCategoryName}
-								fallback = {null}
-								>
-								<List
-									itemLayout="vertical"
-									size="large"
-									dataSource={listData}
-									pagination={{
-										onChange: page => {},
-										pageSize:5,
-									}}
-									renderItem={item => {
-										<List.Item
-											key={item.goodsID}
-											extra={
-												<img
-													src={item.images.find(image => image.isMain === true).image}
-													alt={item.goodsName}
-												/>
-											}
-										>
-										<Skeleton active>
-											<List.Item.Meta
-											// avatar={<Avatar src={item.avatar} />}
-											title={<a href={item.href}>{item.title}</a>}
-											description={item.description}
-											/>
-											{item.content}
-										</Skeleton>
-
-										</List.Item>
-									}}
-									>
-
-								</List>	
-							</Suspense>
-						))
-					: null }
+				<Row className="user-category-content"> 
+					<List
+						itemLayout="vertical"
+						size="large"
+						dataSource={listData}
+						pagination={{
+						onChange: page => {
+							console.log(page);
+						},
+						pageSize: 3,
+						}}
+						
+						renderItem={item => (
+						<List.Item
+							key={item.key}
+						
+							extra={
+								// <div className = "user-category-content-category-img">
+									<img
+										className = "user-category-content-category-img"
+										width={200}
+										height={200}
+										alt="logo"
+										src={item.image}
+									/>
+								// {/* </div> */}
+							}
+						>
+							<List.Item.Meta
+								//   avatar={<Avatar src={item.avatar} />}
+								title={<h3><b>{item.title}</b></h3>}
+								description={<h6><i>{item.description}</i></h6>}
+								/>
+								<h4><i>{item.content}</i></h4>
+							</List.Item>
+						)}
+					/>
 				</Row>
 			</Col>
         </React.Fragment>

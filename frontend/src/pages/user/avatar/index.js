@@ -47,14 +47,33 @@ const AvatarSide = ({userEmail, userImage}) => {
                 </Row>
                 <br/>
                 <Row className="user-avatar-content" 
-                    gutter={{ xs: 10, sm: 32, md: 64}}
+                    gutter={{ xs: 10, sm: 32, md: 120}}
                     >
                     <Col className="user-avatar-content-img" >
-                        <Image id = "avatar" 
-                            className="img-fluid" 
-                            src = {userImageAvata}
-                        />
+                        <Row>
+                            <Image id = "avatar" 
+                                className="img-fluid" 
+                                src = {userImageAvata}
+                            />  
+                        </Row>
+                        <Row>
+                        {cookies['gp_token']? (
+                            <Link to="/profile">
+                                <Button className="user-avatar-button">
+                                    Chỉnh sửa trang cá nhân
+                                </Button>
+                            </Link>
+                        ):(
+                            <Link>
+                                <Button className="user-avatar-button">
+                                    Liên hệ
+                                </Button>
+                            </Link>
+                        )
+                        }
+                        </Row>
                     </Col>
+                    
                     <Col className="user-avatar-content-info">
                         <h3><b>{user.username}</b></h3>
                         <br/>
@@ -66,17 +85,17 @@ const AvatarSide = ({userEmail, userImage}) => {
                             <h5><b>Email: </b>{user.email}</h5>
                         </Row>
                         <br/>
+                        <Row >
+                            <h5><b>Địa chỉ: </b>{user.userProvinceID}</h5>
+                        </Row>
+                        <br/>
                         <Row>
                             <h5><b>Xếp hạng: </b>5/5</h5>
                         </Row>
                     </Col>
                 </Row>
                 
-                <Link to="/profile">
-                    <Button className="user-avatar-button">
-                        Chỉnh sửa trang cá nhân
-                    </Button>
-                </Link>
+                
             </Col>
         </React.Fragment>
     )
