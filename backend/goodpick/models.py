@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 
 class UserManager(BaseUserManager):
 
-    def create_user(self, username, email, password, name, **kwargs):
+    def create_user(self, username, email, password, name, userProvinceID, **kwargs):
         if password is None:
             raise TypeError('Users must have a password.')
         if username is None:
@@ -14,14 +14,21 @@ class UserManager(BaseUserManager):
             raise TypeError('Users must have an email.')
         if name is None:
             raise TypeError('Users must have an name.')
+        if userProvinceID is None:
+            raise TypeError('Users must have an userProvinceID.')
 
-        user = self.model(username=username, email=self.normalize_email(email), name=name)
+        user = self.model(
+            username=username,
+            email=self.normalize_email(email),
+            name=name,
+            userProvinceID=Province.objects.get(pk=userProvinceID)
+        )
         user.set_password(password)
         user.save(using=self._db)
 
         return user
 
-    def create_superuser(self, username, email, password, name):
+    def create_superuser(self, username, email, password, name, userProvinceID):
         if password is None:
             raise TypeError('Superusers must have a password.')
         if email is None:
@@ -30,15 +37,16 @@ class UserManager(BaseUserManager):
             raise TypeError('Superusers must have an username.')
         if name is None:
             raise TypeError('Superusers must have an name.')
+        if userProvinceID is None:
+            raise TypeError('Superusers must have an userProvinceID.')
 
-        user = self.create_user(username, email, password, name)
+        user = self.create_user(username, email, password, name, userProvinceID)
         user.is_superuser = True
         user.is_staff = True
         user.save(using=self._db)
 
         return user
 
-# Create your models here.
 class Province(models.Model):
     userProvinceID = models.AutoField(primary_key=True)
     userProvinceName= models.CharField(max_length=64)
@@ -53,11 +61,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     userImage = models.ImageField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    userProvinceID = models.ForeignKey(Province, on_delete=models.CASCADE, null = True)
+    userProvinceID = models.ForeignKey(Province, on_delete=models.CASCADE)
     userPhoneNumber = models.CharField(max_length=10, null = True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'password', 'name']
+    REQUIRED_FIELDS = ['username', 'password', 'name', 'userProvinceID']
 
     objects = UserManager()
     def __str__(self):
@@ -126,15 +134,24 @@ class Comment(models.Model):
     def __str__(self):
         return f"{self.commentContent} ({self.commentTime})"
 
-
 class Chat(models.Model):
-    class ChatKey:
-        uniqueComment = (('userID', 'goodsID'),)
-
-    userID = models.ForeignKey(User, on_delete=models.CASCADE)
-    goodsID = models.ForeignKey(Goods, on_delete=models.CASCADE)
-    chatContent = models.CharField(max_length=200)
-    chatTime = models.DateTimeField(auto_now=True)
+    participants = models.ManyToManyField(
+        User, related_name='chats', blank=True)
 
     def __str__(self):
-        return f"{self.chatContent} ({self.chatTime})"
+        return "{}".format(self.pk)
+
+class Contact(models.Model):
+    userId = models.ForeignKey(User, on_delete=models.CASCADE)
+    partner = models.ForeignKey(User, related_name='contacts', on_delete=models.CASCADE)
+    chatId = models.ForeignKey(Chat, on_delete=models.CASCADE)
+
+class Message(models.Model):
+    chat = models.ForeignKey(Chat, related_name='messages', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='messages', on_delete=models.CASCADE)
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.user.username
+
