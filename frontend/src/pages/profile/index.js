@@ -83,7 +83,7 @@ const UserProfilePage = () => {
         ],
         address: [
             {
-                // required: true,
+                required: true,
                 message: 'Vui lòng nhập địa chỉ'
             }
         ]
@@ -101,7 +101,7 @@ const UserProfilePage = () => {
 		provinces: [],
 		initialValues: {
             username:'', 
-            email:'', 
+            email:user.email, 
 			name:'',
 			phone:'',
             address:'', 
@@ -129,7 +129,6 @@ const UserProfilePage = () => {
 
 		const getProvinces = async () => {
 			const res = await axios.get('/api/provinces')
-			console.log(res.data)
 			if (!unmountedRef.current) {
 				dispatch({ type: 'get_provinces', provinces: res.data })
 			}
@@ -176,7 +175,6 @@ const UserProfilePage = () => {
 			.then(res => {
 				console.log(res.data)
 				authenticate({user: res.data, token: cookies['gp_token']})
-				// history.push('/user')
 			})
 
 			if (!unmountedRef.current) {
@@ -238,6 +236,7 @@ const UserProfilePage = () => {
 												<Form 
 													className ="update-user-info"
 													layout="vertical"
+													form={form}
 													onFinish={onFinish}
 													scrollToFirstError
 													initialValues={state.initialValues}
@@ -245,9 +244,8 @@ const UserProfilePage = () => {
 													<Col className="profile-item">
 														<Col className="profile-avatar"
 															span={6}
-															push={9}
+															push={10}
 															justify="center">
-															
 																<AvatarUpload
 																	className="new-avatar-upload"
 																	updateFileImg={updateFileImg}
@@ -260,10 +258,10 @@ const UserProfilePage = () => {
 															className="m-0"
 															name="name"
 															rules={rules.name}
-															// label="Họ và Tên"
+															label="Họ và Tên"
 															>
 															<CustomInputField
-																placeholder="Họ và Tên"
+																// placeholder="Họ và Tên"
 																customStyle="style#2"
 															/>
 														</Form.Item>
@@ -272,10 +270,10 @@ const UserProfilePage = () => {
 															className="m-0"
 															name="username"
 															rules={rules.username}
-															// label="Tên người dùng"
+															label="Tên người dùng"
 															>
 															<CustomInputField
-																placeholder="Tên người dùng"
+																// placeholder="Tên người dùng"
 																customStyle="style#2"
 															/>
 														</Form.Item>
@@ -285,12 +283,13 @@ const UserProfilePage = () => {
 															className="m-0"
 															name="email"
 															rules={rules.email}
-															// label="Email"
+															label="Email"
 															>
 															<CustomInputField
-																placeholder="Email"
+																// placeholder="Email"
 																customStyle="style#2"
-																// disabled
+																disabled
+																// defaultValue={user.email}
 															/>
 														</Form.Item>
 
@@ -298,10 +297,10 @@ const UserProfilePage = () => {
 															className="m-0"
 															name="userPhoneNumber"
 															rules={rules.phone}
-															// label="Số điện thoại"
+															label="Số điện thoại"
 															>
 															<CustomInputField
-																placeholder="Số điện thoại"
+																// placeholder="Số điện thoại"
 																customStyle="style#2"
 															/>
 															</Form.Item>
@@ -309,7 +308,7 @@ const UserProfilePage = () => {
 															
 
 															<Form.Item
-																// label="Dia chi"
+																label="Dia chi"
 																name="userProvinceID"
 																rules={rules.address}
 																>
