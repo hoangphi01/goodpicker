@@ -54,7 +54,7 @@ class GoodsView(viewsets.ModelViewSet):
     filterset_fields = {
         'goodsCategoryID': ['exact'],
         'goodsStatus': ['exact'],
-        'goodsCreateId': ['extract'],
+        'goodsCreateId': ['exact'],
         'goodsPrice': ['gte', 'lte'],
         'goodsLocation': ['exact'],
         'goodsUpdatedTime': ['gte', 'lte']
