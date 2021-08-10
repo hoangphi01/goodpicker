@@ -45,7 +45,7 @@ const HeaderControl = () => {
 				{cookies['gp_token'] ? (
 					user ? (
 						<>
-							<Link to="message" className="header-icon">
+							<Link to="/message" className="header-icon">
 								<Tooltip mouseEnterDelay={0.4} title="Tin nhắn">
 									<button className="header-btn header-btn--icon">
 										<MessageOutlined />
@@ -53,7 +53,7 @@ const HeaderControl = () => {
 								</Tooltip>
 							</Link>
 
-							<Link to="new-post" className="header-icon">
+							<Link to="/new-post" className="header-icon">
 								<Tooltip mouseEnterDelay={0.4} title="Đăng bài">
 									<button className="header-btn header-btn--icon">
 										<FileAddOutlined />

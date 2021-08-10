@@ -1,11 +1,11 @@
 import axios from 'axios'
 export default class AuthService {
 	static login = body => {
-		return axios.post('api/auth/login', body)
+		return axios.post('/api/auth/login', body)
 	}
 
 	static logout = token => {
-		return axios.post('http://localhost:8000/api/auth/logout', null, {
+		return axios.post('/api/auth/logout', null, {
 			headers: {
 				Authorization: `Bearer ${token}`
 			}
@@ -13,11 +13,11 @@ export default class AuthService {
 	}
 
 	static register = body => {
-		return axios.post('api/auth/register', body)
+		return axios.post('/api/auth/register', body)
 	}
 
 	static getMe = token => {
-		return axios.get('api/auth/user', {
+		return axios.get('/api/auth/user', {
 			headers: {
 				Authorization: `Bearer ${token}`
 			}
