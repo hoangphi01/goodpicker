@@ -222,7 +222,7 @@ const SearchPage = () => {
 							state.goods.map(item => (
 								<div
 									className="search-page-result-card"
-									key={item.goodsUpdatedTime}
+									key={`${item.goodsID}${item.goodsUpdatedTime}`}
 								>
 									<div className="search-page-result-card__img-wrapper">
 										<img

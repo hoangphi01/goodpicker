@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 
 class UserManager(BaseUserManager):
 
-    def create_user(self, username, email, password, name, **kwargs):
+    def create_user(self, username, email, password, name, userProvinceID, **kwargs):
         if password is None:
             raise TypeError('Users must have a password.')
         if username is None:
@@ -14,14 +14,21 @@ class UserManager(BaseUserManager):
             raise TypeError('Users must have an email.')
         if name is None:
             raise TypeError('Users must have an name.')
+        if userProvinceID is None:
+            raise TypeError('Users must have an userProvinceID.')
 
-        user = self.model(username=username, email=self.normalize_email(email), name=name)
+        user = self.model(
+            username=username,
+            email=self.normalize_email(email),
+            name=name,
+            userProvinceID=Province.objects.get(pk=userProvinceID)
+        )
         user.set_password(password)
         user.save(using=self._db)
 
         return user
 
-    def create_superuser(self, username, email, password, name):
+    def create_superuser(self, username, email, password, name, userProvinceID):
         if password is None:
             raise TypeError('Superusers must have a password.')
         if email is None:
@@ -30,8 +37,10 @@ class UserManager(BaseUserManager):
             raise TypeError('Superusers must have an username.')
         if name is None:
             raise TypeError('Superusers must have an name.')
+        if userProvinceID is None:
+            raise TypeError('Superusers must have an userProvinceID.')
 
-        user = self.create_user(username, email, password, name)
+        user = self.create_user(username, email, password, name, userProvinceID)
         user.is_superuser = True
         user.is_staff = True
         user.save(using=self._db)
@@ -56,7 +65,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     userPhoneNumber = models.CharField(max_length=10, null = True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'password', 'name']
+    REQUIRED_FIELDS = ['username', 'password', 'name', 'userProvinceID']
 
     objects = UserManager()
     def __str__(self):

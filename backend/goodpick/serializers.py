@@ -12,6 +12,11 @@ from .models import GoodsImage
 from .models import Contact
 from .models import Message
 
+class ProvinceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Province
+        fields = '__all__'
+
 #User Serializer
 class UserContactSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,6 +32,7 @@ class ContactSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     contacts = ContactSerializer(source="contact_set", many=True, read_only=True)
+    userProvinceID = ProvinceSerializer(read_only=True)
 
     class Meta:
         model = User
@@ -40,7 +46,13 @@ class RegisterSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        user = User.objects.create_user(validated_data['username'], validated_data['email'], validated_data['password'], validated_data['name'])
+        user = User.objects.create_user(
+            validated_data['username'],
+            validated_data['email'],
+            validated_data['password'],
+            validated_data['name'],
+            self.context.get('request').data.get('userProvinceID')
+        )
 
         return user
 
@@ -59,11 +71,6 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ('goodsCategoryID', 'goodsCategoryName')
-
-class ProvinceSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Province
-        fields = ('userProvinceID', 'userProvinceName')
 
 class GoodsImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -84,7 +91,7 @@ class GoodsSerializer(serializers.ModelSerializer):
             goodsCategoryID=validated_data.get('goodsCategoryID'),
             goodsDescription=validated_data.get('goodsDescription', ''),
             goodsPrice=validated_data.get('goodsPrice'),
-            goodsLocation=validated_data.get('goodsLocation', 'Hanoi'),
+            goodsLocation=validated_data.get('goodsLocation'),
             goodsCreateId=validated_data.get('goodsCreateId'),
         )
 

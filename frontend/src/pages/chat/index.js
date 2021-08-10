@@ -168,7 +168,7 @@ const Chat = () => {
 							onFinish={sendMessageHandler}
 						>
 							<Form.Item name="message">
-								<Input ref={inputRef} />
+								<Input ref={inputRef} placeholder="Gửi tin nhắn" />
 							</Form.Item>
 
 							<button type="submit">

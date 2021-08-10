@@ -1,5 +1,5 @@
 import './style.scss'
-import { Row, Col, Form, Button } from 'antd'
+import { Row, Col, Form, Button, Select } from 'antd'
 import React, { useLayoutEffect, useState } from 'react'
 import CustomInputField from '../../components/elements/input'
 import { Link, useHistory } from 'react-router-dom'
@@ -8,6 +8,7 @@ import SiteLayout from '../../components/layouts/site-layout'
 import AuthService from '../../service/AuthService'
 import { useAuthenticate, useAuthState } from '../../hooks/useAuth'
 import { openMessage } from '../../components/elements/auth-message'
+import axios from 'axios'
 
 const LoginPage = () => {
 	const rules = {
@@ -46,19 +47,40 @@ const LoginPage = () => {
 					return Promise.reject(new Error('Mật khẩu nhập lại không khớp'))
 				}
 			})
+		],
+		userProvinceID: [
+			{ required: true, message: 'Vui lòng chọn một tỉnh thành' }
 		]
 	}
 
 	const authenticate = useAuthenticate()
 	const history = useHistory()
 	const authState = useAuthState()
+	const unmountedRef = React.useRef(false)
 
 	const [error, setError] = useState(null)
+	const [provinces, setProvinces] = useState([])
+
+	React.useEffect(() => {
+		return () => {
+			unmountedRef.current = true
+		}
+	})
 
 	useLayoutEffect(() => {
 		if (authState.cookies['gp_token']) {
 			history.push('/')
 		}
+
+		const getProvinces = async () => {
+			const res = await axios.get('/api/provinces')
+
+			if (!unmountedRef.current) {
+				setProvinces(res.data)
+			}
+		}
+
+		getProvinces()
 	}, [authState.cookies, history])
 
 	const onFinishLogin = async values => {
@@ -83,7 +105,8 @@ const LoginPage = () => {
 			email: values.email,
 			password: values.password,
 			username: values.username,
-			name: values.name
+			name: values.name,
+			userProvinceID: values.userProvinceID
 		})
 			.then(res => {
 				onAuthenticate(res.data)
@@ -233,6 +256,25 @@ const LoginPage = () => {
 											placeholder="Email"
 											customStyle="style#2"
 										/>
+									</Form.Item>
+
+									<Form.Item
+										className="m-0"
+										name="userProvinceID"
+										rules={rules.userProvinceID}
+									>
+										<Select className="round-select" placeholder="Tỉnh thành">
+											{provinces
+												? provinces.map(province => (
+														<Select.Option
+															key={province.userProvinceName}
+															value={province.userProvinceID}
+														>
+															{province.userProvinceName}
+														</Select.Option>
+												  ))
+												: null}
+										</Select>
 									</Form.Item>
 
 									<Form.Item
