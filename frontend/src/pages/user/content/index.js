@@ -1,5 +1,5 @@
 import './style.scss'
-import { Row, Col, Image, Skeleton } from "antd"
+import { Row, Col, Image, Skeleton, List } from "antd"
 import TimeAgo from "javascript-time-ago"
 import axios from "axios"
 import React, {Suspense} from "react"
@@ -7,50 +7,80 @@ import { useAuthState } from "../../../hooks/useAuth"
 // import ListCategory from "./category"
 
 
-const ListCategory = React.lazy(()=> import('./category'))
+// const ListCategory = React.lazy(()=> import('./category'))
 
-// import TimeAgo from "javascript-time-ago"
-// import vi from 'javascript-time-ago/locale/vi'
+const ContentSide = ({goodsID, goodsName}) => {
 
-
-// TimeAgo.addDefaultLocale(vi)
-
-// const timeAgo = new TimeAgo('vi-vn')
-const ContentSide = () => {
-
-    // const []
     const {user, cookies} = useAuthState()
-    const [categories, setCategories] = React.useState(null)
-	const unmountedRef = React.useRef(false)
+    // const [categories, setCategories] = React.useState(null)
+	// const unmountedRef = React.useRef(false)
 
-	React.useLayoutEffect(() => {
-		const getCategories = async () => {
-			const res = await axios.get('/api/categories')
+	// React.useLayoutEffect(() => {
+	// 	const getCategories = async () => {
+	// 		const res = await axios.get('/api/categories')
 
-			if (!unmountedRef.current) {
-				setCategories(res.data)
-			}
-		}
+	// 		if (!unmountedRef.current) {
+	// 			setCategories(res.data)
+	// 		}
+	// 	}
 
-		getCategories()
-	}, [])
+	// 	getCategories()
+	// }, [])
 
-	React.useEffect(() => {
-		return () => {
-			unmountedRef.current = true
-		}
-	}, [])
+	// React.useEffect(() => {
+	// 	return () => {
+	// 		unmountedRef.current = true
+	// 	}
+	// }, [])
+
+
+	// const [user, cookies] = useAuthState()
+    // const timeAgo = new TimeAgo('vi-vn')
+    const unmountedRef = React.useRef(false)
+    const [goods, setGoods] = React.useState([])
+    const [count,setCount] = React.useState(0)
+	const [categories, setCategories] = React.useState(null)
+
+    React.useEffect(()=> {
+        return () => {
+            unmountedRef.current = true
+        }
+    })
+
+    React.useEffect(()=> {
+        const getGoods = async () => {
+            const res = await axios.get (
+                `/api/goods?goodsCreateId=${user.id}&ordering=-goodsUpdatedTime`
+            )
+            .then(res => {
+                setCount(res.data.length)
+				setGoods(res.data.results)
+            	}
+            )
+            // if (!unmountedRef.current) {
+			// 	setGoods(res.data.results)
+			// }
+        }
+
+        getGoods()
+    },[goodsID])
+
+    // const renderListCategory = ({item,i}) => {
+        const listData = [];
+        for(let i; i < count; i++) {
+			if(goods.goodsID === i) {
+            listData.push({
+                title: goods.goodsName,
+                description: goods.goodsPrice,
+                content: goods.goodsDescription,
+
+            })
+        }}
+
+    // }
     
 
-	// const renderSkeleton = () => {
-	// 	return (
-	// 		<div className="newest-category-skeleton">
-	// 			<Skeleton.Input active className="newest-category-skeleton__title" />
-	// 			<Skeleton.Input active className="newest-category-skeleton__divider" />
-	// 			<Skeleton.Input active className="newest-category-skeleton__content" />
-	// 		</div>
-	// 	)
-	// }
+	
 
     return (
         <React.Fragment>
@@ -65,10 +95,38 @@ const ContentSide = () => {
 								key = {category.goodsCategoryName}
 								fallback = {null}
 								>
-									<ListCategory
-										categoryId={category.goodsCategoryID}
-										categoryName={category.goodsCategoryName}
-										/>
+								<List
+									itemLayout="vertical"
+									size="large"
+									dataSource={listData}
+									pagination={{
+										onChange: page => {},
+										pageSize:5,
+									}}
+									renderItem={item => {
+										<List.Item
+											key={item.goodsID}
+											extra={
+												<img
+													src={item.images.find(image => image.isMain === true).image}
+													alt={item.goodsName}
+												/>
+											}
+										>
+										<Skeleton active>
+											<List.Item.Meta
+											// avatar={<Avatar src={item.avatar} />}
+											title={<a href={item.href}>{item.title}</a>}
+											description={item.description}
+											/>
+											{item.content}
+										</Skeleton>
+
+										</List.Item>
+									}}
+									>
+
+								</List>	
 							</Suspense>
 						))
 					: null }
