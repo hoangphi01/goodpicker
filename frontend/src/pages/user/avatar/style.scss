@@ -1,7 +1,34 @@
-@import '../../styles/variables';
+@import '../../../styles/variables';
 
-.data-component {
-    align-items: center;
-    align-self: center;
-    align-content: center;
+.user-avatar {
+    // margin: 0 auto; /* Added */
+    // float: none; /* Added */
+    // margin-bottom: 10px; /* Added */
+    // text-align: justify;
+    &-title {
+
+    }
+    &-button {
+        border-radius: rem(5px);
+        background-color: #21af90;
+        font-size: medium;
+        color: white;
+        height:max-content;
+    }
+
+    &-content {
+        padding-bottom: rem(20px);
+        &-img {
+            .img-fluid {
+                width: 200px;
+                height: 200px;
+                background-size: cover;
+                background-position: top center;
+                border-radius: 50%;
+            }
+        }
+        &-info {
+            border-radius: 5px;
+        }
+    }
 }

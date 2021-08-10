@@ -61,14 +61,7 @@ const AvatarUpload = ({
 
 	const { previewVisible, previewSrc, previewUid, fileList } = state
 
-	const choosePreview = async file => {
-		if (!file.url && !file.preview) {
-			file.preview = await getBase64(file.originFileObj)
-		}
-
-		updateMainIndex(fileList.findIndex(f => f.uid === file.uid))
-		dispatch({ type: 'choose_preview', file })
-	}
+	
 	const handlePreview = async file => {
 		if (!file.url && !file.preview) {
 		  file.preview = await getBase64(file.originFileObj);

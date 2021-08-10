@@ -1,4 +1,5 @@
-import { Row, Col, Image, Button, Avatar } from "antd"
+import './style.scss'
+import { Row, Col, Image, Button, Form } from "antd"
 import TimeAgo from "javascript-time-ago"
 import axios from "axios"
 import React, {useState, useEffect} from "react"
@@ -40,30 +41,42 @@ const AvatarSide = ({userEmail, userImage}) => {
 
     return (
         <React.Fragment>
-            <Col className="data-component">
-                <Col className="profile-card">
-                    <Avatar
-                        shape = "circle"
-                        src={userImageAvata}
-                        className="header-auth__avatar"
-                        size={{
-                            xs: 100,
-                            sm: 120,
-                            md: 160,
-                            lg: 180,
-                            xl: 360,
-                            xxl: 420,
-                        }}
-                    />
-                    <div className="card-name">
-                        {user.username}
-                    </div>
-                    <Link to="/profile/" >
-                        <Button>
-                            Chỉnh sửa trang cá nhân
-                        </Button>
-                    </Link>
-                </Col>
+            <Col className="user-avatar">
+                <Row className="user-avatar-title">
+                    <h2><b>Trang cá nhân</b></h2>
+                </Row>
+                <br/>
+                <Row className="user-avatar-content" 
+                    gutter={{ xs: 10, sm: 32, md: 64}}
+                    >
+                    <Col className="user-avatar-content-img" >
+                        <Image id = "avatar" 
+                            className="img-fluid" 
+                            src = {userImageAvata}
+                        />
+                    </Col>
+                    <Col className="user-avatar-content-info">
+                        <h3><b>{user.username}</b></h3>
+                        <br/>
+                        <Row>
+                            <h5><b>Thông tin liên hệ: </b>{user.userPhoneNumber}</h5>
+                        </Row>
+                        <br/>
+                        <Row >
+                            <h5><b>Email: </b>{user.email}</h5>
+                        </Row>
+                        <br/>
+                        <Row>
+                            <h5><b>Xếp hạng: </b>5/5</h5>
+                        </Row>
+                    </Col>
+                </Row>
+                
+                <Link to="/profile">
+                    <Button className="user-avatar-button">
+                        Chỉnh sửa trang cá nhân
+                    </Button>
+                </Link>
             </Col>
         </React.Fragment>
     )
