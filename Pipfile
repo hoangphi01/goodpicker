@@ -13,6 +13,8 @@ django-rest-knox = "*"
 cloudinary = "*"
 django-cloudinary-storage = "*"
 pillow = "*"
+channels = "*"
+channels-redis = "*"
 
 [dev-packages]
 

@@ -1,5 +1,4 @@
 from rest_framework import serializers
-# from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from .models import Province, User
 from .models import Goods
@@ -10,12 +9,28 @@ from .models import Chat
 from .models import Category
 from .models import Province
 from .models import GoodsImage
+from .models import Contact
+from .models import Message
 
 #User Serializer
-class UserSerializer(serializers.ModelSerializer):
+class UserContactSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'name', 'userImage', 'userProvinceID', 'userPhoneNumber')
+        fields = ('username', 'userImage', 'id')
+
+class ContactSerializer(serializers.ModelSerializer):
+    partner = UserContactSerializer()
+    
+    class Meta:
+        model = Contact
+        fields = ('partner', 'chatId')
+
+class UserSerializer(serializers.ModelSerializer):
+    contacts = ContactSerializer(source="contact_set", many=True, read_only=True)
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'name', 'userImage', 'userProvinceID', 'userPhoneNumber', 'contacts')
 
 #Register Serializer
 class RegisterSerializer(serializers.ModelSerializer):
@@ -95,8 +110,39 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = ('userID', 'goodsID', 'commentContent', 'commentTime')
 
+class UserMessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'id')
+
+class MessageSerializer(serializers.ModelSerializer):
+    user = UserMessageSerializer()
+    
+    class Meta:
+        model = Message
+        fields = ('user', 'timestamp', 'content')
 
 class ChatSerializer(serializers.ModelSerializer):
+    messages = MessageSerializer(many=True)
+
     class Meta:
         model = Chat
-        fields = ('userID', 'goodsID', 'chatContent', 'chatTime')
+        fields = ('id', 'messages')
+        read_only = ('id')
+
+    def create(self, validated_data):
+        participants = validated_data.pop('participants')
+        chat = Chat()
+        chat.save()
+        for username in participants:
+            user = User.objects.get(username=username)
+            chat.participants.add(user)
+            for nestedUsername in participants:
+                if nestedUsername != username:
+                    contact = Contact.objects.create(
+                        userId=user,
+                        partner=User.objects.get(username=nestedUsername),
+                        chatId=chat.id
+                    )
+        chat.save()
+        return chat

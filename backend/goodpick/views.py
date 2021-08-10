@@ -23,7 +23,7 @@ from .models import Chat
 from .models import Category
 from .models import Province
 from .models import GoodsImage
-from .permissions import ReadOnly
+from .permissions import ReadOnly, IsParticipants
 
 # Create your views here.
 
@@ -78,8 +78,14 @@ class CommentView(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
 
-
 class ChatView(viewsets.ModelViewSet):
-    serializer_class = ChatSerializer
-    queryset = Chat.objects.all()
+  serializer_class = ChatSerializer
+  permission_classes = [IsParticipants]
 
+  def get_queryset(self):
+    queryset = Chat.objects.all()
+    username = self.request.query_params.get('username', None)
+    if username is not None:
+      user = User.objects.get(username=username)  
+      queryset = user.chats.all()
+    return queryset
