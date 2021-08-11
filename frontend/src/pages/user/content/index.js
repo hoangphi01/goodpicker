@@ -54,6 +54,7 @@ const ContentSide = ({goodsID, goodsName}) => {
 				image: goodImg,
 				updateTime: goods[i].goodsUpdatedTime,
 				linkGoods: `/goods/${goods[i].goodsID}`
+				// linkGoods: `/`
 			});
 		}
 	}

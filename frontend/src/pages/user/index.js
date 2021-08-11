@@ -8,12 +8,8 @@ import Custom404 from "../404"
 import { useAuthState } from "../../hooks/useAuth"
 import { Link, useHistory } from "react-router-dom"
 import axios from "axios"
-import CustomCarousel from "../home/carousel"
-
-const Category = React.lazy(() => import('../home/category'))
 
 
-const {Sider, Content} = Layout;
 
 const UserPage = () => {
     const { user, cookies} = useAuthState()
@@ -23,7 +19,7 @@ const UserPage = () => {
     
     return (
         <SiteLayout>
-                {/* {cookies['gp_token']? ( */}
+                {cookies['gp_token']? (
                     <Col className="user-main-content" span={18}>
                         <Row className="user-avatar-side">
                             <AvatarSide/>
@@ -33,10 +29,10 @@ const UserPage = () => {
                             <ContentSide/>
                         </Row>
                     </Col>
-                    {/* ):(
-                        <Custom404/>
+                    ):(
+                        history.push("/")
                     )
-                } */}
+                }
         </SiteLayout>
     )
 }
