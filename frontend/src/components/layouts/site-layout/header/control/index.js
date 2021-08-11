@@ -19,7 +19,7 @@ const HeaderControl = () => {
 
 	const menu = (
 		<Menu>
-			<Link to="/users">
+			<Link to={`/users/${user.id}`}>
 				<Menu.Item className="header-dropdown-first-li" key="profile">
 					Quản lí tài khoản
 				</Menu.Item>

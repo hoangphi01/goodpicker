@@ -56,7 +56,7 @@ const GoodsPage = () => {
 			}
 		})
 
-		history.push('/profile')
+		history.push(`/users/${user.id}`)
 	}
 
 	return (
