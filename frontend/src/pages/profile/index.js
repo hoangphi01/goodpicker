@@ -201,17 +201,6 @@ const UserProfilePage = () => {
 	}
 
 
-	// const resetClear = React.useCallback(() => {
-	// 	dispatch({ type: 'reset_images' })
-	// }, [])
-
-	// const updateMainIndex = mainIndex => {
-	// 	dispatch({ type: 'update_index', mainIndex })
-	// }
-
-	// const updateFileImg = fileImg => {
-	// 	dispatch({ type: 'update_files', fileImg })
-	// }
 
 	const onAlertClose = () => {
 		dispatch({ type: 'reset_status' })
@@ -255,13 +244,6 @@ const UserProfilePage = () => {
 															span={6}
 															push={9}
 															justify="center">
-																{/* <AvatarUpload
-																	className="new-avatar-upload"
-																	updateFileImg={updateFileImg}
-																	updateMainIndex={updateMainIndex}
-																	clear={state.clear}
-																	resetClear={resetClear}
-																/> */}
 																<Form.Item
 																	name = "userImage">
 																	<UploadAvatar

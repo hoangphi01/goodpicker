@@ -10,11 +10,9 @@ import { Link } from 'react-router-dom'
 const ContentSide = ({goodsID, goodsName}) => {
 
     const {user, cookies} = useAuthState()
-    const timeAgo = new TimeAgo('vi-vn')
     const unmountedRef = React.useRef(false)
     const [goods, setGoods] = React.useState([])
     const [count,setCount] = React.useState(0)
-	const [categories, setCategories] = React.useState(null)
 
     React.useEffect(()=> {
         return () => {
@@ -30,7 +28,6 @@ const ContentSide = ({goodsID, goodsName}) => {
             .then(res => {
                 setCount(res.data.length)
 				setGoods(res.data)
-				// console.log(res.data)
             	}
             )
         }
@@ -41,7 +38,6 @@ const ContentSide = ({goodsID, goodsName}) => {
 	const  [goodImg, setGoodImg] = React.useState()
 
 	const listData = [];
-	// if(goods=== null) {}
 	if(goods && goods.length !== 0) {
 		for (let i = 0; i < count; i++) {
 			let goodImg;
