@@ -7,8 +7,7 @@ from django.shortcuts import render
 from knox.auth import TokenAuthentication
 from .serializers import UserSerializer
 from .serializers import GoodsSerializer
-from .serializers import OrderSerializer
-from .serializers import RatingSerializer
+# from .serializers import RatingSerializer
 from .serializers import CommentSerializer
 from .serializers import ChatSerializer
 from .serializers import CategorySerializer
@@ -16,8 +15,7 @@ from .serializers import ProvinceSerializer
 from .serializers import GoodsImageSerializer
 from .models import User
 from .models import Goods
-from .models import Order
-from .models import Rating
+# from .models import Rating
 from .models import Comment
 from .models import Chat
 from .models import Category
@@ -63,15 +61,9 @@ class GoodsView(viewsets.ModelViewSet):
     search_fields = ['goodsName']
     ordering_fields = ['goodsUpdatedTime', 'goodsPrice']
 
-
-class OrderView(viewsets.ModelViewSet):
-    serializer_class = OrderSerializer
-    queryset = Order.objects.all()
-
-
-class RatingView(viewsets.ModelViewSet):
-    serializer_class = RatingSerializer
-    queryset = Rating.objects.all()
+# class RatingView(viewsets.ModelViewSet):
+#     serializer_class = RatingSerializer
+#     queryset = Rating.objects.all()
 
 
 class CommentView(viewsets.ModelViewSet):

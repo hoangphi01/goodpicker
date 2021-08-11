@@ -2,8 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth import authenticate
 from .models import Province, User
 from .models import Goods
-from .models import Order
-from .models import Rating
+# from .models import Rating
 from .models import Comment
 from .models import Chat
 from .models import Category
@@ -100,16 +99,10 @@ class GoodsSerializer(serializers.ModelSerializer):
             GoodsImage.objects.create(goodsID=goods, image=image, isMain=isMain)
         return goods
 
-class OrderSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Order
-        fields = ('userID', 'goodsID', 'orderStatus', 'orderTransactionTime')
-
-
-class RatingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Rating
-        fields = ('userID', 'goodsID', 'ratingScore')
+# class RatingSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Rating
+#         fields = ('userID', 'goodsID', 'ratingScore')
 
 
 class CommentSerializer(serializers.ModelSerializer):
