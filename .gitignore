@@ -130,25 +130,25 @@ dmypy.json
 .pyre/
 
 # dependencies
-frontend/node_modules
-frontend/.pnp
-frontend/.pnp.js
+node_modules
+.pnp
+.pnp.js
 
 # testing
-frontend/coverage
+coverage
 
 # production
-frontend/build
+build
 
 # misc
-frontend/.DS_Store
-frontend/.env.local
-frontend/.env.development.local
-frontend/.env.test.local
-frontend/.env.production.local
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-frontend/npm-debug.log*
-frontend/yarn-debug.log*
-frontend/yarn-error.log*
-frontend/yarn.lock
-frontend/package-lock.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+yarn.lock
+package-lock.json

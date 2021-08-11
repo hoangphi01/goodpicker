@@ -1,50 +1,43 @@
 import './style.scss'
-import { Row, Col, Image, Skeleton, List } from "antd"
-import TimeAgo from "javascript-time-ago"
-import axios from "axios"
-import React, {Suspense} from "react"
-import { useAuthState } from "../../../hooks/useAuth"
+import { Row, Col, Image, Skeleton, List } from 'antd'
+import TimeAgo from 'javascript-time-ago'
+import axios from 'axios'
+import React, { Suspense } from 'react'
+import { useAuthState } from '../../../hooks/useAuth'
 import { Link } from 'react-router-dom'
 
+const ContentSide = ({ goodsID, userId, userName }) => {
+	const unmountedRef = React.useRef(false)
+	const [goods, setGoods] = React.useState([])
+	const [count, setCount] = React.useState(0)
 
-const ContentSide = ({goodsID, goodsName}) => {
+	React.useEffect(() => {
+		return () => {
+			unmountedRef.current = true
+		}
+	})
 
-    const {user, cookies} = useAuthState()
-    const unmountedRef = React.useRef(false)
-    const [goods, setGoods] = React.useState([])
-    const [count,setCount] = React.useState(0)
+	React.useEffect(() => {
+		const getGoods = async () => {
+			const res = await axios
+				.get(`/api/goods?goodsCreateId=${userId}&ordering=-goodsUpdatedTime`)
+				.then(res => {
+					setCount(res.data.length)
+					setGoods(res.data)
+				})
+		}
 
-    React.useEffect(()=> {
-        return () => {
-            unmountedRef.current = true
-        }
-    })
+		getGoods()
+	}, [goodsID])
 
-    React.useEffect(()=> {
-        const getGoods = async () => {
-            const res = await axios.get (
-                `/api/goods?goodsCreateId=${user.id}&ordering=-goodsUpdatedTime`
-            )
-            .then(res => {
-                setCount(res.data.length)
-				setGoods(res.data)
-            	}
-            )
-        }
-
-        getGoods()
-    },[goodsID])
-
-	const  [goodImg, setGoodImg] = React.useState()
-
-	const listData = [];
-	if(goods && goods.length !== 0) {
+	const listData = []
+	if (goods && goods.length !== 0) {
 		for (let i = 0; i < count; i++) {
-			let goodImg;
-			goodImg = goods[i].images.find(image => image.isMain === true).image;
-			let des;
-			if(goods[i].goodsDescription) des = goods[i].goodsDescription;
-			else des = `Đây là sản phẩm của ` + user.name
+			let goodImg
+			goodImg = goods[i].images.find(image => image.isMain === true).image
+			let des
+			if (goods[i].goodsDescription) des = goods[i].goodsDescription
+			else des = `Đây là sản phẩm của ` + userName
 
 			listData.push({
 				key: goods[i].goodsID,
@@ -55,58 +48,67 @@ const ContentSide = ({goodsID, goodsName}) => {
 				updateTime: goods[i].goodsUpdatedTime,
 				linkGoods: `/goods/${goods[i].goodsID}`
 				// linkGoods: `/`
-			});
+			})
 		}
 	}
-    
 
-	
-
-    return (
-        <React.Fragment>
-            <Col className = "user-category">
+	return (
+		<React.Fragment>
+			<Col className="user-category">
 				<Row className="user-category-title">
-					<h2><b>Sản phẩm đã đăng</b></h2>
+					<h2>
+						<b>Sản phẩm đã đăng</b>
+					</h2>
 				</Row>
-				<Row className="user-category-content"> 
+				<Row className="user-category-content">
 					<List
 						itemLayout="vertical"
 						size="large"
 						dataSource={listData}
 						pagination={{
-						onChange: page => {
-							console.log(page);
-						},
-						pageSize: 3,
+							onChange: page => {
+								console.log(page)
+							},
+							pageSize: 3
 						}}
-						
 						renderItem={item => (
-						<List.Item
-							key={item.key}
-						
-							extra={
-								<img
-									className = "user-category-content-category-img"
-									width={200}
-									height={200}
-									alt="logo"
-									src={item.image}
+							<List.Item
+								key={item.key}
+								extra={
+									<img
+										className="user-category-content-category-img"
+										width={200}
+										height={200}
+										alt="logo"
+										src={item.image}
+									/>
+								}
+							>
+								<List.Item.Meta
+									//   avatar={<Avatar src={item.avatar} />}
+									title={
+										<Link to={item.linkGoods}>
+											<h4>
+												<b>{item.title}</b>
+											</h4>
+										</Link>
+									}
+									description={
+										<h6>
+											<i>{item.description}</i>
+										</h6>
+									}
 								/>
-							}
-						>
-							<List.Item.Meta
-								//   avatar={<Avatar src={item.avatar} />}
-								title={<Link to ={item.linkGoods}><h4><b>{item.title}</b></h4></Link>}
-								description={<h6><i>{item.description}</i></h6>}
-								/>
-								<h6><i>{item.content}</i></h6>
+								<h6>
+									<i>{item.content}</i>
+								</h6>
 							</List.Item>
 						)}
 					/>
 				</Row>
 			</Col>
-        </React.Fragment>
-    )
+		</React.Fragment>
+	)
 }
 
 export default ContentSide
