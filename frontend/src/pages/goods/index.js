@@ -3,9 +3,9 @@ import './style.scss'
 import React from 'react'
 import axios from 'axios'
 import TimeAgo from 'javascript-time-ago'
-import { useParams, useHistory, Link } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { Skeleton, Row, Col, Popconfirm, Tooltip } from 'antd'
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { DeleteOutlined } from '@ant-design/icons'
 import ImageShow from './image-show'
 import SiteLayout from '../../components/layouts/site-layout'
 import SellerInfo from './seller-info'
@@ -76,15 +76,6 @@ const GoodsPage = () => {
 									</div>
 									{user.id === goods.goodsCreateId ? (
 										<div className="goodspage-detail-header-control">
-											<Tooltip title="Sửa bài đăng" placement="top">
-												<Link
-													to="/"
-													className="goodspage-detail-header-control-btn"
-												>
-													<EditOutlined />
-												</Link>
-											</Tooltip>
-
 											<Popconfirm
 												title="Bạn có chắc muốn xóa bài đăng này?"
 												onConfirm={onDelete}
