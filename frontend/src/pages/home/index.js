@@ -81,6 +81,7 @@ const HomePage = () => {
 										categoryId={category.goodsCategoryID}
 										categoryName={category.goodsCategoryName}
 									/>
+
 								</Suspense>
 						  ))
 						: renderSkeleton()}
