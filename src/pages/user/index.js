@@ -19,14 +19,14 @@ const UserPage = () => {
 		}
 
 		getUser()
-	}, [])
+	}, [userId])
 
 	return (
 		<SiteLayout>
 			{user ? (
 				<Col className="user-main-content" span={18}>
 					<Row className="user-avatar-side">
-						<AvatarSide />
+						<AvatarSide visitedUser={user} />
 					</Row>
 
 					<Row className="user-content-side">
