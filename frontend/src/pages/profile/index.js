@@ -41,6 +41,13 @@ const newAvatar = (state, action) => {
 			return { ...state, status: 'idle' }
 		case 'reset_images':
 			return { ...state, clear: false }
+		case 'error_phone' :
+			return {
+				...state,
+				status:'error',
+				message:
+					'Số điện thoại nhập không hợp lệ. Vui lòng kiểm tra lại'
+			}
 		// case 'no_images':
 		// 	return {
 		// 		...state,
@@ -77,9 +84,19 @@ const UserProfilePage = () => {
         ],
 		phone: [
             {
+				
                 // required: true,
                 message: 'Vui lòng nhập Số điện thoại'
-            }
+            },
+			({ getFieldValue }) => ({
+				validator(_, value) {
+					if ((value.length == 10 ) && value[0] === '0' && /^\d+$/.test(value)) {
+						return Promise.resolve()
+					}
+
+					return Promise.reject(new Error('Số điện thoại nhập không hợp lệ. Vui lòng kiểm tra lại'))
+				}
+			})
         ],
         address: [
             {
@@ -302,6 +319,7 @@ const UserProfilePage = () => {
 																// placeholder="Số điện thoại"
 																customStyle="style#2"
 																maxLength={10}
+																
 															/>
 															</Form.Item>
 															
