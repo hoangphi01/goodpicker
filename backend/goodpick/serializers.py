@@ -130,26 +130,25 @@ class MessageSerializer(serializers.ModelSerializer):
         fields = ('user', 'timestamp', 'content')
 
 class ChatSerializer(serializers.ModelSerializer):
-    messages = MessageSerializer(many=True)
+    messages = MessageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Chat
-        fields = ('id', 'messages')
+        fields = ('id', 'messages', 'participants')
         read_only = ('id')
 
     def create(self, validated_data):
-        participants = validated_data.pop('participants')
+        participants = validated_data.get('participants')
         chat = Chat()
         chat.save()
-        for username in participants:
-            user = User.objects.get(username=username)
+        for user in participants:
             chat.participants.add(user)
-            for nestedUsername in participants:
-                if nestedUsername != username:
+            for partner in participants:
+                if partner.id != user.id:
                     contact = Contact.objects.create(
                         userId=user,
-                        partner=User.objects.get(username=nestedUsername),
-                        chatId=chat.id
+                        partner=partner,
+                        chatId=chat
                     )
         chat.save()
         return chat

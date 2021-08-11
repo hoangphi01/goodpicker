@@ -51,6 +51,7 @@ const Chat = () => {
 		if (!user || !cookies['gp_token']) {
 			history.push('/')
 		} else {
+			unmountedRef.current = false
 			const checkIfParticipants = async () => {
 				try {
 					const res = await axios.get(`/api/chats/${chatID}`, {
@@ -101,7 +102,9 @@ const Chat = () => {
 		return user.contacts.map(({ partner, chatId }) => (
 			<Link
 				key={`${partner.username}${chatId}`}
-				className="chatpage-contact"
+				className={`chatpage-contact${
+					Number(chatId) === Number(chatID) ? ' chatpage-contact--active' : ''
+				}`}
 				to={`/chat/${chatId}`}
 			>
 				{partner.userImage ? (

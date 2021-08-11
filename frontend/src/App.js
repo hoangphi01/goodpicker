@@ -12,6 +12,7 @@ import SearchPage from './pages/search'
 import Chat from './pages/chat'
 import { useAuthState, useAuthenticate, useLogout } from './hooks/useAuth'
 import AuthService from './service/AuthService'
+import GoodsPage from './pages/goods'
 
 function App() {
 	const { user, cookies } = useAuthState()
@@ -41,6 +42,7 @@ function App() {
 						<Route exact path="/users" component={UserPage} />
 						<Route exact path="/search" component={SearchPage} />
 						<Route exact path="/chat/:chatID/" component={Chat} />
+						<Route exact path="/goods/:goodsId" component={GoodsPage} />
 						<Route component={Custom404} />
 					</Switch>
 				</div>
