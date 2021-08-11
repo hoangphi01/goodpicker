@@ -84,7 +84,7 @@ const AvatarSide = ({userEmail, userImage}) => {
                     
                     <Col className="user-avatar-content-info">
                         <h3><b>{user.username}</b></h3>
-                        <br/>
+                        <h6><i>{user.name}</i></h6>
                         <Row>
                             <h5><b>Thông tin liên hệ: </b>{user.userPhoneNumber}</h5>
                         </Row>
