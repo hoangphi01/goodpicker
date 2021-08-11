@@ -9,6 +9,7 @@ import NewPost from './pages/new-post'
 
 import Custom404 from './pages/404'
 import SearchPage from './pages/search'
+import Chat from './pages/chat'
 import { useAuthState, useAuthenticate, useLogout } from './hooks/useAuth'
 import AuthService from './service/AuthService'
 
@@ -39,6 +40,7 @@ function App() {
 						<Route exact path="/new-post" component={NewPost} />
 						<Route exact path="/users" component={UserPage} />
 						<Route exact path="/search" component={SearchPage} />
+						<Route exact path="/chat/:chatID/" component={Chat} />
 						<Route component={Custom404} />
 					</Switch>
 				</div>

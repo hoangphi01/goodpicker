@@ -58,7 +58,7 @@ const Category = ({ categoryId, categoryName }) => {
 				{goods.length !== 0
 					? goods.map((item, i) => (
 							<Col
-								key={item.goodsUpdatedTime}
+								key={`${item.goodsID}${item.goodsUpdatedTime}`}
 								xs={24}
 								md={6}
 								className={`homepage-newest-category-item${

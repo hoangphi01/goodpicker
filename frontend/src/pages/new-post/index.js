@@ -114,7 +114,7 @@ const NewPost = () => {
 		}
 
 		formData.append('goodsCreateId', user.id)
-		formData.append('goodsLocation', 'Ha Noi')
+		formData.append('goodsLocation', user.userProvinceID.userProvinceName)
 		formData.append('mainIndex', state.mainIndex)
 
 		state.fileList.forEach((file, i) => formData.append(`images${i}`, file))
