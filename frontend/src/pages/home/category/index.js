@@ -4,6 +4,7 @@ import React from 'react'
 import axios from 'axios'
 import TimeAgo from 'javascript-time-ago'
 import { Col, Row, Skeleton } from 'antd'
+import { Link } from 'react-router-dom'
 
 const Category = ({ categoryId, categoryName }) => {
 	const [goods, setGoods] = React.useState([])
@@ -65,23 +66,28 @@ const Category = ({ categoryId, categoryName }) => {
 									i % 3 === 0 ? ' homepage-newest-category-item--first' : ''
 								}`}
 							>
-								<div className="homepage-newest-category-item-img-wrapper">
-									<img
-										src={item.images.find(image => image.isMain === true).image}
-										alt={item.goodsName}
-									/>
-								</div>
-								<div className="homepage-newest-category-item__ago">
-									{timeAgo.format(
-										Date.now() - (new Date() - new Date(item.goodsUpdatedTime))
-									)}
-								</div>
-								<div className="homepage-newest-category-item__name">
-									{item.goodsName}
-								</div>
-								<div className="homepage-newest-category-item__price">
-									{item.goodsPrice.toLocaleString()}₫
-								</div>
+								<Link to={`/goods/${item.goodsID}`}>
+									<div className="homepage-newest-category-item-img-wrapper">
+										<img
+											src={
+												item.images.find(image => image.isMain === true).image
+											}
+											alt={item.goodsName}
+										/>
+									</div>
+									<div className="homepage-newest-category-item__ago">
+										{timeAgo.format(
+											Date.now() -
+												(new Date() - new Date(item.goodsUpdatedTime))
+										)}
+									</div>
+									<div className="homepage-newest-category-item__name">
+										{item.goodsName}
+									</div>
+									<div className="homepage-newest-category-item__price">
+										{item.goodsPrice.toLocaleString()}₫
+									</div>
+								</Link>
 							</Col>
 					  ))
 					: renderSkeleton()}

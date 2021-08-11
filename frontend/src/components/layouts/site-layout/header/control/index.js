@@ -84,7 +84,7 @@ const HeaderControl = () => {
 											size="large"
 											className="header-auth__avatar header-auth__avatar--default"
 										>
-											{user.name[0].toUpperCase()}
+											{user.username[0].toUpperCase()}
 										</Avatar>
 									)}
 								</Dropdown>

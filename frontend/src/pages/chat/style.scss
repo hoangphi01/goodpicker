@@ -13,6 +13,7 @@
 		border-radius: 0.625rem;
 		transition: background 0.1s linear !important;
 
+		&--active,
 		&:hover {
 			background-color: rgba($color-black, 0.1);
 		}
@@ -117,6 +118,20 @@
 			border: none;
 			right: 0.25rem;
 			cursor: pointer;
+		}
+	}
+
+	&-link {
+		display: block;
+		color: $color-black !important;
+		width: 100%;
+		padding: 0.7rem 1rem;
+		text-align: center;
+		border-radius: 0.625rem;
+		background-color: rgba($color-black, 0.1);
+
+		&-list {
+			padding: 0.5rem 0.3rem;
 		}
 	}
 }

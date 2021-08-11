@@ -2,8 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth import authenticate
 from .models import Province, User
 from .models import Goods
-from .models import Order
-from .models import Rating
+# from .models import Rating
 from .models import Comment
 from .models import Chat
 from .models import Category
@@ -100,22 +99,26 @@ class GoodsSerializer(serializers.ModelSerializer):
             GoodsImage.objects.create(goodsID=goods, image=image, isMain=isMain)
         return goods
 
-class OrderSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Order
-        fields = ('userID', 'goodsID', 'orderStatus', 'orderTransactionTime')
-
-
-class RatingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Rating
-        fields = ('userID', 'goodsID', 'ratingScore')
+# class RatingSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Rating
+#         fields = ('userID', 'goodsID', 'ratingScore')
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    userID = UserContactSerializer(read_only=True)
+
     class Meta:
         model = Comment
         fields = ('userID', 'goodsID', 'commentContent', 'commentTime')
+
+    def create(self, validated_data):
+        comment = Comment.objects.create(
+            userID=User.objects.get(pk=self.context.get('request').data.get('userID')),
+            goodsID=validated_data.get('goodsID'),
+            commentContent=validated_data.get('commentContent')
+        )
+        return comment
 
 class UserMessageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -130,26 +133,25 @@ class MessageSerializer(serializers.ModelSerializer):
         fields = ('user', 'timestamp', 'content')
 
 class ChatSerializer(serializers.ModelSerializer):
-    messages = MessageSerializer(many=True)
+    messages = MessageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Chat
-        fields = ('id', 'messages')
+        fields = ('id', 'messages', 'participants')
         read_only = ('id')
 
     def create(self, validated_data):
-        participants = validated_data.pop('participants')
+        participants = validated_data.get('participants')
         chat = Chat()
         chat.save()
-        for username in participants:
-            user = User.objects.get(username=username)
+        for user in participants:
             chat.participants.add(user)
-            for nestedUsername in participants:
-                if nestedUsername != username:
+            for partner in participants:
+                if partner.id != user.id:
                     contact = Contact.objects.create(
                         userId=user,
-                        partner=User.objects.get(username=nestedUsername),
-                        chatId=chat.id
+                        partner=partner,
+                        chatId=chat
                     )
         chat.save()
         return chat

@@ -51,6 +51,7 @@ const Chat = () => {
 		if (!user || !cookies['gp_token']) {
 			history.push('/')
 		} else {
+			unmountedRef.current = false
 			const checkIfParticipants = async () => {
 				try {
 					const res = await axios.get(`/api/chats/${chatID}`, {
@@ -87,21 +88,25 @@ const Chat = () => {
 	}, [chatID, cookies, history, user, waitForSocketConnection])
 
 	const sendMessageHandler = value => {
-		const messageObject = {
-			from: user.username,
-			content: value.message,
-			chatId: chatID
+		if (value.message) {
+			const messageObject = {
+				from: user.username,
+				content: value.message,
+				chatId: chatID
+			}
+			WebSocketInstance.newChatMessage(messageObject)
+			form.resetFields()
+			inputRef.current.focus()
 		}
-		WebSocketInstance.newChatMessage(messageObject)
-		form.resetFields()
-		inputRef.current.focus()
 	}
 
 	const renderContacts = () => {
 		return user.contacts.map(({ partner, chatId }) => (
 			<Link
 				key={`${partner.username}${chatId}`}
-				className="chatpage-contact"
+				className={`chatpage-contact${
+					Number(chatId) === Number(chatID) ? ' chatpage-contact--active' : ''
+				}`}
 				to={`/chat/${chatId}`}
 			>
 				{partner.userImage ? (
@@ -177,7 +182,20 @@ const Chat = () => {
 						</Form>
 					</Col>
 
-					<Col xs={4} md={5}></Col>
+					<Col xs={4} md={5}>
+						<div className="chatpage-link-list">
+							<Link
+								className="chatpage-link"
+								to={`/users/${
+									user.contacts.find(
+										contact => Number(contact.chatId) === Number(chatID)
+									).partner.id
+								}`}
+							>
+								Xem trang cá nhân
+							</Link>
+						</div>
+					</Col>
 				</Row>
 			</div>
 		</SiteLayout>
