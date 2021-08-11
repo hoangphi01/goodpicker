@@ -91,7 +91,7 @@ const SellerInfo = ({ sellerId }) => {
 									size={60}
 									className="seller-card-info__avatar seller-card-info__avatar--default"
 								>
-									{seller.name[0].toUpperCase()}
+									{seller.username[0].toUpperCase()}
 								</Avatar>
 							)}
 							<div>

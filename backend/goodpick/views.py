@@ -75,6 +75,8 @@ class RatingView(viewsets.ModelViewSet):
 
 
 class CommentView(viewsets.ModelViewSet):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated|ReadOnly]
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
 

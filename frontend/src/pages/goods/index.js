@@ -10,6 +10,7 @@ import ImageShow from './image-show'
 import SiteLayout from '../../components/layouts/site-layout'
 import SellerInfo from './seller-info'
 import { useAuthState } from '../../hooks/useAuth'
+import Comments from './comments'
 
 const GoodsPage = () => {
 	const { goodsId } = useParams()
@@ -118,6 +119,8 @@ const GoodsPage = () => {
 										? goods.goodsDescription
 										: 'Không có mô tả'}
 								</div>
+
+								<Comments goodsId={goodsId} />
 							</div>
 						</Col>
 

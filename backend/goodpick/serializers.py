@@ -113,9 +113,19 @@ class RatingSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    userID = UserContactSerializer(read_only=True)
+
     class Meta:
         model = Comment
         fields = ('userID', 'goodsID', 'commentContent', 'commentTime')
+
+    def create(self, validated_data):
+        comment = Comment.objects.create(
+            userID=User.objects.get(pk=self.context.get('request').data.get('userID')),
+            goodsID=validated_data.get('goodsID'),
+            commentContent=validated_data.get('commentContent')
+        )
+        return comment
 
 class UserMessageSerializer(serializers.ModelSerializer):
     class Meta:

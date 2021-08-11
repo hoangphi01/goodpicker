@@ -88,14 +88,16 @@ const Chat = () => {
 	}, [chatID, cookies, history, user, waitForSocketConnection])
 
 	const sendMessageHandler = value => {
-		const messageObject = {
-			from: user.username,
-			content: value.message,
-			chatId: chatID
+		if (value.message) {
+			const messageObject = {
+				from: user.username,
+				content: value.message,
+				chatId: chatID
+			}
+			WebSocketInstance.newChatMessage(messageObject)
+			form.resetFields()
+			inputRef.current.focus()
 		}
-		WebSocketInstance.newChatMessage(messageObject)
-		form.resetFields()
-		inputRef.current.focus()
 	}
 
 	const renderContacts = () => {
