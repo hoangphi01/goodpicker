@@ -182,7 +182,20 @@ const Chat = () => {
 						</Form>
 					</Col>
 
-					<Col xs={4} md={5}></Col>
+					<Col xs={4} md={5}>
+						<div className="chatpage-link-list">
+							<Link
+								className="chatpage-link"
+								to={`/users/${
+									user.contacts.find(
+										contact => Number(contact.chatId) === Number(chatID)
+									).partner.id
+								}`}
+							>
+								Xem trang cá nhân
+							</Link>
+						</div>
+					</Col>
 				</Row>
 			</div>
 		</SiteLayout>

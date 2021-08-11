@@ -120,4 +120,18 @@
 			cursor: pointer;
 		}
 	}
+
+	&-link {
+		display: block;
+		color: $color-black !important;
+		width: 100%;
+		padding: 0.7rem 1rem;
+		text-align: center;
+		border-radius: 0.625rem;
+		background-color: rgba($color-black, 0.1);
+
+		&-list {
+			padding: 0.5rem 0.3rem;
+		}
+	}
 }

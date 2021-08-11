@@ -97,30 +97,12 @@ class GoodsImage(models.Model):
     image = models.ImageField(blank=True, null=True)
     isMain = models.BooleanField()
 
-class Order(models.Model):
-    class OrderKey:
-        uniqueOrder = (('userID', 'goodsID'),)
+# class Rating(models.Model):
+#     userID = models.ForeignKey(User, on_delete=models.CASCADE)
+#     ratingScore = models.IntegerField()
 
-    userID = models.ForeignKey(User, on_delete=models.CASCADE)
-    goodsID = models.ForeignKey(Goods, on_delete=models.CASCADE)
-    orderStatus = models.BooleanField()
-    orderTransactionTime = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f"{self.orderStatus} ({self.orderTransactionTime})"
-
-
-class Rating(models.Model):
-    class RatingKey:
-        uniqueRating = (('userID', 'goodsID'),)
-
-    userID = models.ForeignKey(User, on_delete=models.CASCADE)
-    goodsID = models.ForeignKey(Goods, on_delete=models.CASCADE)
-    ratingScore = models.IntegerField()
-
-    def __str__(self):
-        return f"{self.ratingScore}"
-
+#     def __str__(self):
+#         return f"{self.ratingScore}"
 
 class Comment(models.Model):
     class CommentKey:
