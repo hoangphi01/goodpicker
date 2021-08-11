@@ -21,6 +21,7 @@ from goodpick.api import RegisterAPI, LoginAPI, UserAPI
 from knox import views as knox_views
 from django.conf.urls.static import static
 from django.conf import settings
+from .views import index
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserView, 'goodpick')
@@ -33,6 +34,7 @@ router.register(r'comments', views.CommentView, 'goodpick')
 router.register(r'chats', views.ChatView, 'goodpick')
 
 urlpatterns = [
+    path('', index, name='index'),
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api/auth', include('knox.urls')),
