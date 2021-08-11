@@ -77,6 +77,28 @@
 			}
 		}
 
+		&__selectprofile {
+			height: 3rem;
+			border-radius: 5rem !important;
+
+			.ant-select-selector {
+				height: 100% !important;
+				display: flex;
+				align-items: center;
+				padding: 0 1rem !important;
+				border-radius: 5rem !important;
+				font-size: 1rem;
+				font-family: $font-nunito-light;
+				border: 0.0625rem solid lighten($color-gray, 20%) !important;
+
+				&:hover,
+				&:focus {
+					border-color: rgba($color-primary-green, 1) !important;
+					outline: none;
+				}
+			}
+		}
+
 		&-submit {
 			display: flex;
 			justify-content: flex-end;

@@ -15,7 +15,6 @@ const imageUploadReducer = (state, action) => {
 				...state,
 				previewSrc: action.file.url || action.file.preview,
 				previewUid: action.file.uid,
-				// previewImage: action.file.url || action.file.preview,
 		  		previewVisible: true,
 			}
 
@@ -64,7 +63,7 @@ const AvatarUpload = ({
 	
 	const handlePreview = async file => {
 		if (!file.url && !file.preview) {
-		  file.preview = await getBase64(file.originFileObj);
+		  file.preview = await getBase64(file.originFileObj)
 		}
 	
 		updateMainIndex(fileList.findIndex(f => f.uid === file.uid))

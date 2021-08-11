@@ -21,23 +21,31 @@ const AvatarSide = ({userEmail, userImage}) => {
 
     const [theUser, setUser] = useState([])
 
-    let userImageAvata;
+    const [userImageAvata,setUserImageAvatar] = useState(null);
 
-    if(user.userImage) {
-        userImageAvata = user.userImage;
-    }
-    else userImageAvata = DEFAVT;
+  
 
-    // useEffect(()=> {
-    //     const getUsers = async () => {
-    //         const res = await axios.get(
-    //             `/api/users?email=${userEmail}`
-    //         )
-    //         setUser(res.data.results)
-    //     }
 
-    //     getUsers()
-    // },[userEmail])
+//     useEffect(() => {
+//   if(user.userImage) {
+//         // userImageAvata = user.userImage;
+//         setUserImageAvatar(user.userImage);
+//     }
+//     else setUserImageAvatar(DEFAVT);
+//     },[user.userImage]) 
+
+    useEffect(()=> {
+        const getUsers = async () => {
+            const res = await axios.get(
+                `/api/users?email=${userEmail}`
+            )
+            // setUser(res.data.results)
+            setUserImageAvatar(res?.data[0]?.userImage);
+            // console.log(res);
+        }
+
+        getUsers()
+    },[userEmail])
 
     return (
         <React.Fragment>

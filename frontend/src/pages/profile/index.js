@@ -1,5 +1,5 @@
 import './style.scss'
-import { Row, Col, Form, Button, Space, message, Tabs,Steps, Result, Select, Tag } from 'antd'
+import { Row, Col, Form, Button, Upload, message, Tabs,Steps, Result, Select, Tag } from 'antd'
 import React, { useEffect, useState } from 'react'
 import CustomInputField from '../../components/elements/input'
 import { Link, withRouter, useHistory, useParams } from 'react-router-dom'
@@ -12,6 +12,7 @@ import axios from 'axios'
 import { Alert, Modal } from 'antd'
 import Loader from '../../components/elements/loader'
 import UploadAvatar from './upload-avatar'
+// import Avatar from './test/abc'
 
 const {TabPane} = Tabs;
 
@@ -105,7 +106,7 @@ const UserProfilePage = () => {
 			name:'',
 			phone:'',
             address:'', 
-			// image:'',// user.userImage,
+			image:'',// user.userImage,
 		}
 	})
 	
@@ -113,7 +114,8 @@ const UserProfilePage = () => {
 	const unmountedRef = React.useRef(false)
 	const history = useHistory()
 	const authenticate = useAuthenticate()
-	const userid =user.id;
+
+	const [file,setFile] = useState(null);
 
 	React.useEffect(() => {
 		return () => {
@@ -140,16 +142,21 @@ const UserProfilePage = () => {
 
 	const onFinish = async values => {
 
+
 		let formData = new FormData()
 
 		for (const key in values) {
 			formData.append(key, values[key] ?? '')
 		}
 
+
+
+		formData.append('userImage',file);
+
 		formData.append('userId', user.id)
 		formData.append('mainIndex', state.mainIndex)
 		
-		state.fileImg.forEach((file, i) => formData.append(`images${i}`, file))
+		// state.fileImg.forEach((file, i) => formData.append(`images${i}`, file))
 
 		const modal = Modal.info({
 			className: 'new-user-modal',
@@ -167,10 +174,10 @@ const UserProfilePage = () => {
 		})
 
 		try {
-			await axios.patch(`/api/users/${userid}/`, formData, {
-				headers: {
-					Authorization: `Bearer ${cookies['gp_token']}`
-				}
+			await axios.patch(`/api/users/${user.id}/`, formData, {
+				// headers: {
+				// 	Authorization: `Bearer ${cookies['gp_token']}`
+				// }
 			})
 			.then(res => {
 				console.log(res.data)
@@ -194,21 +201,24 @@ const UserProfilePage = () => {
 		}
 	}
 
-	const updateFileImg = fileImg => {
-		dispatch({ type: 'update_files', fileImg })
-	}
+
+	// const resetClear = React.useCallback(() => {
+	// 	dispatch({ type: 'reset_images' })
+	// }, [])
+
+	// const updateMainIndex = mainIndex => {
+	// 	dispatch({ type: 'update_index', mainIndex })
+	// }
+
+	// const updateFileImg = fileImg => {
+	// 	dispatch({ type: 'update_files', fileImg })
+	// }
 
 	const onAlertClose = () => {
 		dispatch({ type: 'reset_status' })
 	}
 
-	const resetClear = React.useCallback(() => {
-		dispatch({ type: 'reset_images' })
-	}, [])
-
-	const updateMainIndex = mainIndex => {
-		dispatch({ type: 'update_index', mainIndex })
-	}
+	
 	return (
 		<SiteLayout>
 		<div>
@@ -244,15 +254,23 @@ const UserProfilePage = () => {
 													<Col className="profile-item">
 														<Col className="profile-avatar"
 															span={6}
-															push={10}
+															push={9}
 															justify="center">
-																<AvatarUpload
+																{/* <AvatarUpload
 																	className="new-avatar-upload"
 																	updateFileImg={updateFileImg}
 																	updateMainIndex={updateMainIndex}
 																	clear={state.clear}
 																	resetClear={resetClear}
-																/>
+																/> */}
+																<Form.Item
+																	name = "userImage">
+																	<UploadAvatar
+
+																	setFile={setFile}
+																		name = "userImage"
+																	/>
+																</Form.Item>
 														</Col>
 														<Form.Item
 															className="m-0"
@@ -312,11 +330,11 @@ const UserProfilePage = () => {
 																name="userProvinceID"
 																rules={rules.address}
 																>
-																<Select className="low-bradius-formpage-form__select">
+																<Select className="low-bradius-formpage-form__selectprofile">
 																	{state.provinces.map(address => (
 																	<Select.Option
-																		value={address.userProvinceName}
-																		key={address.userProvinceID}
+																		key={address.userProvinceName}
+																		value={address.userProvinceID}
 																	>
 																		{address.userProvinceName}
 																	</Select.Option>

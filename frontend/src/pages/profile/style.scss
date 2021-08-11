@@ -17,7 +17,7 @@
             -moz-border-radius: 55px;
             border-radius: 55px;
             padding: 30px;
-            height: rem(800px);
+            height: 70rem;
         }
         .profile-avatar {
             padding-bottom: rem(40px);
@@ -30,7 +30,7 @@
             .ant-tabs {
                 font-size: 10px;
                 color: #da3333;
-                // align-items: center;
+                align-items: center;
                 align-content: center;
                 width: 100%;
                 .infor-user-tab {
@@ -85,19 +85,12 @@
             &-select {
                 border-radius: 50px;
             }
-            .address-province-form__select {
-                padding-bottom: rem(10px);
-                border-radius: 55px;
-                height: 40px;
-                padding-bottom: 20px;
+            .low-bradius-formpage-form__selectprofile {
+                // border-radius: 55px;
+                height: 4.5rem;
+                padding-bottom: rem(25px);
                 
             }
-            element.style {
-                border-radius: 55px;
-                height: 40px;
-                padding-bottom: 20px;
-            }
-
             
         }
         .app-social {

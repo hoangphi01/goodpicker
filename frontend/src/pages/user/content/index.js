@@ -99,10 +99,10 @@ const ContentSide = ({goodsID, goodsName}) => {
 						>
 							<List.Item.Meta
 								//   avatar={<Avatar src={item.avatar} />}
-								title={<h3><b>{item.title}</b></h3>}
+								title={<h4><b>{item.title}</b></h4>}
 								description={<h6><i>{item.description}</i></h6>}
 								/>
-								<h4><i>{item.content}</i></h4>
+								<h6><i>{item.content}</i></h6>
 							</List.Item>
 						)}
 					/>
