@@ -4,6 +4,7 @@ import TimeAgo from "javascript-time-ago"
 import axios from "axios"
 import React, {Suspense} from "react"
 import { useAuthState } from "../../../hooks/useAuth"
+import { Link } from 'react-router-dom'
 
 
 const ContentSide = ({goodsID, goodsName}) => {
@@ -55,7 +56,8 @@ const ContentSide = ({goodsID, goodsName}) => {
 				description: goods[i].goodsPrice,
 				content: des,
 				image: goodImg,
-				updateTime: goods[i].goodsUpdatedTime
+				updateTime: goods[i].goodsUpdatedTime,
+				linkGoods: `/goods/${goods[i].goodsID}`
 			});
 		}
 	}
@@ -86,20 +88,18 @@ const ContentSide = ({goodsID, goodsName}) => {
 							key={item.key}
 						
 							extra={
-								// <div className = "user-category-content-category-img">
-									<img
-										className = "user-category-content-category-img"
-										width={200}
-										height={200}
-										alt="logo"
-										src={item.image}
-									/>
-								// {/* </div> */}
+								<img
+									className = "user-category-content-category-img"
+									width={200}
+									height={200}
+									alt="logo"
+									src={item.image}
+								/>
 							}
 						>
 							<List.Item.Meta
 								//   avatar={<Avatar src={item.avatar} />}
-								title={<h4><b>{item.title}</b></h4>}
+								title={<Link to ={item.linkGoods}><h4><b>{item.title}</b></h4></Link>}
 								description={<h6><i>{item.description}</i></h6>}
 								/>
 								<h6><i>{item.content}</i></h6>

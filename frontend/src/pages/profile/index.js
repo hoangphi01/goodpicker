@@ -3,7 +3,6 @@ import { Row, Col, Form, Button, Upload, message, Tabs,Steps, Result, Select, Ta
 import React, { useEffect, useState } from 'react'
 import CustomInputField from '../../components/elements/input'
 import { Link, withRouter, useHistory, useParams } from 'react-router-dom'
-import AvatarUpload from './avatar-upload'
 import SiteLayout from '../../components/layouts/site-layout'
 import ChangePassword from './change_password'
 import { useAuthenticate, useAuthState } from '../../hooks/useAuth'
