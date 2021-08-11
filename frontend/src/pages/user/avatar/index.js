@@ -40,7 +40,7 @@ const AvatarSide = ({userEmail, userImage}) => {
                 `/api/users?email=${userEmail}`
             )
             // setUser(res.data.results)
-            setUserImageAvatar(res?.data[0]?.userImage);
+            setUserImageAvatar(res?.data[user.id-1]?.userImage);
             // console.log(res);
         }
 
