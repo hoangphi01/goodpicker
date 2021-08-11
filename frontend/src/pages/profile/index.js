@@ -179,7 +179,7 @@ const UserProfilePage = () => {
 				// }
 			})
 			.then(res => {
-				console.log(res.data)
+				// console.log(res.data)
 				authenticate({user: res.data, token: cookies['gp_token']})
 			})
 
@@ -342,9 +342,9 @@ const UserProfilePage = () => {
 
 									</TabPane>
 
-									<TabPane tab="Thay đổi mật khẩu" key="2" className="info-user-tab">
+									{/* <TabPane tab="Thay đổi mật khẩu" key="2" className="info-user-tab" disabled>
 										<ChangePassword/>
-									</TabPane>
+									</TabPane> */}
 								</Tabs>
 								
 							</Col>

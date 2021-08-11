@@ -37,13 +37,8 @@ const UploadAvatar = ({name,setFile}) => {
                   <>
                     <label htmlFor="upload-input">
                         <FileImageOutlined style={{fontSize: 60, color: '#b5b5b5'}} />
-
-
                     </label>
 
-
-                   
-                      
                     <Input
                       // name = {name}
                       id="upload-input"
@@ -63,7 +58,7 @@ const UploadAvatar = ({name,setFile}) => {
                     />
                     
                       <Image
-                        id="uploaded-image"
+                        className="uploaded-image"
                         src={image}
                         draggable={false}
                         alt="uploaded-img"
