@@ -94,7 +94,7 @@ const AvatarSide = ({userEmail, userImage}) => {
                         </Row>
                         <br/>
                         <Row >
-                            <h5><b>Địa chỉ: </b>{user.userProvinceID}</h5>
+                            <h5><b>Địa chỉ: </b>{user.userProvinceID.userProvinceName}</h5>
                         </Row>
                         <br/>
                         <Row>
