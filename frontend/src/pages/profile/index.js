@@ -301,13 +301,14 @@ const UserProfilePage = () => {
 															<CustomInputField
 																// placeholder="Số điện thoại"
 																customStyle="style#2"
+																maxLength={10}
 															/>
 															</Form.Item>
 															
 															
 
 															<Form.Item
-																label="Dia chi"
+																label="Địa chỉ"
 																name="userProvinceID"
 																rules={rules.address}
 																>
